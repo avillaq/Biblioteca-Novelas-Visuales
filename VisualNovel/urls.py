@@ -16,7 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from VNDisplay.views import home, completo, allages, yuri, otome, eroge
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('', view=home, name='home'),
+    path('completo/', view=completo, name='completo'),
+    path('AllAges/', view=allages, name='allages'),
+    path('Yuri/', view=yuri, name='yuri'),
+    path('Otome/', view=otome, name='otome'),
+    path('Eroge/', view=eroge, name='eroge'),
+
 ]
