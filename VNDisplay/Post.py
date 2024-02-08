@@ -99,7 +99,7 @@ class VN_Scraper:
 
     
 
-    def _get_posts(self, url : str) -> list[_Post]:
+    def _get_posts(self, url : str) -> list[Post]:
         
         domain = "www.visualnovelparapc.com"  # The domain of the page
         if domain not in url:
@@ -142,13 +142,13 @@ class VN_Scraper:
                 post_labels = post_labels.text.strip().replace("\n", " ").replace("Etiquetas:", "")
 
                 # Create a new instance
-                post = _Post(title, full_url, image_url, description, post_labels)
+                post = Post(title, full_url, image_url, description, post_labels)
                 list_posts.append(post)
 
         return list_posts
     
     # Public Methods
-    def get_section(self, section: str) -> list[_Post]:
+    def get_section(self, section: str) -> list[Post]:
         section = self._verify_section(section) ################################### mover contenido de _verify_section aqui ###################
         if not section:
             raise ValueError(f"Section {section} not found")
@@ -163,7 +163,7 @@ class VN_Scraper:
 
 
     ## TODO: Esta funcion funciona correctamente, pero solo para segunda pagina, hay que hacerla para todas las paginas (SOLO SI ES POSIBLE), ya que tenemos que ver como sera la paginacion con Django
-    def get_next_page_section(self, section: str) -> list[_Post]:
+    def get_next_page_section(self, section: str) -> list[Post]:
         section = self._verify_section(section)
         if not section:
             raise ValueError(f"Section {section} not found")
@@ -182,7 +182,7 @@ class VN_Scraper:
 
 
     # TODO: Esta funcion no esta terminada 
-    def get_post_detail(self, post: _Post = None) -> tuple[any]:
+    def get_post_detail(self, post: Post = None) -> tuple[any]:
 
         #Title
         title = post.title
@@ -226,7 +226,7 @@ class VN_Scraper:
 
     # APK  http://www.visualnovelparapc.com/2022/01/android-apk.html
     ############################# The APK section is different from the others, so we need to scrap it differently #############################
-    def get_apk_section(self) -> list[_Post_Android]:
+    def get_apk_section(self) -> list[Post_Android]:
 
         url = self.sections["apk"]
         header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.2151.97'}
@@ -298,7 +298,7 @@ class VN_Scraper:
             image_url = image_url.get('src')
 
             # Create a new instance
-            post = _Post_Android(title, full_url, image_url)
+            post = Post_Android(title, full_url, image_url)
             list_posts.append(post)
 
         return list_posts
@@ -306,7 +306,7 @@ class VN_Scraper:
 
     # Emulador Kirikiroid2   http://www.visualnovelparapc.com/2022/06/android-kirikiroid.html
     ############################# The kirikiroid2 section is different from the others, so we need to scrap it differently #############################
-    def get_kirikiroid2_section(self) -> tuple[list[_Post_Android], str]:
+    def get_kirikiroid2_section(self) -> tuple[list[Post_Android], str]:
         url = self.sections["kirikiroid2"]
         header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.2151.97'}
         response = requests.get(url, headers=header)
@@ -341,7 +341,7 @@ class VN_Scraper:
             image_url = image_url.get('src')
 
             # Create a new instance
-            post = _Post_Android(title, full_url, image_url)
+            post = Post_Android(title, full_url, image_url)
             list_posts.append(post)
 
         return list_posts, emulator
@@ -350,7 +350,7 @@ class VN_Scraper:
 
 if __name__ == '__main__':
     scraper = VN_Scraper()
-    post = _Post("Hanachirasu[Completo][Eroge]", "http://www.visualnovelparapc.com/2022/10/hanachirasu.html", "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiloJxDae8yr-lKe0eAj2xmyekmU8SGMHpx2gX5hcXYLDcm1JBq2x4hfxMmfUtEiUs4UgFML7keBJaKKUlWsqwDOjDy7_bc9Cp4AapY-HzJczqM-MlL56xdv2EBhbZ-5Wx7hkQykX1JcV4GuJ-Bzw9OrefPf4Hti9uPa0juL4s6DotQEv_l9C3WZQZpAm4/w400-h299/sms.png", "", "")
+    post = Post("Hanachirasu[Completo][Eroge]", "http://www.visualnovelparapc.com/2022/10/hanachirasu.html", "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiloJxDae8yr-lKe0eAj2xmyekmU8SGMHpx2gX5hcXYLDcm1JBq2x4hfxMmfUtEiUs4UgFML7keBJaKKUlWsqwDOjDy7_bc9Cp4AapY-HzJczqM-MlL56xdv2EBhbZ-5Wx7hkQykX1JcV4GuJ-Bzw9OrefPf4Hti9uPa0juL4s6DotQEv_l9C3WZQZpAm4/w400-h299/sms.png", "", "")
     list_posts = scraper.get_post_detail(post)
     print(list_posts)
 

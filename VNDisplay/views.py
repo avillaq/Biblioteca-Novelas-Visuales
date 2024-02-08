@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from Post import VN_Scraper, Post, Post_Android
+from VNDisplay.Post import VN_Scraper, Post, Post_Android
 
+scraper = VN_Scraper()
 
 # Create your views here.
 #index view
 def home(request):
-    return HttpResponse("Hello, world. You're at the VNDisplay index.")
+    return HttpResponse(scraper.get_section("inicio"))
 
 def completo(request):
     return HttpResponse("Hello, world. You're at the VNDisplay completo.")
