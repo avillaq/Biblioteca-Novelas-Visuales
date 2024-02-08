@@ -21,9 +21,9 @@ from VNDisplay.views import home, completo, allages, yuri, otome, eroge
 urlpatterns = [
     path('', view=home, name='home'),
     path('completo/', view=completo, name='completo'),
-    path('AllAges/', view=allages, name='allages'),
-    path('Yuri/', view=yuri, name='yuri'),
-    path('Otome/', view=otome, name='otome'),
-    path('Eroge/', view=eroge, name='eroge'),
+    path('allages/', view=allages, name='allages'),
+    path('yuri/', view=yuri, name='yuri'),
+    path('otome/', view=otome, name='otome'),
+    path('eroge/', view=eroge, name='eroge'),
 
 ]
