@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from Post import VN_Scraper, Post, Post_Android
+
 
 # Create your views here.
 #index view
