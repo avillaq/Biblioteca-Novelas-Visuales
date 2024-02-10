@@ -1,0 +1,31 @@
+/*Añadir normalize.css al proyecto para mejores resultados*/
+*,*:before,*:after {
+    box-sizing: inherit;
+}
+html {
+    box-sizing: border-box;
+    font-size:62.5%; /*1rem = 10px*/
+}
+body {
+    font-family: 'Open Sans', 'sans-serif';
+    font-size: 1.6rem;
+    line-height: 2; /*Interlineado*/
+    margin: 0;
+    padding: 0;
+}
+img {
+    max-width: 100%; /*Imagen responsiva*/
+    width: 100%;
+    display: block;
+}
+ul {
+    margin: 0; /*Elimina estacios en blaco innecesarios*/
+    padding: 0; /*Elimina estacios en blaco innecesarios*/
+    list-style: none; /*Elimina los puntos que aconpañan a las listas*/
+}
+.wrapper {
+    width: 95%;
+    margin: 0 auto; /*Contenedor centrado*/
+    background-color: red;
+    
+}

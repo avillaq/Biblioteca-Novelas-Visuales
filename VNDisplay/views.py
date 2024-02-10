@@ -7,7 +7,7 @@ scraper = VN_Scraper()
 # Create your views here.
 #index view
 def home(request):
-    return HttpResponse(scraper.get_section("inicio"))
+    return render(request, 'home.html')
 
 def completo(request):
     return HttpResponse("Hello, world. You're at the VNDisplay completo.")

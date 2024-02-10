@@ -55,7 +55,7 @@ ROOT_URLCONF = 'VisualNovel.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ["VNDisplay/template"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
