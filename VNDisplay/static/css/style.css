@@ -1,31 +1,99 @@
-/*Añadir normalize.css al proyecto para mejores resultados*/
-*,*:before,*:after {
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Open+Sans:wght@400;500;700;800&display=swap');
+
+*,
+*:before,
+*:after {
     box-sizing: inherit;
 }
+
 html {
     box-sizing: border-box;
-    font-size:62.5%; /*1rem = 10px*/
 }
+
 body {
     font-family: 'Open Sans', 'sans-serif';
-    font-size: 1.6rem;
-    line-height: 2; /*Interlineado*/
+    font-size: 16px;
+    line-height: 2;
+    /*Interlineado*/
     margin: 0;
     padding: 0;
 }
+
 img {
-    max-width: 100%; /*Imagen responsiva*/
+    max-width: 100%;
+    /*Imagen responsiva*/
     width: 100%;
     display: block;
 }
+
 ul {
-    margin: 0; /*Elimina estacios en blaco innecesarios*/
-    padding: 0; /*Elimina estacios en blaco innecesarios*/
-    list-style: none; /*Elimina los puntos que aconpañan a las listas*/
+    margin: 0;
+    /*Elimina estacios en blaco innecesarios*/
+    padding: 0;
+    /*Elimina estacios en blaco innecesarios*/
+    list-style: none;
+    /*Elimina los puntos que aconpañan a las listas*/
 }
+a {
+    text-decoration: none;
+}
+
+
+/*Side header*/
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: #f7f3f0;
+}
+
+.side-header {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.logo {
+
+}
+
+.logo-title {
+    font-size: 30px;
+    color: #6c6866;
+}
+
+.nav {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+
+.nav a {
+    text-decoration: none;
+    color: #9a9693;
+    transition: color 0.3s ease;
+}
+
+.nav a:hover {
+    color: #0056b3;
+}
+
+a:hover {
+    color: #ffcc00;
+}
+
+.icons{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-left: 100px;
+}
+
+
 .wrapper {
-    width: 95%;
-    margin: 0 auto; /*Contenedor centrado*/
-    background-color: red;
-    
+    width: 90%;
+    margin: 0 auto;
+    /*Contenedor centrado*/
 }
