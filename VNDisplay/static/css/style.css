@@ -72,7 +72,7 @@ header {
 
 .nav a {
     color: #0e0e0e;
-    transition: all 0.2s ease-out; 
+    transition: all 0.1s ease-out; 
 }
 
 .nav a:hover {
@@ -91,4 +91,21 @@ header {
     width: 90%;
     margin: 0 auto;
     /*Contenedor centrado*/
+}
+
+.introduction{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.introduction .introduction-text {
+    font-size: 20px;
+    color: #0e0e0e;
+    text-align: justify;
+    /*Justificado*/
+    max-width: 500px;
+}
+
+.introduction img {
 }
