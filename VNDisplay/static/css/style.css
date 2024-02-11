@@ -60,7 +60,7 @@ header {
 
 .logo-title {
     font-size: 30px;
-    color: #6c6866;
+    color: #0e0e0e;
 }
 
 .nav {
@@ -71,24 +71,19 @@ header {
 
 
 .nav a {
-    text-decoration: none;
-    color: #9a9693;
-    transition: color 0.3s ease;
+    color: #0e0e0e;
+    transition: all 0.2s ease-out; 
 }
 
 .nav a:hover {
-    color: #0056b3;
+    border-bottom: 2px solid #0e0e0e;
 }
 
-a:hover {
-    color: #ffcc00;
-}
 
 .icons{
     display: flex;
     gap: 20px;
     align-items: center;
-    margin-left: 100px;
 }
 
 
