@@ -54,7 +54,25 @@
 
         </div>
         <div class="content">
+            {% block content %}
+            {% for p in posts %}
             <div class="novel">
+                <img src="{{ p.image_url }}" alt="img">
+                <div class="novel-info">
+                    <h3>{{ p.title }}</h3>
+                    <div>
+                        <span class="green">Completo</span>
+                        <span class="red">Eroge</span>
+                    </div>
+                </div>
+                <div class="overview">
+                    {{ p.description }}
+                </div>
+            </div>
+            {% endfor %}
+            {% endblock %}
+
+           <!--  <div class="novel">
                 <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiKtikl1Il87TUx-Ce6JmwlVFhlNbCHU2KWZ-dv9TSVLPbXXlg0UxXGXiGkznrwcWoJikpe_J0a9J6RO3muGv-IYKQ-nylF-WczourS7TJKfXaE1uH68-vepU4ob1fSKfClNS6yd6PG1lsjtREhj0rR9OyiH1J2wV4sBaTwDMWcFtOIM5Vai-1DSR-rPsM/s320/gg.png"
                     alt="img">
                 <div class="novel-info">
@@ -71,7 +89,7 @@
                     jóvenes... ¡Y bien! Este joven tiene mucho que dar y, francamente, ¡está muy buena! Este pueblo
                     carece de mujeres jóvenes, así que ¿por qué no ir más allá?.
                 </div>
-            </div>
+            </div> -->
 
         </div>
     </main>
