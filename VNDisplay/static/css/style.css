@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Open+Sans:wght@400;500;700;800&display=swap');
 
 :root {
-    --primary-color: #22254b;
-    --secondary-color: #f4e9e0;
+    --text-color: #0e0e0e;
+    --background-color: #f4e9e0;
 }
 
 *,
@@ -13,17 +13,16 @@
 
 html {
     box-sizing: border-box;
-    scrollbar-width: none; /* scrollbar setting */
+    scrollbar-width: none;
+    /* scrollbar setting */
 }
 
 body {
     font-family: 'Open Sans', 'sans-serif';
-    font-size: 16px;
-    line-height: 2;
-    /*Interlineado*/
+    font-size: 15px;
     margin: 0;
     padding: 0;
-    
+    line-height: 1.6;
 }
 
 img {
@@ -52,7 +51,7 @@ header {
     position: sticky;
     top: 0;
     z-index: 1;
-    background-color: #f4e9e0;
+    background-color: var(--background-color);
 }
 
 .side-header {
@@ -63,11 +62,9 @@ header {
     align-items: center;
 }
 
-.logo {}
-
 .logo-title {
     font-size: 30px;
-    color: #0e0e0e;
+    color: var(--text-color);
 }
 
 .nav {
@@ -78,7 +75,7 @@ header {
 
 
 .nav a {
-    color: #0e0e0e;
+    color: var(--text-color);
     transition: all 0.1s ease-out;
 }
 
@@ -107,9 +104,10 @@ header {
 }
 
 .introduction .introduction-text {
-    font-size: 16px;
-    color: #0e0e0e;
+    color: var(--text-color);
     max-width: 500px;
+    font-size: 16px;
+
 }
 
 .introduction img {
@@ -118,58 +116,82 @@ header {
 
 }
 
-/*Prueba*/
+/*Main Content */
 .content {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
 }
 
-.movie {
-    width: 300px;
+/* Card */
+.novel {
+    width: calc(25% - 40px); /* Adjust the width to fit 4 cards per row */
+    height: 400px;
     margin: 20px;
-    background-color: var(--secondary-color);
-    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
+    background-color: var(--background-color);
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
     position: relative;
     overflow: hidden;
     border-radius: 10px;
 }
 
-.movie img {
-    width: 100%;
+@media (width <=540px) {
+    .novel {
+        width: calc(100% - 40px);
+        /* Adjust the width to fit 1 card per row on smaller screens */
+    }
 }
 
-.movie-info {
-    color: #000;
+@media (540px <=width <=800px) {
+    .novel {
+        width: calc(50% - 40px);
+        /* Adjust the width to fit 2 cards per row on smaller screens */
+    }
+}
+@media (800px <=width <=1000px) {
+    .novel {
+        width: calc(33.33% - 40px);
+        /* Adjust the width to fit 3 cards per row on smaller screens */
+    }
+}
+.novel img {
+    height: 70%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.novel-info {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.2rem;
-    padding: 0.5rem 1rem 1rem;
-    letter-spacing: 0.5px;
+    justify-content: space-evenly;
+    height: 30%;
+    padding: 15px;
+    gap: 5px;
 }
 
-.movie-info h3 {
-    margin-top: 0;
+.novel-info h3 {
+    margin: 0;
+    color: var(--text-color);
 }
 
-.movie-info span {
-    background-color: var(--primary-color);
-    padding: 0.25rem 0.5rem;
-    border-radius: 3px;
-    font-weight: bold;
+.novel-info span {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+
 }
 
-.movie-info span.green {
-    color: lightgreen;
+.novel-info span.green { /* Completo , All Ages*/
+    background-color: #4CAF50;
 }
 
-.movie-info span.orange {
-    color: orange;
+.novel-info span.red { /* Eroge*/
+    background-color: #e4493e;
 }
 
-.movie-info span.red {
-    color: red;
+.novel-info span.blue { /* Yuri , Otome*/
+    background-color: #4da8e2;
 }
 
 .overview {
@@ -183,10 +205,11 @@ header {
     transform: translateY(101%);
     overflow-y: auto;
     transition: transform 0.3s ease-in;
+    color: var(--text-color);
 
     scrollbar-width: thin; /* scrollbar setting */
 }
 
-.movie:hover .overview {
+.novel:hover .overview {
     transform: translateY(0);
 }
