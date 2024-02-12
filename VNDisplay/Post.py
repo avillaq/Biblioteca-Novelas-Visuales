@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 ############ En esta clase una sola funcion para todas las secciones ############
 
 class Post:
-    def __init__(self, title: str, full_url: str, image_url: str, description: str, labels: str):
+    def __init__(self, title: str, full_url: str, image_url: str, description: str, labels: list[str]):
         self._title = title
         self._full_url = full_url
         self._image_url = image_url
@@ -32,7 +32,7 @@ class Post:
         return self._description
 
     @property
-    def labels(self) -> str:
+    def labels(self) -> list[str]:
         return self._labels
     
 
@@ -138,11 +138,24 @@ class VN_Scraper:
                 description = post_description.strip().replace("\n", " ").replace(title, "")
 
                 # Labels
-                post_labels = post.find('span', class_='post-labels')
-                post_labels = post_labels.text.strip().replace("\n", " ").replace("Etiquetas:", "")
+                post_labels = post.find('span', class_='post-labels').text
+                list_labels = []
 
+                label_mapping = {
+                    "Completo": "Completo",
+                    "sin h": "All Ages",
+                    "yuri": "Yuri",
+                    "otome": "Otome",
+                    "eroge": "Eroge"
+                }
+
+                for label in label_mapping:
+                    if label in post_labels:
+                        list_labels.append(label_mapping[label])
+                
+                
                 # Create a new instance
-                post = Post(title, full_url, image_url, description, post_labels)
+                post = Post(title, full_url, image_url, description, list_labels)
                 list_posts.append(post)
 
         return list_posts

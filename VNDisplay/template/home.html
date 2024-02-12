@@ -61,8 +61,15 @@
                 <div class="novel-info">
                     <h3>{{ p.title }}</h3>
                     <div>
-                        <span class="green">Completo</span>
-                        <span class="red">Eroge</span>
+                        {% for label in p.labels %}
+                            {% if label == "Completo" or label == "All Ages" %}                        
+                                <span class="green">{{ label }}</span>
+                            {% elif label == "Yuri" or label == "Otome" %}
+                                <span class="blue">{{ label }}</span>
+                            {% else %}
+                                <span class="red">{{ label }}</span>
+                            {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="overview">
