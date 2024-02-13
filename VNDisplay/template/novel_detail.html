@@ -55,49 +55,16 @@
         </div>
         <div class="content">
             {% block content %}
-            {% for p in posts %}
-            <div class="novel" data-id="{{ p.full_url }}">
-                <img src="{{ p.image_url }}" alt="img">
-                <div class="novel-info">
-                    <h3>{{ p.title }}</h3>
-                    <div>
-                        {% for label in p.labels %}
-                            {% if label == "Completo" or label == "All Ages" %}                        
-                                <span class="green">{{ label }}</span>
-                            {% elif label == "Yuri" or label == "Otome" %}
-                                <span class="blue">{{ label }}</span>
-                            {% else %}
-                                <span class="red">{{ label }}</span>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                </div>
-                <div class="overview">
-                    {{ p.description }}
-                </div>
-                
-            </div>
-            {% endfor %}
+            {% for p in post %}
+                <p>{{ p }}</p>
+            
+            {% endfor%}
+
+            
+            
             {% endblock %}
 
-           <!--  <div class="novel">
-                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiKtikl1Il87TUx-Ce6JmwlVFhlNbCHU2KWZ-dv9TSVLPbXXlg0UxXGXiGkznrwcWoJikpe_J0a9J6RO3muGv-IYKQ-nylF-WczourS7TJKfXaE1uH68-vepU4ob1fSKfClNS6yd6PG1lsjtREhj0rR9OyiH1J2wV4sBaTwDMWcFtOIM5Vai-1DSR-rPsM/s320/gg.png"
-                    alt="img">
-                <div class="novel-info">
-                    <h3>Chica Fantasma[Completo][Eroge][NCinetica]</h3>
-                    <div>
-                        <span class="green">Completo</span>
-                        <span class="red">Eroge</span>
-                    </div>
-                </div>
-                <div class="overview">
-                    Un rumor corre por la ciudad de una mujer gigante que ronda en las calles, vistiendo un largo
-                    vestido blanco mientras su largo cabello
-                    negro oscurece su rostro... Más de dos metros de altura y con un gusto por la sangre de hombres
-                    jóvenes... ¡Y bien! Este joven tiene mucho que dar y, francamente, ¡está muy buena! Este pueblo
-                    carece de mujeres jóvenes, así que ¿por qué no ir más allá?.
-                </div>
-            </div> -->
+
 
         </div>
     </main>

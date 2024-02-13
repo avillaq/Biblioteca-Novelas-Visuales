@@ -16,10 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from VNDisplay.views import home, completo, allages, yuri, otome, eroge
+from VNDisplay.views import home, completo, allages, yuri, otome, eroge,novel_detail
 
 urlpatterns = [
     path('', view=home, name='home'),
+    path('novel/<str:year>/<str:month>/<str:title>/', novel_detail, name='novel_detail'),
     path('completo/', view=completo, name='completo'),
     path('allages/', view=allages, name='allages'),
     path('yuri/', view=yuri, name='yuri'),

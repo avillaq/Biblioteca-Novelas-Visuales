@@ -132,6 +132,8 @@ header {
     position: relative;
     overflow: hidden;
     border-radius: 10px;
+    cursor: pointer;
+
 }
 
 @media (width <=540px) {
