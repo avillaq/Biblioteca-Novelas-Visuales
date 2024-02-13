@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from VNDisplay.Post import VN_Scraper, Post, Post_Android
 
@@ -16,8 +16,11 @@ def home(request):
 
 def novel_detail(request, year, month, title):
     title = title.replace('/', '')
-    print(f'http://www.visualnovelparapc.com/{year}/{month}/{title}.html')
     url = f'http://www.visualnovelparapc.com/{year}/{month}/{title}.html'
+
+    print(f"{len(current_posts)}")
+    if len(current_posts) == 0:
+        return redirect("home.html")
 
     post = None
     for p in current_posts:
@@ -26,7 +29,6 @@ def novel_detail(request, year, month, title):
             break
 
     post = scraper.get_post_detail(p)
-    print(post)
     return render(request, 'novel_detail.html', {'post': post})
 
 def completo(request):
