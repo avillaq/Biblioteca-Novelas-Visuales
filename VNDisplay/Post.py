@@ -1,19 +1,23 @@
 import requests
 import re
 from bs4 import BeautifulSoup
+from datetime import datetime
+import locale
 
+locale.setlocale(locale.LC_ALL, 'es_ES') # Set the locale to spanish
 
 # En esta clase se define la estructura de un post y se define el scraper para obtener los posts de la página web
 
 ############ En esta clase una sola funcion para todas las secciones ############
 
 class Post:
-    def __init__(self, title: str, full_url: str, image_url: str, description: str, labels: list[str]):
+    def __init__(self, title: str, full_url: str, image_url: str, description: str, labels: list[str], date: str):
         self._title = title
         self._full_url = full_url
         self._image_url = image_url
         self._description = description
         self._labels = labels
+        self._date = date
 
     @property
     def title(self) -> str:
@@ -35,9 +39,13 @@ class Post:
     def labels(self) -> list[str]:
         return self._labels
     
+    @property
+    def date(self) -> str:
+        return self._date
+    
 
     def __str__(self) -> str:
-        return f"Title: {self.title}\nUrl: {self.full_url}\nUrl Image: {self.image_url}\nDescription: {self.description}\nLabels: {self.labels}"
+        return f"Title: {self.title}\nUrl: {self.full_url}\nUrl Image: {self.image_url}\nDescription: {self.description}\nLabels: {self.labels}\nDate: {self.date}"
 
 class Post_Android:
     def __init__(self, title: str, full_url: str, image_url: str):
@@ -115,6 +123,12 @@ class VN_Scraper:
 
         for post_by_date in posts_by_date:
 
+            # Date
+            date = post_by_date.find('h2', class_='date-header').text     
+            date = datetime.strptime(date, '%A, %d de %B de %Y')
+            date = date.strftime("%d-%m-%Y")
+
+
             posts = post_by_date.find_all('div', class_='post-outer')
             for post in posts:
                 post_body = post.find('div', class_='post-body')
@@ -155,13 +169,13 @@ class VN_Scraper:
                 
                 
                 # Create a new instance
-                post = Post(title, full_url, image_url, description, list_labels)
+                post = Post(title, full_url, image_url, description, list_labels, date)
                 list_posts.append(post)
 
         return list_posts
     
     # Public Methods
-    def get_section(self, section: str) -> list[Post]:
+    def get_section(self, section: str) -> list[Post]: ### Only scrap the first page of the section
         section = self._verify_section(section) ################################### mover contenido de _verify_section aqui ###################
         if not section:
             raise ValueError(f"Section {section} not found")
@@ -173,6 +187,28 @@ class VN_Scraper:
 
         return list_posts
 
+    def get_all_posts(self) -> list[Post]:
+        url = self.sections["inicio"]
+
+        header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.2151.97'}
+        response = requests.get(url, headers=header)
+        soup = BeautifulSoup(response.content, 'html.parser')
+
+        next_page_url = soup.find('a', class_='blog-pager-oldexr-link')
+
+        #TODO: Hacer que se recorra todas las paginas, no solo la segunda
+        
+        url_pot = next_page_url.get('href')
+        
+
+        
+        
+
+        #list_posts = self._get_posts(url)
+
+        
+
+        return next_page_url
 
 
     ## TODO: Esta funcion funciona correctamente, pero solo para segunda pagina, hay que hacerla para todas las paginas (SOLO SI ES POSIBLE), ya que tenemos que ver como sera la paginacion con Django
@@ -364,8 +400,12 @@ class VN_Scraper:
 if __name__ == '__main__':
     scraper = VN_Scraper()
     #post = Post("Hanachirasu[Completo][Eroge]", "http://www.visualnovelparapc.com/2022/10/hanachirasu.html", "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiloJxDae8yr-lKe0eAj2xmyekmU8SGMHpx2gX5hcXYLDcm1JBq2x4hfxMmfUtEiUs4UgFML7keBJaKKUlWsqwDOjDy7_bc9Cp4AapY-HzJczqM-MlL56xdv2EBhbZ-5Wx7hkQykX1JcV4GuJ-Bzw9OrefPf4Hti9uPa0juL4s6DotQEv_l9C3WZQZpAm4/w400-h299/sms.png", "", "")
-    list_posts = scraper.get_section("inicio")
-    print(list_posts[0])
+    
+    
+    
+    #list_posts = scraper.get_section("inicio")
+    list_posts = scraper.get_all_posts()
+    print(list_posts)
 
     """ for post in list_posts:
         print(post)
