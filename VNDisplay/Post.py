@@ -131,10 +131,13 @@ class VN_Scraper:
             for post in posts:
                 post_body = post.find('div', class_='post-body')
                 title_link = post_body.find('a')
-
+            
                 # Title
                 title = title_link.text
-                if "Kirikiroid2" in title or "Noticias" in title: # if the post is about Kirikiroid2, we avoid it . Maybe in the future there will more exceptions like this
+
+                # Title exceptions to avoid. Maybe in the future there will be more exceptions like this
+                title_exceptions = ["Kirikiroid2", "Noticias", "APK", "encuesta", "Navidad"]
+                if any(exception in title for exception in title_exceptions):
                     continue
                 
                 # Url full
