@@ -105,8 +105,6 @@ class VN_Scraper:
 
         return None
 
-    
-
     def _get_posts(self, url : str) -> list[Post]:
         
         domain = "www.visualnovelparapc.com"  # The domain of the page
@@ -189,26 +187,22 @@ class VN_Scraper:
 
     def get_all_posts(self) -> list[Post]:
         url = self.sections["inicio"]
+        list_posts = self._get_posts(url) # get the first page
 
         header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.2151.97'}
         response = requests.get(url, headers=header)
         soup = BeautifulSoup(response.content, 'html.parser')
 
-        next_page_url = soup.find('a', class_='blog-pager-oldexr-link')
+        url = soup.find('a', class_='blog-pager-older-link')
+        while url:
+            url = url.get('href')
+            list_posts += self._get_posts(url)
 
-        #TODO: Hacer que se recorra todas las paginas, no solo la segunda
-        
-        url_pot = next_page_url.get('href')
-        
+            response = requests.get(url, headers=header)
+            soup = BeautifulSoup(response.content, 'html.parser')
+            url = soup.find('a', class_='blog-pager-older-link')
 
-        
-        
-
-        #list_posts = self._get_posts(url)
-
-        
-
-        return next_page_url
+        return list_posts
 
 
     ## TODO: Esta funcion funciona correctamente, pero solo para segunda pagina, hay que hacerla para todas las paginas (SOLO SI ES POSIBLE), ya que tenemos que ver como sera la paginacion con Django
@@ -229,8 +223,6 @@ class VN_Scraper:
         return self._get_posts(next_page)
     
 
-
-    # TODO: Esta funcion no esta terminada 
     def get_post_detail(self, post: Post = None) -> tuple[any]:
 
         #Title
@@ -405,8 +397,8 @@ if __name__ == '__main__':
     
     #list_posts = scraper.get_section("inicio")
     list_posts = scraper.get_all_posts()
-    print(list_posts)
+    #print(list_posts)
 
-    """ for post in list_posts:
+    for post in list_posts:
         print(post)
-        print("\n") """
+        print("\n")
