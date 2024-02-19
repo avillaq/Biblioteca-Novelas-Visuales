@@ -30,27 +30,29 @@
 <div class="content">
 
     {% for p in posts %}
-    <div class="novel" data-id="{{ p.full_url }}">
-        <img src="{{ p.image_url }}" alt="img">
-        <div class="novel-info">
-            <h3>{{ p.title }}</h3>
-            <div>
-                {% for label in p.labels %}
-                {% if label == "Completo" or label == "All Ages" %}
-                <span class="green">{{ label }}</span>
-                {% elif label == "Yuri" or label == "Otome" %}
-                <span class="blue">{{ label }}</span>
-                {% else %}
-                <span class="red">{{ label }}</span>
-                {% endif %}
-                {% endfor %}
-            </div>
+        <div class="novel">
+            <a href="{{ p.full_url }}">
+                <img src="{{ p.image_url }}" alt="img">
+                <div class="novel-info">
+                    <h3>{{ p.title }}</h3>
+                    <div>
+                        {% for label in p.labels %}
+                            {% if label == "Completo" or label == "All Ages" %}
+                                <span class="green">{{ label }}</span>
+                            {% elif label == "Yuri" or label == "Otome" %}
+                                <span class="blue">{{ label }}</span>
+                            {% else %}
+                                <span class="red">{{ label }}</span>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="overview">
+                    {{ p.description }}
+                </div>
+            </a>
         </div>
-        <div class="overview">
-            {{ p.description }}
-        </div>
-
-    </div>
+    
     {% endfor %}
 
     <!--  <div class="novel">
