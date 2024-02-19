@@ -13,8 +13,4 @@ function init() {
             window.location.href = nuevaUrl;
         });
     });
-
-
-
-
 }
