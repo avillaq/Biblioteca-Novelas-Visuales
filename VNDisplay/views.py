@@ -8,7 +8,7 @@ current_posts = []
 # Create your views here.
 #index view
 def home(request):
-    posts = scraper.get_all_posts()
+    posts = scraper.get_section("inicio")
     global current_posts
     current_posts = posts
 
