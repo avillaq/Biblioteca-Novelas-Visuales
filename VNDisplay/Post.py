@@ -124,7 +124,7 @@ class VN_Scraper:
             # Date
             date = post_by_date.find('h2', class_='date-header').text     
             date = datetime.strptime(date, '%A, %d de %B de %Y')
-            date = date.strftime("%d-%m-%Y")
+            date = date.strftime("%Y-%m-%d")
 
 
             posts = post_by_date.find_all('div', class_='post-outer')
