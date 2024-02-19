@@ -9,10 +9,11 @@ current_posts = []
 #index view
 def home(request):
     posts = scraper.get_section("inicio")
-    global current_posts
-    current_posts = posts
 
     return render(request, 'home.html', {'posts': posts})
+
+
+
 
 def novel_detail(request, year, month, title):
     title = title.replace('/', '')
