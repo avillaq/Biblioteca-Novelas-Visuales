@@ -6,7 +6,7 @@ class Post(models.Model):
 
     title = models.CharField(max_length=250)
     slug = models.SlugField(max_length=250,
-                            unique_for_date='publish')
+                            unique_for_date='date')
     full_url = models.URLField(max_length=250)
     image_url = models.URLField(max_length=250)
     description = models.TextField()
