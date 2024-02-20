@@ -140,7 +140,9 @@ header {
     position: relative;
     overflow: hidden;
     border-radius: 10px;
-
+    animation: reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 20% cover 30%;
 }
 
 @media (width <=540px) {
@@ -223,6 +225,19 @@ header {
     transform: translateY(0);
 }
 
+@keyframes reveal {
+    from {
+        opacity: 0;
+        translate: 0 50px;
+        scale: 0.8;
+    }
+    to {
+        opacity: 1;
+        translate: 0 0;
+        scale: 1;
+    }
+}
+
 /* Pagination */
 .pagination {
     display: flex;
@@ -246,12 +261,17 @@ header {
         width: 35px;
         height: 35px;
         border-radius: 100%;
+        transition: all 0.7s ease-out;
+    }
+    & a:hover {
+        background-color: #a0bbff;
     }
 }
-a.current {
+a.current, a:hover.current {
     background-color: #4d639a;
     color: #fff;
 }
+
 
 
 
