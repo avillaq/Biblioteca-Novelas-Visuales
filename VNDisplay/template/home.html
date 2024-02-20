@@ -31,7 +31,7 @@
 
     {% for p in posts %}
         <div class="novel">
-            <a href="{{ p.full_url }}">
+            <a href="{{ p.get_absolute_url }}">
                 <img src="{{ p.image_url }}" alt="img">
                 <div class="novel-info">
                     <h3>{{ p.title }}</h3>

@@ -1,13 +1,12 @@
 import re
 from datetime import datetime
 
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse
 from VNDisplay.Post import VN_Scraper
 from VNDisplay.models import Post, Category
 
 scraper = VN_Scraper()
-current_posts = []
 
 def home(request):
     if not Post.objects.exists():
@@ -40,17 +39,6 @@ def home(request):
     return render(request, 'home.html', {'posts': posts})
 
 
-def homes(request):
-    posts = scraper.get_all_posts() # trae todos los posts de la pagina original
-
-    posts = scraper.get_section("inicio") # trae todos los posts de la primera pagina (ya que tiene paginacion) de la seccion "inicio" de la pagina original
-
-    #post = Post.objects.create(title=p.title, slug=create_slug(p.full_url), full_url=p.full_url, image_url=p.image_url, description=p.description, categories=p.labels, date=p.date)
-    #Post.objects.all().delete()
-
-    return render(request, 'home.html', {'posts': posts})
-
-
 def create_slug(full_url):
     match = re.search(r"/([\w-]+)\.html", full_url)
     if match:
@@ -64,19 +52,14 @@ def delete_all(request):
     return redirect("home.html")
 
 
-def novel_detail(request, year, month, title):
-    title = title.replace('/', '')
-    url = f'http://www.visualnovelparapc.com/{year}/{month}/{title}.html'
+def novel_detail(request, year, month, day, title):
+    #url = f'http://www.visualnovelparapc.com/{year}/{month}/{title}.html'
 
-    print(f"{len(current_posts)}")
-    if len(current_posts) == 0:
-        return redirect("home.html")
-
-    post = None
-    for p in current_posts:
-        if p.full_url == url:
-            post = p
-            break
+    p = get_object_or_404(Post,
+                            slug=title,
+                            date__year=year,
+                            date__month=month,
+                            date__day=day)
 
     post = scraper.get_post_detail(p)
     return render(request, 'novel_detail.html', {'post': post})
