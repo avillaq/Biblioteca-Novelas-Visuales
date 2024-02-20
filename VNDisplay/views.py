@@ -21,13 +21,10 @@ def home(request):
 
     else: 
         posts = scraper.get_section("inicio")  
-        latest_post = Post.objects.latest('date') 
+        latest_post = Post.objects.latest('id')
         for post in reversed(posts):
-
-            # Convertir la cadena de texto a una fecha
             post_date = datetime.strptime(post.date, '%Y-%m-%d').date()
-            #latest_post_date = datetime.strptime(str(latest_post.date), '%Y-%m-%d').date()
-            if post_date >= latest_post.date and post.title != latest_post.title:  
+            if post_date > latest_post.date:
                 new_post = Post.objects.create(title=post.title, slug=create_slug(post.full_url), full_url=post.full_url, 
                                     image_url=post.image_url, description=post.description, 
                                     date=post.date)
@@ -35,7 +32,7 @@ def home(request):
                     post_category = Category.objects.get(name=label)
                     new_post.categories.add(post_category)
 
-    posts = Post.objects.all().order_by('-date')
+    posts = Post.objects.all().order_by('-id')
     return render(request, 'home.html', {'posts': posts})
 
 

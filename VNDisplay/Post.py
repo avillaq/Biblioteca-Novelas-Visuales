@@ -396,12 +396,11 @@ class VN_Scraper:
 
 if __name__ == '__main__':
     scraper = VN_Scraper()
-    #post = Post("Hanachirasu[Completo][Eroge]", "http://www.visualnovelparapc.com/2022/10/hanachirasu.html", "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiloJxDae8yr-lKe0eAj2xmyekmU8SGMHpx2gX5hcXYLDcm1JBq2x4hfxMmfUtEiUs4UgFML7keBJaKKUlWsqwDOjDy7_bc9Cp4AapY-HzJczqM-MlL56xdv2EBhbZ-5Wx7hkQykX1JcV4GuJ-Bzw9OrefPf4Hti9uPa0juL4s6DotQEv_l9C3WZQZpAm4/w400-h299/sms.png", "", "")
+    #post = Post("PruebaPOST", "http://www.visualnovelparapc.com/2022/10/hanachirasu.html", "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiloJxDae8yr-lKe0eAj2xmyekmU8SGMHpx2gX5hcXYLDcm1JBq2x4hfxMmfUtEiUs4UgFML7keBJaKKUlWsqwDOjDy7_bc9Cp4AapY-HzJczqM-MlL56xdv2EBhbZ-5Wx7hkQykX1JcV4GuJ-Bzw9OrefPf4Hti9uPa0juL4s6DotQEv_l9C3WZQZpAm4/w400-h299/sms.png", "Esto es una prueba", [],"2024-02-06")
     
     
     
-    #list_posts = scraper.get_section("inicio")
-    list_posts = scraper.get_all_posts()
+    list_posts = scraper.get_section("inicio")
     #print(list_posts)
 
     for post in list_posts:
