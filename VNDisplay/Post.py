@@ -129,19 +129,20 @@ class VN_Scraper:
 
             posts = post_by_date.find_all('div', class_='post-outer')
             for post in posts:
-                post_body = post.find('div', class_='post-body')
-                title_link = post_body.find('a')
-            
                 # Title
-                title = title_link.text
+                title = post.find('h3', class_='post-title').text
 
                 # Title exceptions to avoid. Maybe in the future there will be more exceptions like this
-                title_exceptions = ["Kirikiroid2", "Noticias", "APK", "encuesta", "Navidad"]
+                title_exceptions = ["Kirikiroid", "Noticias", "APK", "encuesta", "Navidad"]
                 if any(exception in title for exception in title_exceptions):
                     continue
+
+                # Post body
+                post_body = post.find('div', class_='post-body')
                 
                 # Url full
-                full_url = title_link.get('href')
+                post_url = post_body.find('a')
+                full_url = post_url.get('href')
                 if "html" not in full_url:
                     continue
 
