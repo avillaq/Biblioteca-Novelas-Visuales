@@ -7,14 +7,33 @@ from VNDisplay.models import Post
 scraper = VN_Scraper()
 current_posts = []
 
-
 def home(request):
-    posts = scraper.get_section("inicio")[0:1]
-    p = posts[0]
-    
-   
-    post = Post(title=p.title, slug=create_slug(p.full_url), full_url=p.full_url, image_url=p.image_url, description=p.description, categories=p.labels, date=p.date)
-    post.save()
+    if not Post.objects.exists():  # Si la base de datos está vacía
+        posts = scraper.get_all_posts()  # Obtiene todos los posts
+        for post in posts:
+            Post.objects.create(title=post.title, slug=create_slug(post.full_url), full_url=post.full_url, 
+                                image_url=post.image_url, description=post.description, categories=post.labels, 
+                                date=post.date)
+    else:  # Si la base de datos no está vacía
+        posts = scraper.get_section("inicio")  # Obtiene los posts de la primera página
+        latest_post = Post.objects.latest('date')  # Obtiene el post más reciente en la base de datos
+        for post in posts:
+            if post.date > latest_post.date:  # Si el post es más reciente que el último en la base de datos
+                Post.objects.create(title=post.title, slug=create_slug(post.full_url), full_url=post.full_url, 
+                                    image_url=post.image_url, description=post.description, categories=post.labels, 
+                                    date=post.date)
+
+    posts = Post.objects.all()  # Obtiene todos los posts de la base de datos para mostrarlos
+    return render(request, 'home.html', {'posts': posts})
+
+
+def homes(request):
+    posts = scraper.get_all_posts() # trae todos los posts de la pagina original
+
+    posts = scraper.get_section("inicio") # trae todos los posts de la primera pagina (ya que tiene paginacion) de la seccion "inicio" de la pagina original
+
+    #post = Post.objects.create(title=p.title, slug=create_slug(p.full_url), full_url=p.full_url, image_url=p.image_url, description=p.description, categories=p.labels, date=p.date)
+    #Post.objects.all().delete()
 
     return render(request, 'home.html', {'posts': posts})
 
@@ -26,6 +45,10 @@ def create_slug(full_url):
     else:
         raise ValueError(f"Invalid URL: {full_url}")
     return match
+
+def delete_all(request):
+    Post.objects.all().delete()
+    return redirect("home.html")
 
 
 def novel_detail(request, year, month, title):
