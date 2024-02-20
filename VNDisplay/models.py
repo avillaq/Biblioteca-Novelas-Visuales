@@ -1,6 +1,15 @@
 from django.db import models
 from django.urls import reverse
 
+class Category(models.Model):
+    name = models.CharField(max_length=250)
+
+    class Meta:
+        db_table = "category"
+
+    def __str__(self):
+        return self.name
+
 class Post(models.Model):
 
     title = models.CharField(max_length=250)
@@ -9,7 +18,7 @@ class Post(models.Model):
     full_url = models.URLField(max_length=250)
     image_url = models.URLField(max_length=250)
     description = models.TextField()
-    categories = models.CharField(max_length=250)
+    categories = models.ManyToManyField(Category)
     date = models.DateField()
 
     class Meta:
@@ -27,14 +36,7 @@ class Post(models.Model):
                             self.slug])
 
 
-class Category(models.Model):
-    name = models.CharField(max_length=250)
 
-    class Meta:
-        db_table = "category"
-
-    def __str__(self):
-        return self.name
  
 
 
