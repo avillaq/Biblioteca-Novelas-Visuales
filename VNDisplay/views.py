@@ -2,7 +2,7 @@ import re
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from VNDisplay.Post import VN_Scraper
-from VNDisplay.models import Post
+from VNDisplay.models import Post, Category
 
 scraper = VN_Scraper()
 current_posts = []
@@ -11,18 +11,25 @@ def home(request):
     if not Post.objects.exists():
         posts = scraper.get_all_posts() 
         for post in reversed(posts):
-            Post.objects.create(title=post.title, slug=create_slug(post.full_url), full_url=post.full_url, 
-                                image_url=post.image_url, description=post.description, categories=post.labels, 
+            new_post = Post.objects.create(title=post.title, slug=create_slug(post.full_url), full_url=post.full_url, 
+                                image_url=post.image_url, description=post.description, 
                                 date=post.date)
+            for label in post.labels:
+                post_category = Category.objects.get(name=label)
+                new_post.categories.add(post_category)
+
     else: 
         posts = scraper.get_section("inicio")  
         latest_post = Post.objects.latest('date') 
         print(f"Ultimo añadido {latest_post.title}")
         for post in reversed(posts):
             if post.date >= latest_post.date and post.title != latest_post.title:  
-                Post.objects.create(title=post.title, slug=create_slug(post.full_url), full_url=post.full_url, 
-                                    image_url=post.image_url, description=post.description, categories=post.labels, 
+                new_post = Post.objects.create(title=post.title, slug=create_slug(post.full_url), full_url=post.full_url, 
+                                    image_url=post.image_url, description=post.description, 
                                     date=post.date)
+                for label in post.labels:
+                    post_category = Category.objects.get(name=label)
+                    new_post.categories.add(post_category)
 
     posts = Post.objects.all()
     posts = reversed(posts) 
