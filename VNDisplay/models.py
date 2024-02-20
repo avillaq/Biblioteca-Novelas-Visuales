@@ -14,7 +14,6 @@ class Post(models.Model):
     date = models.DateField()
 
     class Meta:
-        ordering = ['date'] #IMPORTANT: Sort by date date in descending order
         db_table = "post"
 
     def __str__(self):
