@@ -1,22 +1,21 @@
 <div class="pagination">
     <span class="step-links">
         {% if page.has_previous %}
-        <a href="?page=1">&lt;&lt;</a> <!-- Link a la primera página -->
-        <a href="?page={{ page.previous_page_number }}">&lt;</a> <!-- Link a la página anterior -->
+        <a href="?page=1"><i class="fa-solid fa-angles-left" style="color: #999999;"></i></a> 
+        <a href="?page={{ page.previous_page_number }}"><i class="fa-solid fa-chevron-left" style="color: #999999;"></i></a> 
         {% endif %}
 
-        <!-- Muestra los números de las páginas -->
         {% for i in page.paginator.page_range %}
             {% if page.number == i %}
-                <span class="current">{{ i }}</span> <!-- Número de la página actual -->
+                <a href="?page={{ i }}" class="current">{{ i }}</a>  
             {% elif i > page.number|add:"-3" and i < page.number|add:"3" %}
-                <a href="?page={{ i }}">{{ i }}</a> <!-- Números de las páginas cercanas a la actual -->
+                <a href="?page={{ i }}">{{ i }}</a> 
             {% endif %}
         {% endfor %}
 
         {% if page.has_next %}
-            <a href="?page={{ page.next_page_number }}">&gt;</a> <!-- Link a la página siguiente -->
-            <a href="?page={{ page.paginator.num_pages }}">&gt;&gt;</a> <!-- Link a la última página -->
+            <a href="?page={{ page.next_page_number }}"><i class="fa-solid fa-chevron-right" style="color: #999999;"></i></a> 
+            <a href="?page={{ page.paginator.num_pages }}"><i class="fa-solid fa-angles-right" style="color: #999999;"></i></a>
         {% endif %}
     </span>
-</div
+</div>

@@ -13,8 +13,10 @@
 
 html {
     box-sizing: border-box;
-    scrollbar-width: none;
+    scrollbar-width: thin;
     /* scrollbar setting */
+
+    height: 100%;
 }
 
 body {
@@ -23,6 +25,11 @@ body {
     margin: 0;
     padding: 0;
     line-height: 1.6;
+
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+
 }
 
 img {
@@ -214,4 +221,53 @@ header {
 
 .novel:hover .overview {
     transform: translateY(0);
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 30px 0;
+}
+
+.step-links {
+    display: flex;
+    gap: 10px;
+    padding: 10px 15px;
+    border-radius: 30px;
+    background-color: var(--background-color);
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+    & a{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #656565;
+        width: 35px;
+        height: 35px;
+        border-radius: 100%;
+    }
+}
+a.current {
+    background-color: #4d639a;
+    color: #fff;
+}
+
+
+
+/*Footer*/
+footer {
+    margin-top: auto;
+}
+
+.copyright {
+    background-color: var(--background-color);
+}
+
+.copyright p {
+    margin: 0 0;
+    padding: 6px 0;
+    font-size: 14px;
+    text-align: center;
+    color: var(--text-color);
 }
