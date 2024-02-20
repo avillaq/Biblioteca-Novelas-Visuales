@@ -133,7 +133,7 @@ class VN_Scraper:
                 title = post.find('h3', class_='post-title').text
 
                 # Title exceptions to avoid. Maybe in the future there will be more exceptions like this
-                title_exceptions = ["Kirikiroid", "Noticias", "APK", "encuesta", "Navidad"]
+                title_exceptions = ["Kirikiroid", "Noticias", "Android", "Encuesta", "Navidad"]
                 if any(exception in title for exception in title_exceptions):
                     continue
 

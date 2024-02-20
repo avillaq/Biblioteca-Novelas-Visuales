@@ -50,8 +50,6 @@ def home(request):
         # If page_number is out of range deliver last page of results
         posts = paginator.page(paginator.num_pages)
 
-
-
     return render(request, 'home.html', {'posts': posts})
 
 
@@ -64,8 +62,9 @@ def create_slug(full_url):
     return match
 
 def delete_all(request):
-    Post.objects.all().delete()
-    return redirect("home.html")
+    
+    
+    return HttpResponse("Hello, world. You're at the VNDisplay delete_all.")
 
 
 def novel_detail(request, year, month, day, title):
