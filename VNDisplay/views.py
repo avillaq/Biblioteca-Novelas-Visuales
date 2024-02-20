@@ -8,22 +8,24 @@ scraper = VN_Scraper()
 current_posts = []
 
 def home(request):
-    if not Post.objects.exists():  # Si la base de datos está vacía
-        posts = scraper.get_all_posts()  # Obtiene todos los posts
-        for post in posts:
+    if not Post.objects.exists():
+        posts = scraper.get_all_posts() 
+        for post in reversed(posts):
             Post.objects.create(title=post.title, slug=create_slug(post.full_url), full_url=post.full_url, 
                                 image_url=post.image_url, description=post.description, categories=post.labels, 
                                 date=post.date)
-    else:  # Si la base de datos no está vacía
-        posts = scraper.get_section("inicio")  # Obtiene los posts de la primera página
-        latest_post = Post.objects.latest('date')  # Obtiene el post más reciente en la base de datos
-        for post in posts:
-            if post.date > latest_post.date:  # Si el post es más reciente que el último en la base de datos
+    else: 
+        posts = scraper.get_section("inicio")  
+        latest_post = Post.objects.latest('date') 
+        print(f"Ultimo añadido {latest_post.title}")
+        for post in reversed(posts):
+            if post.date >= latest_post.date and post.title != latest_post.title:  
                 Post.objects.create(title=post.title, slug=create_slug(post.full_url), full_url=post.full_url, 
                                     image_url=post.image_url, description=post.description, categories=post.labels, 
                                     date=post.date)
 
-    posts = Post.objects.all()  # Obtiene todos los posts de la base de datos para mostrarlos
+    posts = Post.objects.all()
+    posts = reversed(posts) 
     return render(request, 'home.html', {'posts': posts})
 
 
