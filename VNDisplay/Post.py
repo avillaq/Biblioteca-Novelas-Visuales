@@ -142,6 +142,8 @@ class VN_Scraper:
                 
                 # Url full
                 full_url = title_link.get('href')
+                if "html" not in full_url:
+                    continue
 
                 # Url image
                 if not post_body.find('img'): # if there's no image in the post, we avoid it
