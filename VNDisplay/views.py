@@ -3,6 +3,10 @@ from datetime import datetime
 
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse
+
+# Pagination
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 from VNDisplay.Post import VN_Scraper
 from VNDisplay.models import Post, Category
 
@@ -33,6 +37,21 @@ def home(request):
                     new_post.categories.add(post_category)
 
     posts = Post.objects.all().order_by('-id')
+
+    # Pagination with 3 posts per page
+    paginator = Paginator(posts, 32)
+    page_number = request.GET.get('page', 1)
+    try:
+        posts = paginator.page(page_number)
+    except PageNotAnInteger:
+        # If page_number is not an integer deliver the first page
+        posts = paginator.page(1)
+    except EmptyPage:
+        # If page_number is out of range deliver last page of results
+        posts = paginator.page(paginator.num_pages)
+
+
+
     return render(request, 'home.html', {'posts': posts})
 
 
