@@ -153,7 +153,7 @@ class VN_Scraper:
                 
                 # Description
                 post_description = post_body.text
-                description = post_description.strip().replace("\n", " ").replace(title, "")
+                description = post_description.strip().replace("\n", " ").replace(post_url.text, "")
 
                 # Labels
                 post_labels = post.find('span', class_='post-labels').text
