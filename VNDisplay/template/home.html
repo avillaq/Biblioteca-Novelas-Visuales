@@ -35,17 +35,6 @@
                 <img src="{{ p.image_url }}" alt="img">
                 <div class="novel-info">
                     <h3>{{ p.title }}</h3>
-                    <div>
-                        {% for category in p.categories.all %}
-                            {% if category.name == "Completo" or category.name == "All Ages" %}
-                                <span class="green">{{ category.name }}</span>
-                            {% elif category.name == "Yuri" or category.name == "Otome" %}
-                                <span class="blue">{{ category.name }}</span>
-                            {% else %}
-                                <span class="red">{{ category.name }}</span>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
                 </div>
                 <div class="overview">
                     {{ p.description }}

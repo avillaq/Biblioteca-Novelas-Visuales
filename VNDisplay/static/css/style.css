@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Open+Sans:wght@400;500;700;800&display=swap');
 
 :root {
-    --text-color: #0e0e0e;
-    --background-color: #f4e9e0;
+    --text-color: #b9c4d5; /* #0e0e0e */
+    --secondary-color: #141a32;
 }
 
 *,
@@ -29,7 +29,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100%;
-
+    background-color: #080f28;
 }
 
 img {
@@ -58,7 +58,7 @@ header {
     position: sticky;
     top: 0;
     z-index: 1;
-    background-color: var(--background-color);
+    background-color: var(--secondary-color);
 }
 
 .side-header {
@@ -132,14 +132,15 @@ header {
 
 /* Card */
 .novel {
-    width: calc(25% - 40px); /* Adjust the width to fit 4 cards per row */
-    height: 400px;
-    margin: 20px;
-    background-color: var(--background-color);
+    width: calc(25% - 30px); /* Adjust the width to fit 4 cards per row */
+    height: 350px;
+    margin: 15px;
+    background-color: var(--secondary-color);
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
     position: relative;
     overflow: hidden;
     border-radius: 10px;
+
     animation: reveal linear both;
     animation-timeline: view();
     animation-range: entry 20% cover 30%;
@@ -165,7 +166,7 @@ header {
     }
 }
 .novel img {
-    height: 70%;
+    height: 85%;
     object-fit: cover;
     object-position: center;
 }
@@ -175,7 +176,7 @@ header {
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
-    height: 30%;
+    height: 15%;
     padding: 15px;
     gap: 5px;
 }
@@ -183,6 +184,12 @@ header {
 .novel-info h3 {
     margin: 0;
     color: var(--text-color);
+    font-size: 16px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 90%;
 }
 
 .novel-info span {
@@ -251,7 +258,7 @@ header {
     gap: 10px;
     padding: 10px 15px;
     border-radius: 30px;
-    background-color: var(--background-color);
+    background-color: var(--secondary-color);
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
     & a{
         display: flex;
@@ -281,7 +288,7 @@ footer {
 }
 
 .copyright {
-    background-color: var(--background-color);
+    background-color: var(--secondary-color);
 }
 
 .copyright p {
