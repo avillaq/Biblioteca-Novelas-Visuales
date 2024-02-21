@@ -111,8 +111,13 @@ class VN_Scraper:
         if domain not in url:
             raise ValueError("URL does not belong to the domain")
 
-        header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.2151.97'}
-        response = requests.get(url, headers=header)
+        try:
+            header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.2151.97'}
+            response = requests.get(url, headers=header)
+        except requests.exceptions.ConnectionError as e:
+            print("Internet connection error. Please check your connection.")
+            return []
+
         soup = BeautifulSoup(response.content, 'html.parser')
 
         posts_by_date = soup.find_all('div', class_='date-outer') #############################
