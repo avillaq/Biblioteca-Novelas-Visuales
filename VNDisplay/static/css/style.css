@@ -21,7 +21,6 @@ html {
 
 body {
     font-family: 'Open Sans', 'sans-serif';
-    font-size: 15px;
     margin: 0;
     padding: 0;
     line-height: 1.6;
@@ -113,7 +112,6 @@ header {
 .introduction .introduction-text {
     color: var(--text-color);
     max-width: 500px;
-    font-size: 16px;
 
 }
 
@@ -133,7 +131,7 @@ header {
 /* Card */
 .novel {
     width: calc(25% - 30px); /* Adjust the width to fit 4 cards per row */
-    height: 350px;
+    height: 300px; 
     margin: 15px;
     background-color: var(--secondary-color);
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
@@ -173,43 +171,20 @@ header {
 
 .novel-info {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
+    justify-content: center;
     height: 15%;
-    padding: 15px;
-    gap: 5px;
+    padding: 10px;
 }
 
-.novel-info h3 {
+.novel-info p {
     margin: 0;
     color: var(--text-color);
-    font-size: 16px;
+    font-weight: bold;
 
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 90%;
-}
-
-.novel-info span {
-    background-color: #4CAF50;
-    color: #fff;
-    padding: 5px 10px;
-    border-radius: 5px;
-
-}
-
-.novel-info span.green { /* Completo , All Ages*/
-    background-color: #4CAF50;
-}
-
-.novel-info span.red { /* Eroge*/
-    background-color: #e4493e;
-}
-
-.novel-info span.blue { /* Yuri , Otome*/
-    background-color: #4da8e2;
 }
 
 .overview {
@@ -220,10 +195,12 @@ header {
     bottom: 0;
     right: 0;
     max-height: 100%;
+    font-size: 14px;
+
     transform: translateY(101%);
     overflow-y: auto;
     transition: transform 0.3s ease-in;
-    color: var(--text-color);
+    color: #000;
 
     scrollbar-width: thin; /* scrollbar setting */
 }
