@@ -2,10 +2,14 @@
 {% load static %}
 
 {% block content %}
-    {% for p in post %}
-    <p>{{ p }}</p>
+    <div class="detail-container">
+        {% for p in post %}
+        <p>{{ p }}</p>
 
-    {% endfor%}
+        {% endfor%}
 
+    </div>
+
+    
 
 {% endblock %}

@@ -2,7 +2,9 @@
 
 :root {
     --text-color: #b9c4d5; /* #0e0e0e */
-    --secondary-color: #141a32;
+    --primary-color: #141a32;
+    --secondary-color: #1e2747;
+    --tertiary-color: #007aff;
 }
 
 *,
@@ -13,14 +15,16 @@
 
 html {
     box-sizing: border-box;
-    scrollbar-width: thin;
+
     /* scrollbar setting */
+    scrollbar-width: thin;
+    scrollbar-color: var(--tertiary-color) var(--secondary-color);
 
     height: 100%;
 }
 
 body {
-    font-family: 'Open Sans', 'sans-serif';
+    font-family: 'Open Sans', 'Segoe UI', 'Tahoma';
     margin: 0;
     padding: 0;
     line-height: 1.6;
@@ -57,7 +61,7 @@ header {
     position: sticky;
     top: 0;
     z-index: 1;
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
 }
 
 .side-header {
@@ -121,8 +125,8 @@ header {
 
 }
 
-/*Main Content */
-.content {
+/****** Main Content ******/
+.cards-container {
     display: flex;
     flex-wrap: wrap;
 }
@@ -222,7 +226,7 @@ header {
     }
 }
 
-/* Pagination */
+/****** Pagination ******/
 .pagination {
     display: flex;
     justify-content: center;
@@ -235,37 +239,46 @@ header {
     gap: 10px;
     padding: 10px 15px;
     border-radius: 30px;
-    background-color: var(--secondary-color);
+    background-color: #1e2747;
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
     & a{
         display: flex;
         justify-content: center;
         align-items: center;
-        color: #656565;
+        color: var(--text-color);
         width: 35px;
         height: 35px;
         border-radius: 100%;
-        transition: all 0.7s ease-out;
+        transition: all 0.5s ease-out;
+
+        & i{
+            color: var(--text-color);
+        }
     }
     & a:hover {
-        background-color: #a0bbff;
+        background-color: var(--tertiary-color);
     }
+    
 }
 a.current, a:hover.current {
-    background-color: #4d639a;
+    background-color: var(--tertiary-color);
     color: #fff;
 }
 
+/****** Post Detail ******/
+.detail-container {
+    color: var(--text-color);
+    margin-top: 30px;
+}
 
 
-
-/*Footer*/
+/****** Footer ******/
 footer {
     margin-top: auto;
 }
 
 .copyright {
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
 }
 
 .copyright p {
