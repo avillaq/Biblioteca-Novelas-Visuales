@@ -111,6 +111,8 @@ header {
     }
 }
 
+
+/***** Search Bar *****/
 .nav .search-container {
     position: relative;
 }
@@ -130,7 +132,6 @@ header {
         outline: solid 1px var(--tertiary-color);
     }
 }
-
 
 .search-container button {
     background-color: transparent;
@@ -198,8 +199,11 @@ header {
 
 @media (width <=540px) {
     .novel {
-        width: calc(100% - 40px);
-        /* Adjust the width to fit 1 card per row on smaller screens */
+        width: calc(100% - 40px); /* Adjust the width to fit 1 card per row on smaller screens */
+    }
+    header .side-header {
+        flex-direction: column;
+        padding-bottom: 20px;
     }
 }
 
@@ -208,6 +212,13 @@ header {
         width: calc(50% - 40px);
         /* Adjust the width to fit 2 cards per row on smaller screens */
     }
+    header .side-header {
+        padding: 10px 0;
+    }
+    .side-header .logo-title{
+        line-height: 1.0;
+    }
+
 }
 
 @media (800px <=width <=1000px) {
