@@ -159,19 +159,11 @@ header {
 /****** Introduction ******/
 
 /*Image de fondo*/
-.introduction-container{
-    
-}
-.introduction-container {
-    border-radius: 25px;
-}
-
 .bg-intro {
     height: 600px;
     background: radial-gradient(circle, #1e274744 0%, #080f28 100%);
     color: #fff;
 
-    border-radius: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
