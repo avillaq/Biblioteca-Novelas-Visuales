@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Open+Sans:wght@400;500;700;800&display=swap');
 
 :root {
-    --text-color: #b9c4d5; /* #0e0e0e */
+    --text-color: #b9c4d5;
+    /* #0e0e0e */
     --primary-color: #141a32;
     --secondary-color: #1e2747;
     --tertiary-color: #007aff;
@@ -61,7 +62,12 @@ header {
     position: sticky;
     top: 0;
     z-index: 1;
-    background-color: var(--primary-color);
+    background-color: var(--tertiary-color);
+
+    /*** Navbar Animation ***/
+    animation: navbar-animation linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 0 500px;
 }
 
 .side-header {
@@ -100,6 +106,15 @@ header {
     align-items: center;
 }
 
+@keyframes navbar-animation {
+    to {
+        background-color: red;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+}
+
+
+
 
 .wrapper {
     width: 90%;
@@ -107,6 +122,7 @@ header {
     /*Contenedor centrado*/
 }
 
+/****** Introduction ******/
 .introduction {
     display: flex;
     gap: 20px;
@@ -134,8 +150,9 @@ header {
 
 /* Card */
 .novel {
-    width: calc(25% - 30px); /* Adjust the width to fit 4 cards per row */
-    height: 300px; 
+    width: calc(25% - 30px);
+    /* Adjust the width to fit 4 cards per row */
+    height: 300px;
     margin: 15px;
     background-color: var(--secondary-color);
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
@@ -161,12 +178,14 @@ header {
         /* Adjust the width to fit 2 cards per row on smaller screens */
     }
 }
+
 @media (800px <=width <=1000px) {
     .novel {
         width: calc(33.33% - 40px);
         /* Adjust the width to fit 3 cards per row on smaller screens */
     }
 }
+
 .novel img {
     height: 85%;
     object-fit: cover;
@@ -206,7 +225,8 @@ header {
     transition: transform 0.3s ease-in;
     color: #000;
 
-    scrollbar-width: thin; /* scrollbar setting */
+    scrollbar-width: thin;
+    /* scrollbar setting */
 }
 
 .novel:hover .overview {
@@ -219,6 +239,7 @@ header {
         translate: 0 50px;
         scale: 0.8;
     }
+
     to {
         opacity: 1;
         translate: 0 0;
@@ -241,7 +262,8 @@ header {
     border-radius: 30px;
     background-color: #1e2747;
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
-    & a{
+
+    & a {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -251,16 +273,19 @@ header {
         border-radius: 100%;
         transition: all 0.5s ease-out;
 
-        & i{
+        & i {
             color: var(--text-color);
         }
     }
+
     & a:hover {
         background-color: var(--tertiary-color);
     }
-    
+
 }
-a.current, a:hover.current {
+
+a.current,
+a:hover.current {
     background-color: var(--tertiary-color);
     color: #fff;
 }
