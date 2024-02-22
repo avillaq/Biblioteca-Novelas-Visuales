@@ -70,7 +70,7 @@ header {
     animation-range: 0 500px;
 }
 
-.side-header {
+.site-header {
     width: 90%;
     height: 100%;
     margin: 0 auto;
@@ -160,7 +160,7 @@ header {
 
 /*Image de fondo*/
 .introduction-container{
-    margin: 20px 0;
+    
 }
 .introduction-container {
     border-radius: 25px;
@@ -175,6 +175,17 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    & h2 {
+        font-size: 35px;
+        font-weight: 800;
+        margin-bottom: 20px;
+    }
+    & p {
+        font-size: 20px;
+        font-weight: 500;
+        margin-bottom: 20px;
+    }
 }
 
 
@@ -208,9 +219,13 @@ header {
         /* Adjust the width to fit 1 card per row on smaller screens */
     }
 
-    header .side-header {
+    header .site-header {
         flex-direction: column;
         padding-bottom: 20px;
+    }
+
+    .bg-intro div {
+        padding: 0 30px;
     }
 }
 
@@ -220,12 +235,16 @@ header {
         /* Adjust the width to fit 2 cards per row on smaller screens */
     }
 
-    header .side-header {
+    header .site-header {
         padding: 10px 0;
     }
 
-    .side-header .logo-title {
+    .site-header .logo-title {
         line-height: 1.0;
+    }
+
+    .bg-intro div {
+        padding: 0 50px;
     }
 
 }
@@ -234,6 +253,9 @@ header {
     .novel {
         width: calc(33.33% - 40px);
         /* Adjust the width to fit 3 cards per row on smaller screens */
+    }
+    .bg-intro div {
+        padding: 0 80px;
     }
 }
 

@@ -14,7 +14,7 @@
 
 <body>
     <header>
-        <div class="side-header">
+        <div class="site-header">
             <div class="logo">
                 <a href="{% url 'VNDisplay:home' %}" class="logo-title">Novelas Visuales</a>
             </div>
@@ -28,6 +28,11 @@
             </div>
         </div>
     </header>
+
+    <section>
+        {% block section %}
+        {% endblock %}
+    </section>
 
     <main class="wrapper">
         {% block content %}
