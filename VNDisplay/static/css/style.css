@@ -125,9 +125,11 @@ header {
     padding: 10px 15px;
     color: var(--text-color);
     font-size: 16px;
-    &::placeholder { 
+
+    &::placeholder {
         color: var(--text-color);
     }
+
     &:focus {
         outline: solid 1px var(--tertiary-color);
     }
@@ -142,7 +144,7 @@ header {
     width: 40px;
     height: 40px;
     padding: 0 15px 0 0;
-    color: var(--tertiary-color);  
+    color: var(--tertiary-color);
     cursor: pointer;
 }
 
@@ -155,23 +157,26 @@ header {
 }
 
 /****** Introduction ******/
-.introduction {
+
+/*Image de fondo*/
+.introduction-container{
+    margin: 20px 0;
+}
+.introduction-container {
+    border-radius: 25px;
+}
+
+.bg-intro {
+    height: 600px;
+    background: radial-gradient(circle, #1e274744 0%, #080f28 100%);
+    color: #fff;
+
+    border-radius: 20px;
     display: flex;
-    gap: 20px;
+    justify-content: center;
     align-items: center;
 }
 
-.introduction .introduction-text {
-    color: var(--text-color);
-    max-width: 500px;
-
-}
-
-.introduction img {
-    border-radius: 30px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
-}
 
 /****** Main Content ******/
 .cards-container {
@@ -199,8 +204,10 @@ header {
 
 @media (width <=540px) {
     .novel {
-        width: calc(100% - 40px); /* Adjust the width to fit 1 card per row on smaller screens */
+        width: calc(100% - 40px);
+        /* Adjust the width to fit 1 card per row on smaller screens */
     }
+
     header .side-header {
         flex-direction: column;
         padding-bottom: 20px;
@@ -212,10 +219,12 @@ header {
         width: calc(50% - 40px);
         /* Adjust the width to fit 2 cards per row on smaller screens */
     }
+
     header .side-header {
         padding: 10px 0;
     }
-    .side-header .logo-title{
+
+    .side-header .logo-title {
         line-height: 1.0;
     }
 
@@ -357,7 +366,7 @@ footer {
 }
 
 
-.copyright .icons a{
+.copyright .icons a {
     color: var(--text-color);
     margin: 0 10px;
     transition: all 0.4s ease-out;

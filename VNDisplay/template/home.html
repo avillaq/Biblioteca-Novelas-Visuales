@@ -4,47 +4,39 @@
 
 {% block content %}
 
-<div class="introduction">
-    <div class="introduction-text">
-        <div class="text">
-            <h1>Novelas Visuales para pc</h1>
-            <p>Las novelas visuales son un género de videojuegos que se caracterizan por su narrativa y su
-                énfasis en la
-                historia. A menudo, los personajes y la trama son más importantes que el juego en sí. Las
-                novelas
-                visuales son muy populares en Japón, pero también tienen seguidores en todo el mundo. En este
-                sitio
-                web, encontrarás una recopilacion de las mejores novelas visuales, ¡gratis y en español!</p>
-        </div>
-        <div class="blank">
-            <p>-------------------------------------------------------------------------------------------</p>
 
+<div class="introduction-container"
+    style="background-image:url('static/img/Visual-Novels.jpg'); background-size: cover; background-position: center 50%;">
+
+    <div class="bg-intro">
+        <div class="text-bg-intro">
+            <p>Novelas Visuales para pc y Android</p>
+            <p>Aqui encontrarás una recopilacion de las mejores novelas visuales, ¡gratis y en español!</p>
         </div>
     </div>
-    <div class="introduction-image">
-        <img src="{% static 'img/Visual-Novels.jpg' %}" alt="">
-    </div>
+
 </div>
+
 
 
 <div class="cards-container">
 
     {% for p in posts %}
-        <div class="novel">
-            <a href="{{ p.get_absolute_url }}">
-                <img src="{{ p.image_url }}" alt="img">
-                <div class="novel-info">
-                    <p>{{ p.title }}</p>
-                </div>
-                <div class="overview">
-                    <span>{{ p.description }}</span>
-                </div>
-            </a>
-        </div>
-    
+    <div class="novel">
+        <a href="{{ p.get_absolute_url }}">
+            <img src="{{ p.image_url }}" alt="img">
+            <div class="novel-info">
+                <p>{{ p.title }}</p>
+            </div>
+            <div class="overview">
+                <span>{{ p.description }}</span>
+            </div>
+        </a>
+    </div>
+
     {% endfor %}
 
-    
+
 </div>
 
 {% include "pagination.html" with page=posts %}
