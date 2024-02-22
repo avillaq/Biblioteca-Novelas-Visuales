@@ -15,18 +15,19 @@
 <body>
     <header>
         <div class="side-header">
-            <div class="nav">
-                <a href="{% url 'VNDisplay:home' %}">Inicio</a>
-                <a href="test-ninos-1.html">Categorias</a>
-            </div>
             <div class="logo">
                 <a href="{% url 'VNDisplay:home' %}" class="logo-title">Novelas Visuales</a>
             </div>
-            <div class="icons">
-                <i class="fa-brands fa-github"></i>
-                <i class="fa-brands fa-facebook"></i>
-                <i class="fa-solid fa-envelope"></i>
+            <div class="nav">
+                <a href="{% url 'VNDisplay:home' %}">Inicio</a>
+                <a href="test-ninos-1.html">Categorias</a>
+                <div class="search-container">
+                    <input class="input-search" type="text" placeholder="Buscador..." autocomplete="off" required>
+                    <button><i class="fa-solid fa-search"></i></button>
+                </div>
             </div>
+            
+
         </div>
     </header>
 
@@ -37,8 +38,14 @@
     <footer>
         <div class="copyright">
             <p>&copy;2024 Novelas Visuales - All Rights Reserved.</p>
+            <p class="icons">
+                <a href=""><i class="fa-brands fa-github"></i></a>
+                <a href=""><i class="fa-brands fa-facebook"></i></a>
+                <a href=""><i class="fa-solid fa-envelope"></i></a>
+            </p>
         </div>
     </footer>
     <script src="{% static 'js/main.js' %}"></script>
 </body>
+
 </html>

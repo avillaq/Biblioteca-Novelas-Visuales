@@ -62,7 +62,10 @@ header {
     position: sticky;
     top: 0;
     z-index: 1;
-    background-color: var(--tertiary-color);
+    background-color: var(--secondary-color);
+
+
+    height: 64px;
 
     /*** Navbar Animation ***/
     animation: navbar-animation linear both;
@@ -72,6 +75,7 @@ header {
 
 .side-header {
     width: 90%;
+    height: 100%;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
@@ -79,8 +83,13 @@ header {
 }
 
 .logo-title {
-    font-size: 30px;
-    color: var(--text-color);
+    font-size: 40px;
+    font-weight: bold;
+    color: #fff;
+
+    animation: logo-animation linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 0 500px;
 }
 
 .nav {
@@ -91,28 +100,59 @@ header {
 
 
 .nav a {
-    color: var(--text-color);
+    color: #fff;
+    font-size: 18px;
     transition: all 0.1s ease-out;
+
+    animation: logo-animation linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 0 500px;
 }
 
 .nav a:hover {
-    border-bottom: 2px solid #0e0e0e;
+    border-bottom: 2px solid var(--tertiary-color);
 }
 
 
-.icons {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-}
 
 @keyframes navbar-animation {
     to {
-        background-color: red;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        background: #1e2747c0;
+        backdrop-filter: blur(15px);
+    }
+}
+@keyframes logo-animation {
+    to {
+        font-size: 20px;
     }
 }
 
+.nav .search-container {
+    position: relative;
+}
+
+.search-container input {
+    border: none;
+    background-color: #080f28;
+    border-radius: 30px;
+    padding: 10px 15px;
+    color: var(--text-color);
+    font-size: 16px;
+
+    outline: none;
+}
+.search-container button {
+    background-color: transparent;
+    position: absolute;
+    right: 0;
+    top: 0;
+    border: none;
+    width: 40px;
+    height: 40px;
+    padding: 0 15px 0 0;
+    color: var(--tertiary-color);  
+    cursor: pointer;
+}
 
 
 
@@ -260,8 +300,7 @@ header {
     gap: 10px;
     padding: 10px 15px;
     border-radius: 30px;
-    background-color: #1e2747;
-    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+    background-color: var(--secondary-color);
 
     & a {
         display: flex;
@@ -271,7 +310,7 @@ header {
         width: 35px;
         height: 35px;
         border-radius: 100%;
-        transition: all 0.5s ease-out;
+        transition: all 0.4s ease-out;
 
         & i {
             color: var(--text-color);
@@ -303,13 +342,29 @@ footer {
 }
 
 .copyright {
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
+    padding: 10px 0;
+
 }
 
 .copyright p {
-    margin: 0 0;
-    padding: 6px 0;
     font-size: 14px;
     text-align: center;
     color: var(--text-color);
+    margin: 0;
 }
+
+
+.copyright .icons a{
+    color: var(--text-color);
+    margin: 0 10px;
+    transition: all 0.4s ease-out;
+
+    &:hover {
+        color: var(--tertiary-color);
+    }
+}
+
+
+
+
