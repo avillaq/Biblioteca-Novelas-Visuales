@@ -19,7 +19,18 @@
 
 <div class="carousel-container">
 
-
+    <swiper-container class="mySwiper" space-between="30" slides-per-view="5" loop="true" navigation="true"
+        >
+        <!-- autoplay-delay="2500" autoplay-disable-on-interaction="false" -->
+        {% for post in posts %}
+        <swiper-slide>
+            <a href="{{ post.get_absolute_url }}">
+                <img src="{{ post.image_url }}" alt="" >
+            </a>
+        </swiper-slide>
+        {% endfor %}
+    </swiper-container>
+    
 </div>
 
 
