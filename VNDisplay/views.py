@@ -1,4 +1,5 @@
 import re
+import random
 from datetime import datetime
 
 from django.shortcuts import get_object_or_404, render
@@ -13,11 +14,13 @@ from VNDisplay.models import Post, Category
 scraper = VN_Scraper()
 
 def home(request):
-    # verify_new_posts() #TODO : implement a way to verify new posts without taking too long 
+    posts = Post.objects.all()
 
-    posts = Post.objects.all().order_by('-id')[:32]
+    carousel_posts = random.sample(list(posts), 10)
+    last_posts = posts.order_by('-id')[:32]
 
-    return render(request, 'home.html', {'posts': posts})
+    return render(request, 'home.html', {'carousel_posts': carousel_posts, 
+                                         'last_posts': last_posts})
 
 def directory(request):
 
