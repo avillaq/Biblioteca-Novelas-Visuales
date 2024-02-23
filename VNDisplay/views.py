@@ -13,6 +13,41 @@ from VNDisplay.models import Post, Category
 scraper = VN_Scraper()
 
 def home(request):
+    verify_new_posts()
+
+    posts = Post.objects.all().order_by('-id')[:32]
+
+    return render(request, 'home.html', {'posts': posts})
+
+def directory(request):
+    verify_new_posts()
+
+    posts = Post.objects.all().order_by('-id')
+
+    # Pagination with 3 posts per page
+    paginator = Paginator(posts, 32)
+    page_number = request.GET.get('page', 1)
+    try:
+        posts = paginator.page(page_number)
+    except PageNotAnInteger:
+        # If page_number is not an integer deliver the first page
+        posts = paginator.page(1)
+    except EmptyPage:
+        # If page_number is out of range deliver last page of results
+        posts = paginator.page(paginator.num_pages)
+
+    return render(request, 'directory.html', {'posts': posts})
+
+
+def create_slug(full_url):
+    match = re.search(r"/([\w-]+)\.html", full_url)
+    if match:
+        match = match.group(1)
+    else:
+        raise ValueError(f"Invalid URL: {full_url}")
+    return match
+
+def verify_new_posts():
     if not Post.objects.exists():
         posts = scraper.get_all_posts() 
         for post in reversed(posts):
@@ -35,37 +70,6 @@ def home(request):
                 for label in post.labels:
                     post_category = Category.objects.get(name=label)
                     new_post.categories.add(post_category)
-
-    posts = Post.objects.all().order_by('-id')
-
-    # Pagination with 3 posts per page
-    paginator = Paginator(posts, 32)
-    page_number = request.GET.get('page', 1)
-    try:
-        posts = paginator.page(page_number)
-    except PageNotAnInteger:
-        # If page_number is not an integer deliver the first page
-        posts = paginator.page(1)
-    except EmptyPage:
-        # If page_number is out of range deliver last page of results
-        posts = paginator.page(paginator.num_pages)
-
-    return render(request, 'home.html', {'posts': posts})
-
-
-def create_slug(full_url):
-    match = re.search(r"/([\w-]+)\.html", full_url)
-    if match:
-        match = match.group(1)
-    else:
-        raise ValueError(f"Invalid URL: {full_url}")
-    return match
-
-def delete_all(request):
-    
-    
-    return HttpResponse("Hello, world. You're at the VNDisplay delete_all.")
-
 
 def novel_detail(request, year, month, day, title):
     #url = f'http://www.visualnovelparapc.com/{year}/{month}/{title}.html'

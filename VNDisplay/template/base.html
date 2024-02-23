@@ -20,7 +20,8 @@
             </div>
             <div class="nav">
                 <a href="{% url 'VNDisplay:home' %}">Inicio</a>
-                <a href="test-ninos-1.html">Categorias</a>
+                <a href="{% url 'VNDisplay:directory' %}">Directorio</a>
+                <a href="{% url 'VNDisplay:home' %}">Categorias</a>
                 <div class="search-container">
                     <input class="input-search" type="text" placeholder="Buscar..." autocomplete="off" required>
                     <button><i class="fa-solid fa-search"></i></button>
