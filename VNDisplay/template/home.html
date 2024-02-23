@@ -17,18 +17,23 @@
 
 {% block content %}
 
+
+
 <div class="carousel-container">
     <h3 class="subtitle-text">Podria interesarte: </h3>
-    <swiper-container class="mySwiper" space-between="20" slides-per-view="4" loop="true" navigation="true" autoplay-delay="2500" autoplay-disable-on-interaction="false">
-        
-        {% for post in carousel_posts %}
-        <swiper-slide>
-            <a href="{{ post.get_absolute_url }}">
-                <img src="{{ post.image_url }}" alt="">
-            </a>
-        </swiper-slide>
-        {% endfor %}
-    </swiper-container>
+    <div class="swiper">
+        <div class="swiper-wrapper">
+            {% for post in carousel_posts %}
+            <div class="swiper-slide">
+                <a href="{{ post.get_absolute_url }}">
+                    <img src="{{ post.image_url }}" alt="">
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+    </div>
 
 </div>
 

@@ -29,7 +29,6 @@ body {
     margin: 0;
     padding: 0;
     line-height: 1.6;
-
     display: flex;
     flex-direction: column;
     min-height: 100%;
@@ -196,19 +195,18 @@ header {
     margin: 30px 0;
 }
 
-.carousel-container swiper-slide {
+.carousel-container .swiper-slide {
     padding-top: 15px;
     height: 250px;
 
 }
-.carousel-container swiper-slide img {
+.carousel-container .swiper-slide img {
     height: 100%;
     object-fit: cover;
     object-position: center;
     border-radius: 10px;
-
 }
-
+ 
 
 /* Card */
 
@@ -238,7 +236,7 @@ header {
 
 @media (width <=540px) {
     .novel {
-        width: calc(100% - 40px);
+        width: calc(100% - 30px);
         /* Adjust the width to fit 1 card per row on smaller screens */
     }
 
@@ -254,7 +252,7 @@ header {
 
 @media (540px <=width <=800px) {
     .novel {
-        width: calc(50% - 40px);
+        width: calc(50% - 30px);
         /* Adjust the width to fit 2 cards per row on smaller screens */
     }
 
@@ -274,7 +272,7 @@ header {
 
 @media (800px <=width <=1000px) {
     .novel {
-        width: calc(33.33% - 40px);
+        width: calc(33.33% - 30px);
         /* Adjust the width to fit 3 cards per row on smaller screens */
     }
 
