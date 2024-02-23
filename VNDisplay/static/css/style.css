@@ -183,19 +183,23 @@ header {
 
 
 /****** Main Content ******/
-.cards-container {
-    display: flex;
-    flex-wrap: wrap;
+
+.subtitle-text{
+    color: var(--text-color);
+    font-size: 20px;
+    font-weight: 800;
+    margin: 0;
 }
 
 /* Carousel */
 .carousel-container {
-    padding-top: 50px;
-    padding-bottom: 50px;
+    margin: 30px 0;
 }
 
 .carousel-container swiper-slide {
+    padding-top: 15px;
     height: 400px;
+
 }
 .carousel-container swiper-slide img {
     height: 100%;
@@ -206,8 +210,17 @@ header {
 }
 
 
-
 /* Card */
+
+.main-container{
+    margin-bottom: 15px;
+}
+
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .novel {
     width: calc(25% - 30px);
     /* Adjust the width to fit 4 cards per row */

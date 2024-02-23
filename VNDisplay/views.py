@@ -1,7 +1,7 @@
 import re
 from datetime import datetime
 
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
 
 # Pagination
@@ -13,7 +13,7 @@ from VNDisplay.models import Post, Category
 scraper = VN_Scraper()
 
 def home(request):
-    verify_new_posts()
+    # verify_new_posts() #TODO : implement a way to verify new posts without taking too long 
 
     posts = Post.objects.all().order_by('-id')[:32]
 

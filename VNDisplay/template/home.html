@@ -18,40 +18,43 @@
 {% block content %}
 
 <div class="carousel-container">
-
-    <swiper-container class="mySwiper" space-between="30" slides-per-view="5" loop="true" navigation="true"
-        >
+    <h3 class="subtitle-text">Podria interesarte: </h3>
+    <swiper-container class="mySwiper" space-between="30" slides-per-view="5" loop="true" navigation="true">
         <!-- autoplay-delay="2500" autoplay-disable-on-interaction="false" -->
         {% for post in posts %}
         <swiper-slide>
             <a href="{{ post.get_absolute_url }}">
-                <img src="{{ post.image_url }}" alt="" >
+                <img src="{{ post.image_url }}" alt="">
             </a>
         </swiper-slide>
         {% endfor %}
     </swiper-container>
-    
+
 </div>
 
 
-<div class="cards-container">
+<div class="main-container">
+    <h3 class="subtitle-text">Ultimas novelas agregadas: </h3>
+    <div class="cards-container">
+        {% for p in posts %}
+        <div class="novel">
+            <a href="{{ p.get_absolute_url }}">
+                <img src="{{ p.image_url }}" alt="img">
+                <div class="novel-info">
+                    <p>{{ p.title }}</p>
+                </div>
+                <div class="overview">
+                    <span>{{ p.description }}</span>
+                </div>
+            </a>
+        </div>
 
-    {% for p in posts %}
-    <div class="novel">
-        <a href="{{ p.get_absolute_url }}">
-            <img src="{{ p.image_url }}" alt="img">
-            <div class="novel-info">
-                <p>{{ p.title }}</p>
-            </div>
-            <div class="overview">
-                <span>{{ p.description }}</span>
-            </div>
-        </a>
+        {% endfor %}
+
+
     </div>
 
-    {% endfor %}
-
-
 </div>
+
 
 {% endblock %}
