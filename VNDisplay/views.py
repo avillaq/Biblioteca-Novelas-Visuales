@@ -20,7 +20,6 @@ def home(request):
     return render(request, 'home.html', {'posts': posts})
 
 def directory(request):
-    verify_new_posts()
 
     posts = Post.objects.all().order_by('-id')
 
@@ -48,7 +47,7 @@ def create_slug(full_url):
     return match
 
 def verify_new_posts():
-    if not Post.objects.exists():
+    if not Post.objects.exists():  #IMPORTANT: If there are no posts in the database. IT WILL TAKE A FEW MINUTES 
         posts = scraper.get_all_posts() 
         for post in reversed(posts):
             new_post = Post.objects.create(title=post.title, slug=create_slug(post.full_url), full_url=post.full_url, 
