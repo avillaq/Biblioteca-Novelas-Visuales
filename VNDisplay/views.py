@@ -28,7 +28,8 @@ def directory(request):
     if request.method == 'GET' and request.GET: """
     form = PostFilterForm(request.GET)
     if form.is_valid():
-        print(f"es valido")
+        print(f"Form is valid: {form.cleaned_data}")
+        form = PostFilterForm(request.GET)
     else:
         form = PostFilterForm()
 

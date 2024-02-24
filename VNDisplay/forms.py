@@ -1,3 +1,4 @@
+from datetime import datetime
 from django import forms
 from .models import Post, Category
 from django.db.models import Min, Max
@@ -13,15 +14,33 @@ class PostFilterForm(forms.Form):
         ('name', 'Nombre'),
     ]
 
-    # Campo select para : fecha, nombre (por defecto fecha)
-    sort_field = forms.ChoiceField(choices=SORT_FIELD_CHOICES, initial='date', widget=forms.Select())
 
-    # Campo select para : ascendentemente o descendentemente
-    sort_order = forms.ChoiceField(choices=SORT_ORDER_CHOICES, initial='asc', widget=forms.Select())
+    sort_field = forms.ChoiceField(
+        choices=SORT_FIELD_CHOICES, 
+        initial='date', 
+        widget=forms.Select(attrs={'class': 'custom-select', 'placeholder': 'Fecha', 'style': 'display: none;'}), 
+        label=False
+    )
 
-    # Campo select para : categoria ( sacados del modelo Category)
-    category = forms.ModelChoiceField(queryset=Category.objects.all(), required=False, widget=forms.Select())
+    sort_order = forms.ChoiceField(
+        choices=SORT_ORDER_CHOICES, 
+        initial='asc', 
+        widget=forms.Select(attrs={'class': 'custom-select', 'placeholder': 'Ascendente', 'style': 'display: none;'}), 
+        label=False
+    )
 
-    # Campo select para : año (es una lista de años de los post)
-    YEAR_CHOICES = [(r,r) for r in range(2010, 2025)]
-    year = forms.ChoiceField(choices=YEAR_CHOICES, required=False, widget=forms.Select())
+    category = forms.ModelChoiceField(
+        queryset=Category.objects.all(),
+        required=False, 
+        widget=forms.Select(attrs={'class': 'custom-select', 'placeholder': 'Categoria', 'style': 'display: none;'}), 
+        label=False,
+        empty_label="Categoria"
+    )
+    current_year = datetime.now().year
+    YEAR_CHOICES = [("", "Año")] + [(r,r) for r in range(2013, current_year + 1)]
+    year = forms.ChoiceField(
+        choices=YEAR_CHOICES,
+        required=False, 
+        widget=forms.Select(attrs={'class': 'custom-select', 'placeholder': 'Año', 'style': 'display: none;'}), 
+        label=False,
+    )

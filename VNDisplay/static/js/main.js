@@ -2,11 +2,8 @@ const customSelects = document.querySelectorAll(".custom-select");
 
 customSelects.forEach(function(select) {
     const classes = select.getAttribute("class");
-    const id = select.getAttribute("id");
-    const name = select.getAttribute("name");
-
     let template = `<div class="${classes}">
-                                        <span class="custom-select-trigger">${select.getAttribute("placeholder")}</span>
+                                        <span class="custom-select-trigger">${select.selectedOptions[0].text}</span>
                                         <div class="custom-options">`;
 
     const options = select.querySelectorAll("option");
@@ -44,8 +41,10 @@ const customOptions = document.querySelectorAll(".custom-option");
 customOptions.forEach(function(option) {
     option.addEventListener("click", function(e) {
         
-        /*const select = this.closest(".custom-options").querySelector("span");
-        select.value = this.getAttribute("data-value");*/
+        // Set the value of the original select element
+        const select = this.closest(".custom-select").previousElementSibling;
+        select.value = this.getAttribute("data-value");
+        console.log(select.value);
 
         const options = this.closest(".custom-options").querySelectorAll(".custom-option");
         options.forEach(function(option) {

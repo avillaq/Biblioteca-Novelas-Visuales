@@ -421,8 +421,10 @@ footer {
     }
 }
 
-.center {
-    display: inline-block;
+/* Filter */
+.main-container form{
+    display: flex;
+    gap: 10px;
 }
 
 /** Custom Select **/
@@ -474,6 +476,7 @@ footer {
     border-radius: 4px;
     background: #fff;
     transition: all .3s ease-in-out;
+    z-index: 2;
 
     opacity: 0;
     visibility: hidden;

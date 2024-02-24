@@ -3,51 +3,7 @@
 
 {% block section %}
 
-<div class="filter-container">
-    <!-- <form method="get">
-        {{ form.as_p }}
-        <button type="submit">Filtrar</button>
-    </form> -->
 
-
-
-
-
-    <div class="center">
-        <select name="sources" id="sources" class="custom-select sources" placeholder="Año" style="display: none;">
-            <option value="profile">Profile</option>
-            <option value="word">Word</option>
-            <option value="hashtag">Hashtag</option>
-        </select>
-    </div>
-
-    <div class="center">
-        <select name="sources" id="sources" class="custom-select sources" placeholder="Categoria" style="display: none;">
-            <option value="profile">Profile</option>
-            <option value="word">Word</option>
-            <option value="hashtag">Hashtag</option>
-        </select>
-    </div>
-    <div class="center">
-        <select name="sources" id="sources" class="custom-select sources" placeholder="Año" style="display: none;">
-            <option value="profile">Profile</option>
-            <option value="word">Word</option>
-            <option value="hashtag">Hashtag</option>
-        </select>
-    </div>
-    <div class="center">
-        <select name="sources" id="sources" class="custom-select sources" placeholder="Año" style="display: none;">
-            <option value="profile">Profile</option>
-            <option value="word">Word</option>
-            <option value="hashtag">Hashtag</option>
-        </select>
-    </div>
-
-
-
-
-
-</div>
 
 
 {% endblock %}
@@ -56,6 +12,20 @@
 {% block content %}
 <div class="main-container">
     <h3 class="subtitle-text">Lista completa de novelas visuales para pc: </h3>
+
+    <form method="get" class="filter-container">
+        {{ form }}
+        <input type="submit" value="Filtrar"></input>
+    </form>
+
+    <!--  <div>
+            <select class="custom-select" placeholder="Año" style="display: none;">
+                <option value="profile">Profile</option>
+                <option value="word">Word</option>
+                <option value="hashtag">Hashtag</option>
+            </select>
+        </div>
+     -->
 
 
     <div class="cards-container">
