@@ -24,7 +24,14 @@ def home(request):
                                          'last_posts': last_posts})
 
 def directory(request):
-    form = PostFilterForm(request.GET)  
+    """    form = PostFilterForm(request.GET)  
+    if request.method == 'GET' and request.GET: """
+    form = PostFilterForm(request.GET)
+    if form.is_valid():
+        print(f"es valido")
+    else:
+        form = PostFilterForm()
+
     posts = Post.objects.all().order_by('-id')
 
     # Pagination with 3 posts per page
