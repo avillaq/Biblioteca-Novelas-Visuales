@@ -9,6 +9,7 @@ from django.http import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from VNDisplay.Post import VN_Scraper
+from VNDisplay.forms import PostFilterForm
 from VNDisplay.models import Post, Category
 
 scraper = VN_Scraper()
@@ -23,7 +24,7 @@ def home(request):
                                          'last_posts': last_posts})
 
 def directory(request):
-
+    form = PostFilterForm(request.GET)  
     posts = Post.objects.all().order_by('-id')
 
     # Pagination with 3 posts per page
@@ -38,8 +39,17 @@ def directory(request):
         # If page_number is out of range deliver last page of results
         posts = paginator.page(paginator.num_pages)
 
-    return render(request, 'directory.html', {'posts': posts})
+    return render(request, 'directory.html', {'posts': posts, 'form': form})
 
+def post_list(request):
+    form = PostFilterForm(request.GET)
+    posts = Post.objects.all()
+    if form.is_valid():
+        if form.cleaned_data['title']:
+            posts = posts.filter(title__icontains=form.cleaned_data['title'])
+        if form.cleaned_data['description']:
+            posts = posts.filter(description__icontains=form.cleaned_data['description'])
+    return render(request, 'directory.html', {'posts': posts, 'form': form})
 
 def create_slug(full_url):
     match = re.search(r"/([\w-]+)\.html", full_url)
