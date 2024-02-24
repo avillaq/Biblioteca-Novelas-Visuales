@@ -235,52 +235,21 @@ header {
     animation-range: entry 20% cover 30%;
 }
 
-@media (width <=540px) {
-    .novel {
-        width: calc(100% - 30px);
-        /* Adjust the width to fit 1 card per row on smaller screens */
+@keyframes reveal {
+    from {
+        opacity: 0;
+        translate: 0 50px;
+        scale: 0.8;
     }
 
-    header .site-header {
-        flex-direction: column;
-        padding-bottom: 20px;
-    }
-
-    .bg-intro div {
-        padding: 0 30px;
+    to {
+        opacity: 1;
+        translate: 0 0;
+        scale: 1;
     }
 }
 
-@media (540px <=width <=800px) {
-    .novel {
-        width: calc(50% - 30px);
-        /* Adjust the width to fit 2 cards per row on smaller screens */
-    }
 
-    header .site-header {
-        padding: 10px 0;
-    }
-
-    .site-header .logo-title {
-        line-height: 1.0;
-    }
-
-    .bg-intro div {
-        padding: 0 50px;
-    }
-
-}
-
-@media (800px <=width <=1000px) {
-    .novel {
-        width: calc(33.33% - 30px);
-        /* Adjust the width to fit 3 cards per row on smaller screens */
-    }
-
-    .bg-intro div {
-        padding: 0 80px;
-    }
-}
 
 .novel img {
     height: 85%;
@@ -329,19 +298,175 @@ header {
     transform: translateY(0);
 }
 
-@keyframes reveal {
-    from {
-        opacity: 0;
-        translate: 0 50px;
-        scale: 0.8;
+
+
+/****** Filter ******/
+.main-container .directory-subtitle {
+    margin-top: 40px;
+}
+
+.main-container form{
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+
+/* Custom Select */
+.custom-select {
+    position: relative;
+    display: inline-block;
+}
+
+.custom-select-trigger {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+
+    width: 110px;
+    padding: 5px 0;
+    font-size: 14px;
+    color: #fff;
+    background-color: var(--tertiary-color);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.custom-select-trigger:after {
+    display: block;
+    content: '';
+    width: 6px;
+    height: 6px;
+
+    border-bottom: 1px solid #fff;
+    border-right: 1px solid #fff;
+    transform: rotate(45deg) translateY(-50%);
+    transition: all .3s ease-in-out;
+    transform-origin: 50% 0;
+}
+.custom-select.opened .custom-select-trigger:after {
+    transform: rotate(-135deg) translateY(-50%);
+}
+
+.custom-options {
+    position: absolute;
+    display: block;
+    top: 100%;
+    left: 0;
+    right: 0;
+    min-width: 100%;
+    margin: 5px 0;
+    border-radius: 4px;
+    background: #fff;
+    transition: all .3s ease-in-out;
+    z-index: 2;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-5px);
+}
+
+.custom-select.opened .custom-options {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+    transform: translateY(0);
+}
+
+.custom-option {
+    position: relative;
+    display: block;
+    border-bottom: 1px solid #b5b5b5;
+    font-size: 14px;
+    text-align: center;
+    padding: 5px 0;
+    color: #000;
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+}
+
+.custom-option:first-of-type {
+    border-radius: 4px 4px 0 0;
+}
+
+.custom-option:last-of-type {
+    border-bottom: 0;
+    border-radius: 0 0 4px 4px;
+}
+
+.custom-option:hover {
+    background: var(--text-color);
+}
+
+.custom-option.selection {
+    font-weight: bold;
+}
+
+button.btnSubmit{
+    background-color: #007bff;
+    color: #fff;
+    padding: 5px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 90px;
+}
+
+
+
+/***** Responsive *****/
+
+@media (width <=540px) {
+    .novel {
+        width: calc(100% - 30px);
+        /* Adjust the width to fit 1 card per row on smaller screens */
     }
 
-    to {
-        opacity: 1;
-        translate: 0 0;
-        scale: 1;
+    header .site-header {
+        flex-direction: column;
+        padding-bottom: 20px;
+    }
+
+    .bg-intro div {
+        padding: 0 30px;
     }
 }
+
+@media (540px <=width <=800px) {
+    .novel {
+        width: calc(50% - 30px);
+        /* Adjust the width to fit 2 cards per row on smaller screens */
+    }
+
+    header .site-header {
+        padding: 10px 0;
+    }
+
+    .site-header .logo-title {
+        line-height: 1.0;
+    }
+
+    .bg-intro div {
+        padding: 0 50px;
+    }
+
+}
+
+@media (800px <=width <=1000px) {
+    .novel {
+        width: calc(33.33% - 30px);
+        /* Adjust the width to fit 3 cards per row on smaller screens */
+    }
+
+    .bg-intro div {
+        padding: 0 80px;
+    }
+}
+
 
 /****** Pagination ******/
 .pagination {
@@ -419,100 +544,4 @@ footer {
     &:hover {
         color: var(--tertiary-color);
     }
-}
-
-/* Filter */
-.main-container form{
-    display: flex;
-    gap: 10px;
-}
-
-/** Custom Select **/
-
-.custom-select {
-    position: relative;
-    display: inline-block;
-}
-
-.custom-select-trigger {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-
-    width: 100px;
-    padding: 5px 10px 5px 10px;
-    font-size: 14px;
-    color: #fff;
-    background: #5c9cd8;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.custom-select-trigger:after {
-    display: block;
-    content: '';
-    width: 6px;
-    height: 6px;
-
-    border-bottom: 1px solid #fff;
-    border-right: 1px solid #fff;
-    transform: rotate(45deg) translateY(-50%);
-    transition: all .3s ease-in-out;
-    transform-origin: 50% 0;
-}
-.custom-select.opened .custom-select-trigger:after {
-    transform: rotate(-135deg) translateY(-50%);
-}
-
-.custom-options {
-    position: absolute;
-    display: block;
-    top: 100%;
-    left: 0;
-    right: 0;
-    min-width: 100%;
-    margin: 5px 0;
-    border-radius: 4px;
-    background: #fff;
-    transition: all .3s ease-in-out;
-    z-index: 2;
-
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transform: translateY(-5px);
-}
-
-.custom-select.opened .custom-options {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: all;
-    transform: translateY(0);
-}
-
-.custom-option {
-    position: relative;
-    display: block;
-    border-bottom: 1px solid #b5b5b5;
-    font-size: 14px;
-    text-align: center;
-    padding: 5px 0;
-    color: #b5b5b5;
-    cursor: pointer;
-    transition: all .2s ease-in-out;
-}
-
-.custom-option:first-of-type {
-    border-radius: 4px 4px 0 0;
-}
-
-.custom-option:last-of-type {
-    border-bottom: 0;
-    border-radius: 0 0 4px 4px;
-}
-
-.custom-option:hover,
-.custom-option.selection {
-    background: var(--tertiary-color);
 }
