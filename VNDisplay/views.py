@@ -26,7 +26,8 @@ def home(request):
 def directory(request):
 
     posts = Post.objects.all()
-    
+    filtered = None
+
     form = PostFilterForm(request.GET)
     if form.is_valid():
         field = form.cleaned_data["field"]
@@ -43,10 +44,10 @@ def directory(request):
         if year:
             posts = posts.filter(date__year=year)
 
-        # Ordena los posts por 'field'
         posts = posts.order_by(field)
 
-        print(f"Form is valid: {form.cleaned_data}")
+        filtered = {'field': field, 'order': order, 'category': category, 'year': year}
+
     else:
         form = PostFilterForm()
         posts = posts.order_by('-id')
@@ -63,7 +64,7 @@ def directory(request):
         # If page_number is out of range deliver last page of results
         posts = paginator.page(paginator.num_pages)
 
-    return render(request, 'directory.html', {'posts': posts, 'form': form})
+    return render(request, 'directory.html', {'posts': posts, 'form': form, 'filtered': filtered})
 
 def post_list(request):
     form = PostFilterForm(request.GET)

@@ -39,6 +39,8 @@
 </div>
 
 
-{% include "pagination.html" with page=posts %}
+{% if posts.paginator.count > 32 %}
+    {% include "pagination.html" with page=posts %}
+{% endif %}
 
 {% endblock %}
