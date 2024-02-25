@@ -31,7 +31,8 @@
                 </div>
             </a>
         </div>
-
+        {% empty %}
+            <p style="text-align: center; color: #fff; font-size: 30px; font-weight: bold;">No hay novelas visuales que coincidan con tu búsqueda.</p>
         {% endfor %}
 
 
@@ -40,7 +41,7 @@
 
 
 {% if posts.paginator.count > 32 %}
-    {% include "pagination.html" with page=posts %}
+    {% include "pagination.html" with page=posts param=filtered%}
 {% endif %}
 
 {% endblock %}
