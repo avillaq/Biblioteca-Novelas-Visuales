@@ -1,40 +1,21 @@
 <div class="pagination">
     <span class="step-links">
         {% if page.has_previous %}
-            {% if param %}
-                <a href="?page=1{{param}}"><i class="fa-solid fa-angles-left"></i></a> 
-                <a href="?page={{ page.previous_page_number }}{{param}}"><i class="fa-solid fa-chevron-left"></i></a> 
-            {% else %}
-                <a href="?page=1"><i class="fa-solid fa-angles-left"></i></a> 
-                <a href="?page={{ page.previous_page_number }}"><i class="fa-solid fa-chevron-left"></i></a> 
-            {% endif %}
-
+            <a href="?page=1{{param}}"><i class="fa-solid fa-angles-left"></i></a> 
+            <a href="?page={{ page.previous_page_number }}{{param}}"><i class="fa-solid fa-chevron-left"></i></a> 
         {% endif %}
 
         {% for i in page.paginator.page_range %}
             {% if page.number == i %}
-                {% if param %}
-                    <a href="?page={{ i }}{{param}}" class="current">{{ i }}</a>  
-                {% else %}
-                    <a href="?page={{ i }}" class="current">{{ i }}</a>  
-                {% endif %}
-            {% elif i > page.number|add:"-3" and i < page.number|add:"3" %}
-                {% if param %}  
-                    <a href="?page={{ i }}{{param}}">{{ i }}</a>  
-                {% else %}
-                    <a href="?page={{ i }}">{{ i }}</a>  
-                {% endif %}
+                <a href="?page={{ i }}{{param}}" class="current">{{ i }}</a>  
+            {% elif i > page.number|add:"-3" and i < page.number|add:"3" %}  
+                <a href="?page={{ i }}{{param}}">{{ i }}</a>  
             {% endif %}
         {% endfor %}
 
         {% if page.has_next %}
-            {% if param %}  
-                <a href="?page={{ page.next_page_number }}{{param}}"><i class="fa-solid fa-chevron-right"></i></a> 
-                <a href="?page={{ page.paginator.num_pages }}{{param}}"><i class="fa-solid fa-angles-right"></i></a> 
-            {% else %}
-                <a href="?page={{ page.next_page_number }}"><i class="fa-solid fa-chevron-right"></i></a> 
-                <a href="?page={{ page.paginator.num_pages }}"><i class="fa-solid fa-angles-right"></i></a>
-            {% endif %}
+            <a href="?page={{ page.next_page_number }}{{param}}"><i class="fa-solid fa-chevron-right"></i></a> 
+            <a href="?page={{ page.paginator.num_pages }}{{param}}"><i class="fa-solid fa-angles-right"></i></a> 
         {% endif %}
     </span>
 </div>
