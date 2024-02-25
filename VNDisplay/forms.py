@@ -4,35 +4,35 @@ from .models import Post, Category
 from django.db.models import Min, Max
 
 class PostFilterForm(forms.Form):
-    SORT_ORDER_CHOICES = [
+    ORDER_CHOICES = [
         ('asc', 'Ascendente'),
         ('desc', 'Descendente'),
     ]
 
-    SORT_FIELD_CHOICES = [
+    FIELD_CHOICES = [
         ('date', 'Fecha'),
         ('name', 'Nombre'),
     ]
 
 
-    sort_field = forms.ChoiceField(
-        choices=SORT_FIELD_CHOICES, 
+    field = forms.ChoiceField(
+        choices=FIELD_CHOICES, 
         initial='date', 
-        widget=forms.Select(attrs={'class': 'custom-select', 'placeholder': 'Fecha', 'style': 'display: none;'}), 
+        widget=forms.Select(attrs={'class': 'custom-select', 'style': 'display: none;'}), 
         label=False
     )
 
-    sort_order = forms.ChoiceField(
-        choices=SORT_ORDER_CHOICES, 
-        initial='asc', 
-        widget=forms.Select(attrs={'class': 'custom-select', 'placeholder': 'Ascendente', 'style': 'display: none;'}), 
+    order = forms.ChoiceField(
+        choices=ORDER_CHOICES, 
+        initial='desc', 
+        widget=forms.Select(attrs={'class': 'custom-select', 'style': 'display: none;'}), 
         label=False
     )
 
     category = forms.ModelChoiceField(
         queryset=Category.objects.all(),
         required=False, 
-        widget=forms.Select(attrs={'class': 'custom-select', 'placeholder': 'Categoria', 'style': 'display: none;'}), 
+        widget=forms.Select(attrs={'class': 'custom-select', 'style': 'display: none;'}), 
         label=False,
         empty_label="Categoria"
     )
@@ -41,6 +41,6 @@ class PostFilterForm(forms.Form):
     year = forms.ChoiceField(
         choices=YEAR_CHOICES,
         required=False, 
-        widget=forms.Select(attrs={'class': 'custom-select', 'placeholder': 'Año', 'style': 'display: none;'}), 
+        widget=forms.Select(attrs={'class': 'custom-select', 'style': 'display: none;'}), 
         label=False,
     )
