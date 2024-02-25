@@ -26,7 +26,7 @@ def home(request):
 def directory(request):
 
     posts = Post.objects.all()
-    filtered = None
+    filtered = ""
 
     form = PostFilterForm(request.GET)
     if form.is_valid():
@@ -35,7 +35,7 @@ def directory(request):
         category = form.cleaned_data["category"] #TODO: virify if it is none
         year = form.cleaned_data["year"]
 
-        filtered = {}
+        filtered = "&field=" + field + "&order=" + order + "&category=" + (str(category.id) if category else "") + "&year=" + str(year)
 
         final_field = field
         if order == 'desc':
@@ -49,7 +49,7 @@ def directory(request):
 
         posts = posts.order_by(final_field)
 
-        filtered = {'field': field, 'order': order, 'category': category, 'year': year}
+        #filtered = {'field': field, 'order': order, 'category': category, 'year': year}
 
     else:
         form = PostFilterForm()
