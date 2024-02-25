@@ -1,21 +1,40 @@
 <div class="pagination">
     <span class="step-links">
         {% if page.has_previous %}
-        <a href="?page=1"><i class="fa-solid fa-angles-left"></i></a> 
-        <a href="?page={{ page.previous_page_number }}"><i class="fa-solid fa-chevron-left"></i></a> 
+            {% if param %}
+                <a href="?page=1&field={{ param.field }}&order={{ param.order }}&category={{ param.category }}&year={{ param.year }}"><i class="fa-solid fa-angles-left"></i></a> 
+                <a href="?page={{ page.previous_page_number }}&field={{ param.field }}&order={{ param.order }}&category={{ param.category }}&year={{ param.year }}"><i class="fa-solid fa-chevron-left"></i></a> 
+            {% else %}
+                <a href="?page=1"><i class="fa-solid fa-angles-left"></i></a> 
+                <a href="?page={{ page.previous_page_number }}"><i class="fa-solid fa-chevron-left"></i></a> 
+            {% endif %}
+
         {% endif %}
 
         {% for i in page.paginator.page_range %}
             {% if page.number == i %}
-                <a href="?page={{ i }}" class="current">{{ i }}</a>  
+                {% if param %}
+                    <a href="?page={{ i }}&field={{ param.field }}&order={{ param.order }}&category={{ param.category }}&year={{ param.year }}" class="current">{{ i }}</a>  
+                {% else %}
+                    <a href="?page={{ i }}" class="current">{{ i }}</a>  
+                {% endif %}
             {% elif i > page.number|add:"-3" and i < page.number|add:"3" %}
-                <a href="?page={{ i }}">{{ i }}</a> 
+                {% if param %}  
+                    <a href="?page={{ i }}&field={{ param.field }}&order={{ param.order }}&category={{ param.category }}&year={{ param.year }}">{{ i }}</a>  
+                {% else %}
+                    <a href="?page={{ i }}">{{ i }}</a>  
+                {% endif %}
             {% endif %}
         {% endfor %}
 
         {% if page.has_next %}
-            <a href="?page={{ page.next_page_number }}"><i class="fa-solid fa-chevron-right"></i></a> 
-            <a href="?page={{ page.paginator.num_pages }}"><i class="fa-solid fa-angles-right"></i></a>
+            {% if param %}  
+                <a href="?page={{ page.next_page_number }}&field={{ param.field }}&order={{ param.order }}&category={{ param.category }}&year={{ param.year }}"><i class="fa-solid fa-chevron-right"></i></a> 
+                <a href="?page={{ page.paginator.num_pages }}&field={{ param.field }}&order={{ param.order }}&category={{ param.category }}&year={{ param.year }}"><i class="fa-solid fa-angles-right"></i></a> 
+            {% else %}
+                <a href="?page={{ page.next_page_number }}"><i class="fa-solid fa-chevron-right"></i></a> 
+                <a href="?page={{ page.paginator.num_pages }}"><i class="fa-solid fa-angles-right"></i></a>
+            {% endif %}
         {% endif %}
     </span>
 </div>

@@ -32,11 +32,14 @@ def directory(request):
     if form.is_valid():
         field = form.cleaned_data["field"]
         order = form.cleaned_data["order"]
-        category = form.cleaned_data["category"]
+        category = form.cleaned_data["category"] #TODO: virify if it is none
         year = form.cleaned_data["year"]
 
+        filtered = {}
+
+        final_field = field
         if order == 'desc':
-            field = '-' + field
+            final_field = '-' + final_field
 
         if category:
             posts = posts.filter(categories=category)
@@ -44,7 +47,7 @@ def directory(request):
         if year:
             posts = posts.filter(date__year=year)
 
-        posts = posts.order_by(field)
+        posts = posts.order_by(final_field)
 
         filtered = {'field': field, 'order': order, 'category': category, 'year': year}
 
