@@ -37,9 +37,8 @@ def directory(request):
 
         filtered = "&field=" + field + "&order=" + order + "&category=" + (str(category.id) if category else "") + "&year=" + str(year)
 
-        final_field = field
         if order == 'desc':
-            final_field = '-' + final_field
+            field = '-' + field
 
         if category:
             posts = posts.filter(categories=category)
@@ -47,9 +46,8 @@ def directory(request):
         if year:
             posts = posts.filter(date__year=year)
 
-        posts = posts.order_by(final_field)
+        posts = posts.order_by(field)
 
-        #filtered = {'field': field, 'order': order, 'category': category, 'year': year}
 
     else:
         form = PostFilterForm()
@@ -68,16 +66,6 @@ def directory(request):
         posts = paginator.page(paginator.num_pages)
 
     return render(request, 'directory.html', {'posts': posts, 'form': form, 'filtered': filtered})
-
-def post_list(request):
-    form = PostFilterForm(request.GET)
-    posts = Post.objects.all()
-    if form.is_valid():
-        if form.cleaned_data['title']:
-            posts = posts.filter(title__icontains=form.cleaned_data['title'])
-        if form.cleaned_data['description']:
-            posts = posts.filter(description__icontains=form.cleaned_data['description'])
-    return render(request, 'directory.html', {'posts': posts, 'form': form})
 
 def create_slug(full_url):
     match = re.search(r"/([\w-]+)\.html", full_url)
