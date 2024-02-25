@@ -31,12 +31,17 @@
                 </div>
             </a>
         </div>
-        {% empty %}
-            <p style="text-align: center; color: #fff; font-size: 30px; font-weight: bold;">No hay novelas visuales que coincidan con tu búsqueda.</p>
         {% endfor %}
-
-
     </div>
+    {% if not posts %}
+        <div class="no-result-containder">
+            <p>No se encontraron resultados :(</p>
+            <img src="{% static 'img/sadness.png' %}" alt="">
+            <p>No estes triste!!</p>
+        </div>
+    {% endif %}
+
+
 </div>
 
 

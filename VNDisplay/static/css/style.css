@@ -305,7 +305,7 @@ header {
     margin-top: 40px;
 }
 
-.main-container form{
+.main-container form {
     margin: 20px 0;
     display: flex;
     justify-content: center;
@@ -347,6 +347,7 @@ header {
     transition: all .3s ease-in-out;
     transform-origin: 50% 0;
 }
+
 .custom-select.opened .custom-select-trigger:after {
     transform: rotate(-135deg) translateY(-50%);
 }
@@ -406,7 +407,7 @@ header {
     font-weight: bold;
 }
 
-button.btnSubmit{
+button.btnSubmit {
     background-color: #007bff;
     color: #fff;
     padding: 5px 0;
@@ -416,6 +417,25 @@ button.btnSubmit{
     font-size: 16px;
     width: 90px;
 }
+
+/* No results */
+.no-result-containder {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    & p {
+        text-align: center;
+        color: #fff;
+        font-size: 20px;
+        font-weight: bold;
+    }
+    & img {
+        width: 400px;
+    }
+}
+
 
 
 
