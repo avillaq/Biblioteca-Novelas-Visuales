@@ -11,7 +11,7 @@ class PostFilterForm(forms.Form):
 
     FIELD_CHOICES = [
         ('date', 'Fecha'),
-        ('name', 'Nombre'),
+        ('title', 'Nombre'),
     ]
 
 

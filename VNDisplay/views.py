@@ -24,16 +24,32 @@ def home(request):
                                          'last_posts': last_posts})
 
 def directory(request):
-    """    form = PostFilterForm(request.GET)  
-    if request.method == 'GET' and request.GET: """
+
+    posts = Post.objects.all()
+    
     form = PostFilterForm(request.GET)
     if form.is_valid():
+        field = form.cleaned_data["field"]
+        order = form.cleaned_data["order"]
+        category = form.cleaned_data["category"]
+        year = form.cleaned_data["year"]
+
+        if order == 'desc':
+            field = '-' + field
+
+        if category:
+            posts = posts.filter(categories=category)
+
+        if year:
+            posts = posts.filter(date__year=year)
+
+        # Ordena los posts por 'field'
+        posts = posts.order_by(field)
+
         print(f"Form is valid: {form.cleaned_data}")
-        form = PostFilterForm(request.GET)
     else:
         form = PostFilterForm()
-
-    posts = Post.objects.all().order_by('-id')
+        posts = posts.order_by('-id')
 
     # Pagination with 3 posts per page
     paginator = Paginator(posts, 32)
