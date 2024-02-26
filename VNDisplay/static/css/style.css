@@ -436,6 +436,14 @@ button.btnSubmit {
     }
 }
 
+/***** Android ******/
+.novel .info-android p {
+    transition: all 0.2s ease-out;
+}
+.novel:hover .info-android p{
+    color: #fff;
+    transform: scale(1.1);
+}
 
 
 
