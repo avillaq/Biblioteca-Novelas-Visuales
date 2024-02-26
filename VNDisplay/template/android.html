@@ -12,7 +12,7 @@
     <h3 class="subtitle-text directory-subtitle">Nuestra seccion Android: </h3>
     <div class="cards-container">
         <div class="novel">
-            <a href="{{ p.get_absolute_url }}">
+            <a href="{% url 'VNDisplay:android_apk' %}">
                 <img src="{% static 'img/android.jfif' %}" alt="img">
                 <div class="novel-info info-android">
                     <p>Android APK</p>
@@ -20,7 +20,7 @@
             </a>
         </div>
         <div class="novel">
-            <a href="{{ p.get_absolute_url }}">
+            <a href="{% url 'VNDisplay:android_kirikiroid2' %}">
                 <img src="{% static 'img/kirikiroid2.webp' %}" alt="img">
                 <div class="novel-info info-android">
                     <p>Android Kirikiroid2</p>
@@ -29,9 +29,6 @@
         </div>
     </div>
     
-    
-
-
 </div>
 
 
