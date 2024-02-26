@@ -35,8 +35,17 @@ class Post(models.Model):
                             self.date.day,
                             self.slug])
 
+class Android_Post(models.Model):
+    title = models.CharField(max_length=250)
+    full_url = models.URLField(max_length=250)
+    image_url = models.URLField(max_length=250)
 
+    class Meta:
+        db_table = "android_post"
 
+    def __str__(self):
+        return self.title
+    
  
 
 
