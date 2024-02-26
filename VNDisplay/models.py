@@ -39,13 +39,22 @@ class Android_Post(models.Model):
     title = models.CharField(max_length=250)
     full_url = models.URLField(max_length=250)
     image_url = models.URLField(max_length=250)
+    type = models.ForeignKey('Type', on_delete=models.CASCADE)
 
     class Meta:
         db_table = "android_post"
 
     def __str__(self):
         return self.title
-    
+
+class Type(models.Model):
+    name = models.CharField(max_length=250)
+
+    class Meta:
+        db_table = "type"
+
+    def __str__(self):
+        return self.name
  
 
 
