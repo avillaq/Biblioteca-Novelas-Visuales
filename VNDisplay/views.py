@@ -68,7 +68,7 @@ def directory(request):
     return render(request, 'directory.html', {'posts': posts, 'form': form, 'filtered': filtered})
 
 def android(request):
-    return HttpResponse("Hello, world. You're at the VNDisplay android.")
+    return render(request, 'android.html')
 
 def create_slug(full_url):
     match = re.search(r"/([\w-]+)\.html", full_url)
@@ -113,7 +113,3 @@ def novel_detail(request, year, month, day, title):
 
     post = scraper.get_post_detail(p)
     return render(request, 'novel_detail.html', {'post': post})
-
-
-def completo(request):
-    return HttpResponse("Hello, world. You're at the VNDisplay completo.")
