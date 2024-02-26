@@ -48,10 +48,11 @@ class Post:
         return f"Title: {self.title}\nUrl: {self.full_url}\nUrl Image: {self.image_url}\nDescription: {self.description}\nLabels: {self.labels}\nDate: {self.date}"
 
 class Post_Android:
-    def __init__(self, title: str, full_url: str, image_url: str):
+    def __init__(self, title: str, full_url: str, image_url: str, type: str):
         self._title = title
         self._full_url = full_url
         self._image_url = image_url
+        self._type = type
 
     @property
     def title(self) -> str:
@@ -64,9 +65,13 @@ class Post_Android:
     @property
     def image_url(self) -> str:
         return self._image_url
+    
+    @property
+    def type(self) -> str:
+        return self._type
 
     def __str__(self) -> str:
-        return f"Title: {self.title}\nUrl: {self.full_url}\nUrl Image: {self.image_url}"
+        return f"Title: {self.title}\nUrl: {self.full_url}\nUrl Image: {self.image_url}\nType: {self.type}"
 
 
 
@@ -290,7 +295,7 @@ class VN_Scraper:
         list_posts = []        
         
         # IMPORTANT !! 
-        #I cannot discard the titles of posts, so they will be added manually
+        #I cannot scrap the titles of posts, so they will be added manually
         titles = [
             "Dorei to no Seikatsu -Teaching Feeling",
             "Sakura Swim Club",
@@ -340,6 +345,9 @@ class VN_Scraper:
         # Full URL
         full_urls = post.find_all('a', string="Apk")
 
+        # Type
+        type = "apk"
+
         # IMPORTANT !! 
         # if the length of the titles, full_urls or image_urls is different, we need to check the original page: http://www.visualnovelparapc.com/2022/01/android-apk.html and manually add missing titles to the first position of the title list. Just do that.  
         if len(titles) != len(full_urls) or len(titles) != len(image_urls):
@@ -350,7 +358,7 @@ class VN_Scraper:
             image_url = image_url.get('src')
 
             # Create a new instance
-            post = Post_Android(title, full_url, image_url)
+            post = Post_Android(title, full_url, image_url, type)
             list_posts.append(post)
 
         return list_posts
@@ -372,9 +380,22 @@ class VN_Scraper:
         emulator = post.find('a', string="Apk").get('href')
 
         # Titles
+        titles = post.find_all("u")
+
+        for title in titles:
+            text_title = title.text
+            title = text_title.replace("por AngelGbb", "")
+
+
+
+        return titles, emulator
         titles = re.findall(r'(\w+[\s\w]*(\[[^\]]*\])+)', post.text)[1:] # we discard the first title because it's not a game
         # Only the first match is the title of the post
         titles = [match[0] for match in titles]
+
+
+
+
 
         # Image URL
         image_urls = post.find_all('img')[1:] # we discard the first image because it's not a game
@@ -406,7 +427,7 @@ if __name__ == '__main__':
     
     
     
-    list_posts = scraper.get_section("inicio")
+    list_posts = scraper.get_apk_section()
     #print(list_posts)
 
     for post in list_posts:
