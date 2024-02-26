@@ -71,7 +71,9 @@ def android(request):
     return render(request, 'android.html')
 
 def android_apk(request):
-    return render(request, 'android_apk.html')
+    android_posts = scraper.get_apk_section()
+
+    return render(request, 'android_apk.html', {'android_posts': android_posts})
 
 def android_kirikiroid2(request):
     return render(request, 'android_kirikiroid2.html')

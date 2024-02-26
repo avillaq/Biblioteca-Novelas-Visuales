@@ -323,22 +323,22 @@ class VN_Scraper:
             "Wolf Tails",
             "Master of the Harem Guild",
             "The Demon's Stele & The Dog Princess",
-            "Bullied Bride por Ero Ero Games",
-            "StayStay por Ero Ero Games",
-            "Wild Romance Mofu Mofu por Ero Ero Games",
-            "Imolicious por Ero Ero Games",
-            "Lost Life por Ero Ero Games",
-            "My Neighbor is a Yandere 2!? por Ero Ero Games",
-            "The Grim Reaper Who Reaped My Heart por Ero Ero Games",
-            "Lonely Yuri por AnimeChannel",
-            "Love Love H Maid por AnimeChannel",
+            "Bullied Bride",
+            "StayStay",
+            "Wild Romance Mofu Mofu",
+            "Imolicious",
+            "Lost Life",
+            "My Neighbor is a Yandere 2!?",
+            "The Grim Reaper Who Reaped My Heart",
+            "Lonely Yuri",
+            "Love Love H Maid",
             "Otomaid @ Cafe(trap)",
-            "Hansel y Gretel DS por Moog",
-            "Kubitori Sarasa por Moog",
+            "Hansel y Gretel DS",
+            "Kubitori Sarasa",
             "Cuidando la Casa con mi Hermanita",
             "Nai Training Diary[H]"
         ]
-
+  
         # Image URL
         image_urls = post.find_all('img')
         
