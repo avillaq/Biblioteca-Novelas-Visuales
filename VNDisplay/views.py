@@ -32,7 +32,7 @@ def directory(request):
     if form.is_valid():
         field = form.cleaned_data["field"]
         order = form.cleaned_data["order"]
-        category = form.cleaned_data["category"] #TODO: virify if it is none
+        category = form.cleaned_data["category"] 
         year = form.cleaned_data["year"]
 
         filtered = "&field=" + field + "&order=" + order + "&category=" + (str(category.id) if category else "") + "&year=" + str(year)
@@ -66,6 +66,9 @@ def directory(request):
         posts = paginator.page(paginator.num_pages)
 
     return render(request, 'directory.html', {'posts': posts, 'form': form, 'filtered': filtered})
+
+def android(request):
+    return HttpResponse("Hello, world. You're at the VNDisplay android.")
 
 def create_slug(full_url):
     match = re.search(r"/([\w-]+)\.html", full_url)
@@ -111,17 +114,6 @@ def novel_detail(request, year, month, day, title):
     post = scraper.get_post_detail(p)
     return render(request, 'novel_detail.html', {'post': post})
 
+
 def completo(request):
     return HttpResponse("Hello, world. You're at the VNDisplay completo.")
-
-def allages(request):
-    return HttpResponse("Hello, world. You're at the VNDisplay allages.")
-
-def yuri(request):
-    return HttpResponse("Hello, world. You're at the VNDisplay yuri.")
-
-def otome(request):
-    return HttpResponse("Hello, world. You're at the VNDisplay otome.")
-
-def eroge(request):
-    return HttpResponse("Hello, world. You're at the VNDisplay eroge.")
