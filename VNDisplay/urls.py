@@ -1,5 +1,5 @@
 from django.urls import path
-from VNDisplay.views import home, directory, novel_detail, android
+from VNDisplay.views import home, directory, novel_detail, android, android_apk, android_kirikiroid2
 
 app_name = 'VNDisplay'
 urlpatterns = [

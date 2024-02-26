@@ -70,13 +70,11 @@ def directory(request):
 def android(request):
     return render(request, 'android.html')
 
-def create_slug(full_url):
-    match = re.search(r"/([\w-]+)\.html", full_url)
-    if match:
-        match = match.group(1)
-    else:
-        raise ValueError(f"Invalid URL: {full_url}")
-    return match
+def android_apk(request):
+    return render(request, 'android_apk.html')
+
+def android_kirikiroid2(request):
+    return render(request, 'android_kirikiroid2.html')
 
 def verify_new_posts():
     if not Post.objects.exists():  #IMPORTANT: If there are no posts in the database. IT WILL TAKE A FEW MINUTES 
@@ -101,6 +99,14 @@ def verify_new_posts():
                 for label in post.labels:
                     post_category = Category.objects.get(name=label)
                     new_post.categories.add(post_category)
+
+def create_slug(full_url):
+    match = re.search(r"/([\w-]+)\.html", full_url)
+    if match:
+        match = match.group(1)
+    else:
+        raise ValueError(f"Invalid URL: {full_url}")
+    return match
 
 def novel_detail(request, year, month, day, title):
     #url = f'http://www.visualnovelparapc.com/{year}/{month}/{title}.html'
