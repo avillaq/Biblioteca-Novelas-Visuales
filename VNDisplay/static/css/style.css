@@ -259,7 +259,9 @@ header {
 
 .novel-info {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     height: 15%;
     padding: 10px;
 }
@@ -445,7 +447,24 @@ button.btnSubmit {
     transform: scale(1.1);
 }
 
+/* APK */
+.bg-intro-android {
+    height: 400px;
+    & div{
+        width: 50%;
+    }
+}
+.android-novel img{
+    height: 76%;
+}
+.android-novel .android-novel-info {
+    height: 24%;
 
+    & a {
+        display: inline-block;
+        max-width: 90%;
+    }
+}
 
 /***** Responsive *****/
 
@@ -462,6 +481,10 @@ button.btnSubmit {
 
     .bg-intro div {
         padding: 0 30px;
+    }
+    
+    .bg-intro-android div{
+        width: 100%;
     }
 }
 
@@ -483,6 +506,10 @@ button.btnSubmit {
         padding: 0 50px;
     }
 
+    .bg-intro-android div{
+        width: 100%;
+    }
+
 }
 
 @media (800px <=width <=1000px) {
@@ -493,6 +520,10 @@ button.btnSubmit {
 
     .bg-intro div {
         padding: 0 80px;
+    }
+
+    .bg-intro-android div{
+        width: 100%;
     }
 }
 
