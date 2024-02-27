@@ -68,7 +68,7 @@ def directory(request):
     return render(request, 'directory.html', {'posts': posts, 'form': form, 'filtered': filtered})
 
 def search(request):
-    query = request.GET.get('search')
+    query = request.GET.get('q')
     print(f"Query: {query}")
     #posts = Post.objects.filter(title__icontains=query)
     return render(request, 'search.html')
