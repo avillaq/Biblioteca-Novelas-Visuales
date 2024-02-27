@@ -24,10 +24,10 @@
                 <a href="{% url 'VNDisplay:home' %}">Inicio</a>
                 <a href="{% url 'VNDisplay:directory' %}">Directorio</a>
                 <a href="{% url 'VNDisplay:android' %}">Android</a>
-                <div class="search-container">
-                    <input class="input-search" type="text" placeholder="Buscar..." autocomplete="off" required>
-                    <button><i class="fa-solid fa-search"></i></button>
-                </div>
+                <form class="search-container">
+                    <input name="search" class="input-search" type="text" placeholder="Buscar..." autocomplete="off" required>
+                    <button type="submit"><i class="fa-solid fa-search"></i></button>
+                </form>
             </div>
         </div>
     </header>
