@@ -71,14 +71,16 @@ def android(request):
     return render(request, 'android.html')
 
 def android_apk(request):
-    verify_new_android_posts("apk", scraper.get_apk_section)
     android_posts = Android_Post.objects.filter(type__name="apk").order_by('-id')
     return render(request, 'android_apk.html', {'android_posts': android_posts})
 
 def android_kirikiroid2(request):
     verify_new_android_posts("kirikiroid2", scraper.get_kirikiroid2_section)
+
+    kirikiroid2_emualtor = Type.objects.get(name="kirikiroid2").resource
+
     android_posts = Android_Post.objects.filter(type__name="kirikiroid2").order_by('-id')
-    return render(request, 'android_kirikiroid2.html', {'android_posts': android_posts, 'emulador': "Kirikiroid2"})
+    return render(request, 'android_kirikiroid2.html', {'android_posts': android_posts, 'emulador': kirikiroid2_emualtor})
 
 def verify_new_posts():
     if not Post.objects.exists():  #IMPORTANT: If there are no posts in the database. IT WILL TAKE A FEW MINUTES 
@@ -121,6 +123,9 @@ def verify_new_android_posts(type_name, scraper_function):
             for post in reversed(new_posts):
                 Android_Post.objects.create(title=post.title, full_url=post.full_url, 
                                     image_url=post.image_url, type=post_type)
+
+def verify_kirikiroid2_emulator():
+    Type.objects.filter(name="kirikiroid2").update(resource=scraper.get_kirikiroid2_emulator())
 
 def create_slug(full_url):
     match = re.search(r"/([\w-]+)\.html", full_url)
