@@ -25,5 +25,5 @@ class Android_PostAdmin(admin.ModelAdmin):
 
 @admin.register(Type)
 class TypeAdmin(admin.ModelAdmin):
-    list_display = ['name']
+    list_display = ['name', 'resource']
     search_fields = ['name']

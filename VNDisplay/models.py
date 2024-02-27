@@ -49,6 +49,7 @@ class Android_Post(models.Model):
 
 class Type(models.Model):
     name = models.CharField(max_length=250)
+    resource = models.URLField(max_length=250, null=True)
 
     class Meta:
         db_table = "type"
@@ -56,5 +57,3 @@ class Type(models.Model):
     def __str__(self):
         return self.name
  
-
-
