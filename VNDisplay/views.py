@@ -77,7 +77,7 @@ def android_apk(request):
 
 def android_kirikiroid2(request):
     android_posts, emulador = scraper.get_kirikiroid2_section()
-    return render(request, 'android_kirikiroid2.html', {'android_posts': android_posts})
+    return render(request, 'android_kirikiroid2.html', {'android_posts': android_posts, 'emulador': emulador})
 
 def verify_new_posts():
     if not Post.objects.exists():  #IMPORTANT: If there are no posts in the database. IT WILL TAKE A FEW MINUTES 
