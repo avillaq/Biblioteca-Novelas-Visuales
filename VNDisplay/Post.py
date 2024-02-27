@@ -382,20 +382,16 @@ class VN_Scraper:
         # Titles
         titles = post.find_all("u")
 
+        text_title = ""
         for title in titles:
-            text_title = title.text
-            title = text_title.replace("por AngelGbb", "")
+            text = title.text.strip()
+            if text == "":
+                continue
+            text_title += text.replace("por AngelGbb", "").replace("por DaveVGN", "") # we discard the names of the uploaders
 
-
-
-        return titles, emulator
-        titles = re.findall(r'(\w+[\s\w]*(\[[^\]]*\])+)', post.text)[1:] # we discard the first title because it's not a game
+        titles = re.findall(r'(\w+[,!\?\'\/\-\s\w]*(\[[^\]]*\])+)', text_title)
         # Only the first match is the title of the post
         titles = [match[0] for match in titles]
-
-
-
-
 
         # Image URL
         image_urls = post.find_all('img')[1:] # we discard the first image because it's not a game
@@ -403,6 +399,8 @@ class VN_Scraper:
         # Full URL
         full_urls = post.find_all('a', string="Mediafire")
 
+        # Type
+        type = "kirikiroid2"
 
         # IMPORTANT !!
         # if the length of the titles, full_urls or image_urls is different, we need to check the original page: http://www.visualnovelparapc.com/2022/06/android-kirikiroid.html.
@@ -414,7 +412,7 @@ class VN_Scraper:
             image_url = image_url.get('src')
 
             # Create a new instance
-            post = Post_Android(title, full_url, image_url)
+            post = Post_Android(title, full_url, image_url, type)
             list_posts.append(post)
 
         return list_posts, emulator
@@ -427,9 +425,11 @@ if __name__ == '__main__':
     
     
     
-    list_posts = scraper.get_apk_section()
+    list_posts, emulador = scraper.get_kirikiroid2_section()
     #print(list_posts)
 
     for post in list_posts:
         print(post)
         print("\n")
+
+    print(emulador)
