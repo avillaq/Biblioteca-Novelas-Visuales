@@ -10,7 +10,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from VNDisplay.Post import VN_Scraper
 from VNDisplay.forms import PostFilterForm
-from VNDisplay.models import Post, Category
+from VNDisplay.models import Post, Category, Android_Post, Type
 
 scraper = VN_Scraper()
 
@@ -72,7 +72,7 @@ def android(request):
 
 def android_apk(request):
     android_posts = scraper.get_apk_section()
-
+    verify_new_apk_posts()
     return render(request, 'android_apk.html', {'android_posts': android_posts})
 
 def android_kirikiroid2(request):
@@ -97,6 +97,49 @@ def verify_new_posts():
             post_date = datetime.strptime(post.date, '%Y-%m-%d').date()
             if post_date > latest_post.date:
                 new_post = Post.objects.create(title=post.title, slug=create_slug(post.full_url), full_url=post.full_url, 
+                                    image_url=post.image_url, description=post.description, 
+                                    date=post.date)
+                for label in post.labels:
+                    post_category = Category.objects.get(name=label)
+                    new_post.categories.add(post_category)
+
+def verify_new_apk_posts():
+    apk_post = Android_Post.objects.all().filter(type__name='apk')
+    android_posts = scraper.get_apk_section() 
+    if not apk_post:
+        post_type = Type.objects.get(name="apk")
+        for post in reversed(android_posts):
+            Android_Post.objects.create(title=post.title, full_url=post.full_url, 
+                                    image_url=post.image_url, type=post_type)
+
+    else: 
+        total = apk_post.count()
+        if total < len(android_posts):
+            android_posts = android_posts[total:]
+            post_type = Type.objects.get(name="apk")
+            for post in android_posts:
+                Android_Post.objects.create(title=post.title, full_url=post.full_url, 
+                                    image_url=post.image_url, type=post_type)
+        print(f"HAY POSTS EN LA BASE DE DATOS")
+
+def verify_new_kirikiroid2_posts():
+    if not Android_Post.objects.exists():  #IMPORTANT: If there are no posts in the database. IT WILL TAKE A FEW MINUTES 
+        android_posts, emulador = scraper.get_kirikiroid2_section() 
+        for post in reversed(android_posts):
+            new_post = Android_Post.objects.create(title=post.title, slug=create_slug(post.full_url), full_url=post.full_url, 
+                                image_url=post.image_url, description=post.description, 
+                                date=post.date)
+            for label in post.labels:
+                post_category = Category.objects.get(name=label)
+                new_post.categories.add(post_category)
+
+    else: 
+        android_posts, emulador = scraper.get_kirikiroid2_section()  
+        latest_post = Android_Post.objects.latest('id')
+        for post in reversed(android_posts):
+            post_date = datetime.strptime(post.date, '%Y-%m-%d').date()
+            if post_date > latest_post.date:
+                new_post = Android_Post.objects.create(title=post.title, slug=create_slug(post.full_url), full_url=post.full_url, 
                                     image_url=post.image_url, description=post.description, 
                                     date=post.date)
                 for label in post.labels:
