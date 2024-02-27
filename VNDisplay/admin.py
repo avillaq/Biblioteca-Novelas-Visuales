@@ -21,7 +21,7 @@ class Android_PostAdmin(admin.ModelAdmin):
     list_display = ['title', 'type']
     list_filter = ['type']
     search_fields = ['title']
-    ordering = ['title']
+    ordering = ['id']
 
 @admin.register(Type)
 class TypeAdmin(admin.ModelAdmin):
