@@ -2,6 +2,15 @@
 {% load static %}
 
 {% block section %}
+    <div
+        style="background-image:url('../static/img/background_kirikiroid2.webp'); background-size: cover; background-position: center; background-attachment: fixed; background-repeat: no-repeat;">
+        <div class="bg-intro bg-intro-android">
+            <div>
+                <h2>Seccion Android Kirikiroid2</h2>
+                <p>En está sección encontrarás las novelas visuales en español emuladas con Kirikiroid2 en android. Las novelas estarán en un .rar con contraseña y deben ser extraidas, es necesario desmarcar la opción de instalar de origen desconocido en el android al instalar la aplicación de Kirikiroid2.</p>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
 
@@ -9,26 +18,22 @@
 {% block content %}
 
 <div class="main-container">
-    <h3 class="subtitle-text directory-subtitle">Nuestra seccion Android: </h3>
+    <h3 class="subtitle-text android-subtitle-text">Lista completa: </h3>
     <div class="cards-container">
-        <div class="novel">
-            <a href="{% url 'VNDisplay:android_apk' %}">
-                <img src="{% static 'img/android.jfif' %}" alt="img">
-                <div class="novel-info info-android">
-                    <p>Android APK</p>
+        {% for p in android_posts %}
+        <div class="novel android-novel">
+                <img src="{{ p.image_url }}" alt="img">
+                <div class="novel-info android-novel-info">
+                    <p>{{ p.title }}</p>
+                    <a href="{{ p.full_url }}" target="_blank">Descargar</a>
                 </div>
-            </a>
+                
         </div>
-        <div class="novel">
-            <a href="{% url 'VNDisplay:android_kirikiroid2' %}">
-                <img src="{% static 'img/kirikiroid2.webp' %}" alt="img">
-                <div class="novel-info info-android">
-                    <p>Android Kirikiroid2</p>
-                </div>
-            </a>
-        </div>
+
+        {% endfor %}
+
+
     </div>
-    
 </div>
 
 
