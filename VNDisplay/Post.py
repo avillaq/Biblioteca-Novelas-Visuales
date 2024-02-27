@@ -433,11 +433,9 @@ if __name__ == '__main__':
     
     
     
-    list_posts, emulador = scraper.get_kirikiroid2_section()
+    list_posts= scraper.get_kirikiroid2_section()
     #print(list_posts)
 
     for post in list_posts:
         print(post)
         print("\n")
-
-    print(emulador)
