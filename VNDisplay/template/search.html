@@ -1,0 +1,35 @@
+{% extends "./base.html" %}
+{% load static %}
+
+{% block section %}
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="main-container">
+    <h3 class="subtitle-text directory-subtitle">Nuestra seccion Android: </h3>
+    <div class="cards-container">
+        <div class="novel">
+            <a href="{% url 'VNDisplay:android_apk' %}">
+                <img src="{% static 'img/android.jfif' %}" alt="img">
+                <div class="novel-info info-android">
+                    <p>Android APK</p>
+                </div>
+            </a>
+        </div>
+        <div class="novel">
+            <a href="{% url 'VNDisplay:android_kirikiroid2' %}">
+                <img src="{% static 'img/kirikiroid2.webp' %}" alt="img">
+                <div class="novel-info info-android">
+                    <p>Android Kirikiroid2</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    
+</div>
+
+
+{% endblock %}
