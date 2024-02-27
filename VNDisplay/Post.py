@@ -8,8 +8,6 @@ locale.setlocale(locale.LC_ALL, 'es_ES') # Set the locale to spanish
 
 # En esta clase se define la estructura de un post y se define el scraper para obtener los posts de la página web
 
-############ En esta clase una sola funcion para todas las secciones ############
-
 class Post:
     def __init__(self, title: str, full_url: str, image_url: str, description: str, labels: list[str], date: str):
         self._title = title
@@ -190,7 +188,7 @@ class VN_Scraper:
     
     # Public Methods
     def get_section(self, section: str) -> list[Post]: ### Only scrap the first page of the section
-        section = self._verify_section(section) ################################### mover contenido de _verify_section aqui ###################
+        section = self._verify_section(section)
         if not section:
             raise ValueError(f"Section {section} not found")
         
@@ -201,7 +199,8 @@ class VN_Scraper:
 
         return list_posts
 
-    def get_all_posts(self) -> list[Post]:
+
+    def get_all_posts(self) -> list[Post]: # Get all the posts of the web site (PC)
         url = self.sections["inicio"]
         list_posts = self._get_posts(url) # get the first page
 
@@ -220,9 +219,8 @@ class VN_Scraper:
 
         return list_posts
 
-
-    ## TODO: Esta funcion funciona correctamente, pero solo para segunda pagina, hay que hacerla para todas las paginas (SOLO SI ES POSIBLE), ya que tenemos que ver como sera la paginacion con Django
-    def get_next_page_section(self, section: str) -> list[Post]:
+    
+    def get_next_page_section(self, section: str) -> list[Post]: # Only get the second page of the section
         section = self._verify_section(section)
         if not section:
             raise ValueError(f"Section {section} not found")
