@@ -71,13 +71,14 @@ def android(request):
     return render(request, 'android.html')
 
 def android_apk(request):
-    android_posts = scraper.get_apk_section()
-    verify_new_apk_posts()
+    verify_new_android_posts("apk", scraper.get_apk_section)
+    android_posts = Android_Post.objects.filter(type__name="apk").order_by('-id')
     return render(request, 'android_apk.html', {'android_posts': android_posts})
 
 def android_kirikiroid2(request):
-    android_posts, emulador = scraper.get_kirikiroid2_section()
-    return render(request, 'android_kirikiroid2.html', {'android_posts': android_posts, 'emulador': emulador})
+    verify_new_android_posts("kirikiroid2", scraper.get_kirikiroid2_section)
+    android_posts = Android_Post.objects.filter(type__name="kirikiroid2").order_by('-id')
+    return render(request, 'android_kirikiroid2.html', {'android_posts': android_posts, 'emulador': "Kirikiroid2"})
 
 def verify_new_posts():
     if not Post.objects.exists():  #IMPORTANT: If there are no posts in the database. IT WILL TAKE A FEW MINUTES 
@@ -103,48 +104,23 @@ def verify_new_posts():
                     post_category = Category.objects.get(name=label)
                     new_post.categories.add(post_category)
 
-def verify_new_apk_posts():
-    apk_post = Android_Post.objects.all().filter(type__name='apk')
-    android_posts = scraper.get_apk_section() 
-    if not apk_post:
-        post_type = Type.objects.get(name="apk")
+def verify_new_android_posts(type_name, scraper_function):
+    posts = Android_Post.objects.filter(type__name=type_name)
+    android_posts = scraper_function() 
+    if not posts:
+        post_type = Type.objects.get(name=type_name)
         for post in reversed(android_posts):
             Android_Post.objects.create(title=post.title, full_url=post.full_url, 
                                     image_url=post.image_url, type=post_type)
-
     else: 
-        total = apk_post.count()
+        total = posts.count()
         if total < len(android_posts):
-            android_posts = android_posts[total:]
-            post_type = Type.objects.get(name="apk")
-            for post in android_posts:
+            difference = len(android_posts) - total
+            new_posts = android_posts[:difference]
+            post_type = Type.objects.get(name=type_name)
+            for post in reversed(new_posts):
                 Android_Post.objects.create(title=post.title, full_url=post.full_url, 
                                     image_url=post.image_url, type=post_type)
-        print(f"HAY POSTS EN LA BASE DE DATOS")
-
-def verify_new_kirikiroid2_posts():
-    if not Android_Post.objects.exists():  #IMPORTANT: If there are no posts in the database. IT WILL TAKE A FEW MINUTES 
-        android_posts, emulador = scraper.get_kirikiroid2_section() 
-        for post in reversed(android_posts):
-            new_post = Android_Post.objects.create(title=post.title, slug=create_slug(post.full_url), full_url=post.full_url, 
-                                image_url=post.image_url, description=post.description, 
-                                date=post.date)
-            for label in post.labels:
-                post_category = Category.objects.get(name=label)
-                new_post.categories.add(post_category)
-
-    else: 
-        android_posts, emulador = scraper.get_kirikiroid2_section()  
-        latest_post = Android_Post.objects.latest('id')
-        for post in reversed(android_posts):
-            post_date = datetime.strptime(post.date, '%Y-%m-%d').date()
-            if post_date > latest_post.date:
-                new_post = Android_Post.objects.create(title=post.title, slug=create_slug(post.full_url), full_url=post.full_url, 
-                                    image_url=post.image_url, description=post.description, 
-                                    date=post.date)
-                for label in post.labels:
-                    post_category = Category.objects.get(name=label)
-                    new_post.categories.add(post_category)
 
 def create_slug(full_url):
     match = re.search(r"/([\w-]+)\.html", full_url)
