@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Category, Android_Post, Type
+from .models import Post, Category, Android_Post, Type, PostDetail
 
 # admin.site.register(Post) . if you want to register the model with the default admin interface
 
@@ -27,3 +27,9 @@ class Android_PostAdmin(admin.ModelAdmin):
 class TypeAdmin(admin.ModelAdmin):
     list_display = ['name', 'resource']
     search_fields = ['name']
+
+@admin.register(PostDetail)
+class PostDetailAdmin(admin.ModelAdmin):
+    list_display = ['post', 'synopsis']
+    search_fields = ['post']
+    ordering = ['post']
