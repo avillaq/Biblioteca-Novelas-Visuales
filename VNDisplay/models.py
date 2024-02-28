@@ -56,6 +56,9 @@ class PostDetail(models.Model):
 
     def get_features(self):
         return json.loads(self.features)
+    
+    class Meta:
+        db_table = "post_detail"
 
     def __str__(self):
         return self.post.title
