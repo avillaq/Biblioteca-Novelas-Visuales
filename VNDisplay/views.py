@@ -97,7 +97,6 @@ def novel_detail(request, year, month, day, title):
                             date__year=year,
                             date__month=month,
                             date__day=day)
-    create_post_detail(post)
     post_detail = PostDetail.objects.get(post=post)
 
     return render(request, 'novel_detail.html', {'post': post, "post_detail": post_detail})
@@ -144,6 +143,7 @@ def create_post_detail(post):
     post_detail.set_image_urls(screenshots)
     post_detail.set_features(features)
     post_detail.save()
+    
 
 def verify_new_android_posts(type_name, scraper_function):
     posts = Android_Post.objects.filter(type__name=type_name)
