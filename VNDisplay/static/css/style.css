@@ -583,7 +583,7 @@ button.btnSubmit {
         text-align: center;
     }
     & img {
-        width: 500px;
+        width: 400px;
         margin: 0 auto;
     }
 }
@@ -592,11 +592,10 @@ button.btnSubmit {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-
-    & img {
-        width: calc(50% - 20px);
-        margin: 10px;
-    }
+}
+.screenshots-container .screenshots img{
+    width: calc(40% - 20px);
+    margin: 10px;
 }
 
 /***** Responsive *****/
@@ -623,7 +622,9 @@ button.btnSubmit {
     .instructions-container li {
         width: calc(75% - 20px);
         margin: 10px;
-
+    }
+    .screenshots-container .screenshots img{
+        width: calc(100% - 20px);
     }
 }
 
@@ -652,7 +653,9 @@ button.btnSubmit {
     .instructions-container li {
         width: calc(50% - 20px);
         margin: 10px;
-
+    }
+    .screenshots-container .screenshots img{
+        width: calc(90% - 20px);
     }
 
 }
@@ -675,6 +678,9 @@ button.btnSubmit {
         width: calc(33.3% - 20px);
         margin: 10px;
 
+    }
+    .screenshots-container .screenshots img{
+        width: calc(50% - 20px);
     }
 }
 
