@@ -25,7 +25,7 @@
                 <a href="{% url 'VNDisplay:directory' %}">Directorio</a>
                 <a href="{% url 'VNDisplay:android' %}">Android</a>
                 <form class="search-container" action="{% url 'VNDisplay:search' %}">
-                    <input name="q" class="input-search" type="text" placeholder="Buscar..." autocomplete="off" required maxlength="100" minlength="3">
+                    <input name="q" class="input-search" type="text" placeholder="Buscar..." autocomplete="off" required maxlength="50" minlength="3">
                     <button type="submit"><i class="fa-solid fa-search"></i></button>
                 </form>
             </div>
