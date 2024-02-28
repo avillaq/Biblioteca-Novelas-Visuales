@@ -69,12 +69,12 @@ def directory(request):
 
 def search(request):
     query = request.GET.get('q')
-
     if not query or query.strip() == '' or len(query) < 3 or len(query) > 50:
         return render(request, 'search.html',{'posts': None, 'query': query})
-
     posts = Post.objects.filter(title__icontains=query)
-    return render(request, 'search.html', {'posts': posts, 'query': query})
+    apk_posts = Android_Post.objects.filter(title__icontains=query, type__name="apk")
+    kirikiroid2_posts = Android_Post.objects.filter(title__icontains=query, type__name="kirikiroid2")
+    return render(request, 'search.html', {'posts': posts, 'apk_posts': apk_posts, 'kirikiroid2_posts': kirikiroid2_posts, 'query': query})
 
 def android(request):
     return render(request, 'android.html')

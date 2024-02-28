@@ -9,30 +9,65 @@
 {% block content %}
 
 <div class="main-container">
-    <h3 class="subtitle-text directory-subtitle">Resultados para "{{ query }}": </h3>
-
-    <div class="cards-container">
-        {% for p in posts %}
-        <div class="novel">
-            <a href="{{ p.get_absolute_url }}">
-                <img src="{{ p.image_url }}" alt="img">
-                <div class="novel-info">
-                    <p>{{ p.title }}</p>
-                </div>
-                <div class="overview">
-                    <span>{{ p.description }}</span>
-                </div>
-            </a>
-        </div>
-        {% endfor %}
-    </div>
-    {% if not posts %}
+    <h3 class="subtitle-text directory-subtitle" style="text-align: center;">Resultados para "{{ query }}" </h3>
+    {% if not posts and not apk_posts and not kirikiroid2_posts%}
         <div class="no-result-containder">
             <p>No se encontraron resultados :(</p>
             <img src="{% static 'img/sadness.png' %}" alt="">
             <p>No estes triste!!</p>
         </div>
+
+    {% else %}
+        {% if posts %}
+            <h3 class="subtitle-text directory-subtitle">Novelas Visuales para PC </h3>
+            <div class="cards-container">
+                {% for p in posts %}
+                <div class="novel">
+                    <a href="{{ p.get_absolute_url }}">
+                        <img src="{{ p.image_url }}" alt="img">
+                        <div class="novel-info">
+                            <p>{{ p.title }}</p>
+                        </div>
+                        <div class="overview">
+                            <span>{{ p.description }}</span>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if apk_posts %}
+            <h3 class="subtitle-text directory-subtitle">Novelas Visuales Android APK </h3>
+            <div class="cards-container">
+                {% for p in apk_posts %}
+                    <div class="novel android-novel">
+                        <img src="{{ p.image_url }}" alt="img">
+                        <div class="novel-info android-novel-info">
+                            <p>{{ p.title }}</p>
+                            <a href="{{ p.full_url }}" target="_blank">Descargar</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if kirikiroid2_posts %}
+            <h3 class="subtitle-text directory-subtitle">Novelas Visuales Android Kirikiroid2 </h3>
+            <div class="cards-container">
+                {% for p in kirikiroid2_posts %}
+                    <div class="novel android-novel">
+                        <img src="{{ p.image_url }}" alt="img">
+                        <div class="novel-info android-novel-info">
+                            <p>{{ p.title }}</p>
+                            <a href="{{ p.full_url }}" target="_blank">Descargar</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
     {% endif %}
+
+    
     
 </div>
 
