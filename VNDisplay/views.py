@@ -145,13 +145,11 @@ def create_slug(full_url):
     return match
 
 def novel_detail(request, year, month, day, title):
-    #url = f'http://www.visualnovelparapc.com/{year}/{month}/{title}.html'
-
-    p = get_object_or_404(Post,
+    post = get_object_or_404(Post,
                             slug=title,
                             date__year=year,
                             date__month=month,
                             date__day=day)
 
-    post = scraper.get_post_detail(p)
+    post = scraper.get_post_detail(post)
     return render(request, 'novel_detail.html', {'post': post})

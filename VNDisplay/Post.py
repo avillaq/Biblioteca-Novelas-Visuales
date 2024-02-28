@@ -247,8 +247,12 @@ class VN_Scraper:
 
         url = post.full_url
 
-        header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.2151.97'}
-        response = requests.get(url, headers=header)
+        try:
+            header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.2151.97'}
+            response = requests.get(url, headers=header)
+        except requests.exceptions.ConnectionError as e:
+            print("Internet connection error. Please check your connection.")
+            return ()
         soup = BeautifulSoup(response.content, 'html.parser')
 
         post_detail = soup.find('div', class_='post-body')
@@ -260,8 +264,9 @@ class VN_Scraper:
 
         expression = r"(Imágenes:|Imagenes:|Descarga Mega:|Descarga Mediafire:)"
         slides = re.split(expression, post_detail.text, flags=re.IGNORECASE)
+        
         # Sinopsis
-        sinopsis = slides[0].strip().replace(title, "")
+        sinopsis = re.sub(r'(\w+[,!\?\'\/\-\s\w]*(\[[^\]]*\])+)', "", slides[0].strip())
 
         # Specifications
         specifications = slides[2].strip()
@@ -447,11 +452,11 @@ class VN_Scraper:
 
 if __name__ == '__main__':
     scraper = VN_Scraper()
-    #post = Post("PruebaPOST", "http://www.visualnovelparapc.com/2022/10/hanachirasu.html", "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiloJxDae8yr-lKe0eAj2xmyekmU8SGMHpx2gX5hcXYLDcm1JBq2x4hfxMmfUtEiUs4UgFML7keBJaKKUlWsqwDOjDy7_bc9Cp4AapY-HzJczqM-MlL56xdv2EBhbZ-5Wx7hkQykX1JcV4GuJ-Bzw9OrefPf4Hti9uPa0juL4s6DotQEv_l9C3WZQZpAm4/w400-h299/sms.png", "Esto es una prueba", [],"2024-02-06")
+    post = Post("Hanachirasu", "http://www.visualnovelparapc.com/2022/10/hanachirasu.html", "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiloJxDae8yr-lKe0eAj2xmyekmU8SGMHpx2gX5hcXYLDcm1JBq2x4hfxMmfUtEiUs4UgFML7keBJaKKUlWsqwDOjDy7_bc9Cp4AapY-HzJczqM-MlL56xdv2EBhbZ-5Wx7hkQykX1JcV4GuJ-Bzw9OrefPf4Hti9uPa0juL4s6DotQEv_l9C3WZQZpAm4/w400-h299/sms.png", "Esto es una prueba", [],"2024-02-06")
     
     
     
-    list_posts= scraper.get_kirikiroid2_section()
+    list_posts= scraper.get_post_detail(post)
     #print(list_posts)
 
     for post in list_posts:
