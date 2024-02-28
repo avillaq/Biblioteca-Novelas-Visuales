@@ -9,15 +9,17 @@
 {% block content %}
 
 <div class="main-container">
-    <h3 class="subtitle-text directory-subtitle" style="text-align: center;">Resultados para "{{ query }}" </h3>
+    
+    
     {% if not posts and not apk_posts and not kirikiroid2_posts%}
         <div class="no-result-containder">
-            <p>No se encontraron resultados :(</p>
-            <img src="{% static 'img/sadness.png' %}" alt="">
+            <p>No se encontraron resultados para: {{ query }}</p>
+            <img src="{% static 'img/sadness.png' %}" alt="" draggable=false>
             <p>No estes triste!!</p>
         </div>
 
     {% else %}
+        <h3 class="subtitle-text directory-subtitle" style="text-align: center;color:#fff;">Resultados para "{{ query }}" </h3>
         {% if posts %}
             <h3 class="subtitle-text directory-subtitle">Novelas Visuales para PC </h3>
             <div class="cards-container">
