@@ -1,5 +1,7 @@
 from django.db import models
 from django.urls import reverse
+import json
+from django.core.serializers.json import DjangoJSONEncoder
 
 class Category(models.Model):
     name = models.CharField(max_length=250)
@@ -34,6 +36,29 @@ class Post(models.Model):
                             self.date.month,
                             self.date.day,
                             self.slug])
+
+
+
+class PostDetail(models.Model):
+    post = models.OneToOneField(Post, on_delete=models.CASCADE)
+    synopsis = models.TextField()
+    image_urls = models.TextField(blank=True)
+    details = models.TextField(blank=True)
+
+    def set_image_urls(self, data):
+        self.image_urls = json.dumps(data, cls=DjangoJSONEncoder)
+
+    def get_image_urls(self):
+        return json.loads(self.image_urls)
+
+    def set_details(self, data):
+        self.details = json.dumps(data, cls=DjangoJSONEncoder)
+
+    def get_details(self):
+        return json.loads(self.details)
+
+    def __str__(self):
+        return self.post.title
 
 class Android_Post(models.Model):
     title = models.CharField(max_length=250)
