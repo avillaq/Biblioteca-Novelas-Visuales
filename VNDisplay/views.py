@@ -99,7 +99,11 @@ def novel_detail(request, year, month, day, title):
                             date__day=day)
     post_detail = PostDetail.objects.get(post=post)
 
-    return render(request, 'novel_detail.html', {'post': post, "post_detail": post_detail})
+    synopsis = post_detail.synopsis
+    image_urls = post_detail.get_image_urls()
+    features = post_detail.get_features()
+
+    return render(request, 'novel_detail.html', {'post': post, 'synopsis': synopsis, 'image_urls': image_urls, 'features': features})
 
 
 

@@ -4,16 +4,25 @@
 {% block content %}
     <div class="detail-container">
         <h1>{{ post.title }}</h1>
-        <p style="word-wrap: break-word;">{{ post.image_url }}</p>
-        
-        <p style="word-wrap: break-word;">{{ post_detail.synopsis }}</p>
-        <p style="word-wrap: break-word;">{{ post_detail.image_urls }}</p>
+        <img src="{{ post.image_url }}" alt="{{ post.title }}" >
+        <h2>Sinopsis</h2>
+        <p>{{ synopsis }}</p>
 
-        <p style="word-wrap: break-word;">{{ post_detail.features }}</p>
+        <div class="screenshots-container">
+            <h2>Screenshots</h2>
+            <div class="screenshots">
+                {% for image in image_urls %}
+                    <img src="{{ image }}" alt="{{ post.title }}" >
+                {% endfor %}
+            </div>
+        </div>
+
+        <h2>Características</h2>
+        {% for key, value in features.items %}
+            <p><strong>{{ key }}:</strong> {{ value }}</p>
+        {% endfor %}
 
 
     </div>
-
-    
 
 {% endblock %}
