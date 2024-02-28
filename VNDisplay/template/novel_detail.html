@@ -3,10 +3,14 @@
 
 {% block content %}
     <div class="detail-container">
-        {% for p in post %}
-        <p style="word-wrap: break-word;">{{ p }}</p>
+        <h1>{{ post.title }}</h1>
+        <p style="word-wrap: break-word;">{{ post.image_url }}</p>
+        
+        <p style="word-wrap: break-word;">{{ post_detail.synopsis }}</p>
+        <p style="word-wrap: break-word;">{{ post_detail.image_urls }}</p>
 
-        {% endfor %}
+        <p style="word-wrap: break-word;">{{ post_detail.features }}</p>
+
 
     </div>
 
