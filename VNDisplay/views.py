@@ -10,7 +10,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from VNDisplay.Post import VN_Scraper
 from VNDisplay.forms import PostFilterForm
-from VNDisplay.models import Post, Category, Android_Post, Type
+from VNDisplay.models import Post, Category, Android_Post, Type, PostDetail
 
 scraper = VN_Scraper()
 
@@ -91,6 +91,20 @@ def android_kirikiroid2(request):
     android_posts = Android_Post.objects.filter(type__name="kirikiroid2").order_by('-id')
     return render(request, 'android_kirikiroid2.html', {'android_posts': android_posts, 'emulador': kirikiroid2_emualtor})
 
+def novel_detail(request, year, month, day, title):
+    post = get_object_or_404(Post,
+                            slug=title,
+                            date__year=year,
+                            date__month=month,
+                            date__day=day)
+
+    post = scraper.get_post_detail(post)
+    return render(request, 'novel_detail.html', {'post': post})
+
+
+
+######################################### Auxiliary functions #########################################
+
 def verify_new_posts():
     if not Post.objects.exists():  #IMPORTANT: If there are no posts in the database. IT WILL TAKE A FEW MINUTES 
         posts = scraper.get_all_posts() 
@@ -115,6 +129,20 @@ def verify_new_posts():
                     post_category = Category.objects.get(name=label)
                     new_post.categories.add(post_category)
 
+def create_slug(full_url):
+    match = re.search(r"/([\w-]+)\.html", full_url)
+    if match:
+        match = match.group(1)
+    else:
+        raise ValueError(f"Invalid URL: {full_url}")
+    return match
+
+def create_post_detail(post):
+    title, main_image, synopsis, screenshots, features = scraper.get_post_detail(post)
+    post_detail = PostDetail.objects.create(post=post, synopsis=synopsis)
+    post_detail.set_image_urls({"main_image": main_image, "screenshots": screenshots})
+    post_detail.set_details(features)
+
 def verify_new_android_posts(type_name, scraper_function):
     posts = Android_Post.objects.filter(type__name=type_name)
     android_posts = scraper_function() 
@@ -136,20 +164,5 @@ def verify_new_android_posts(type_name, scraper_function):
 def verify_kirikiroid2_emulator():
     Type.objects.filter(name="kirikiroid2").update(resource=scraper.get_kirikiroid2_emulator())
 
-def create_slug(full_url):
-    match = re.search(r"/([\w-]+)\.html", full_url)
-    if match:
-        match = match.group(1)
-    else:
-        raise ValueError(f"Invalid URL: {full_url}")
-    return match
 
-def novel_detail(request, year, month, day, title):
-    post = get_object_or_404(Post,
-                            slug=title,
-                            date__year=year,
-                            date__month=month,
-                            date__day=day)
 
-    post = scraper.get_post_detail(post)
-    return render(request, 'novel_detail.html', {'post': post})

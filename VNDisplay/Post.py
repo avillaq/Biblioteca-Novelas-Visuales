@@ -237,7 +237,7 @@ class VN_Scraper:
         return self._get_posts(next_page)
     
 
-    def get_post_detail(self, post: Post = None) -> tuple[any]:
+    def get_post_detail(self, post: Post) -> tuple[any]:
 
         #Title
         title = post.title
