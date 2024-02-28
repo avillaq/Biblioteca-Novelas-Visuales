@@ -69,8 +69,14 @@ def directory(request):
 
 def search(request):
     query = request.GET.get('q')
-    print(f"Query: {query}")
+
+    if not query or query.strip() == '':
+        print(f"Error en la consulta: {query}")
+        return render(request, 'search.html', {'error': 'No se proporcionó ninguna consulta.La consulta está vacía.'})
+
+    # Realizar la búsqueda
     #posts = Post.objects.filter(title__icontains=query)
+    print(f"Exito: {query}")
     return render(request, 'search.html')
     #return render(request, 'search.html', {'posts': posts, 'query': query})
 
