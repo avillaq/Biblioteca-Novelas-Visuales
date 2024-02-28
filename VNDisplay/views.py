@@ -74,9 +74,8 @@ def search(request):
         print('No se proporcionó ninguna consulta.La consulta estáasddsa vacía.')
         return render(request, 'search.html', {'error': 'No se proporcionó ninguna consulta.La consulta está vacía.'})
 
-    #posts = Post.objects.filter(title__icontains=query)
-    return render(request, 'search.html')
-    #return render(request, 'search.html', {'posts': posts, 'query': query})
+    posts = Post.objects.filter(title__icontains=query)
+    return render(request, 'search.html', {'posts': posts, 'query': query})
 
 def android(request):
     return render(request, 'android.html')
