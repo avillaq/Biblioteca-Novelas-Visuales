@@ -17,11 +17,14 @@
             </div>
         </div>
 
-        <h2>Características</h2>
-        {% for key, value in features.items %}
-            <p><strong>{{ key }}:</strong> {{ value }}</p>
-        {% endfor %}
+        <div class="feature-container">
+            <h2>Características</h2>
+            {% for key, value in features.items %}
+                <p><strong>{{ key }}:</strong> {{ value }}</p>
+            {% endfor %}
 
+            <a href="{{ post.full_url }}" target="_blank">Ver en la pagina original</a>
+        </div>
 
     </div>
 
