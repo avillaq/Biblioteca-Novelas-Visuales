@@ -72,7 +72,7 @@ def search(request):
 
     if not query or query.strip() == '' or len(query) < 3:
         print('No se proporcionó ninguna consulta.La consulta estáasddsa vacía.')
-        return render(request, 'search.html', {'error': 'No se proporcionó ninguna consulta.La consulta está vacía.'})
+        return render(request, 'search.html',{'posts': None, 'query': query})
 
     posts = Post.objects.filter(title__icontains=query)
     return render(request, 'search.html', {'posts': posts, 'query': query})
