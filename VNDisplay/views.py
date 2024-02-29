@@ -103,7 +103,6 @@ def novel_detail(request, year, month, day, title):
     return render(request, 'novel_detail.html', {'post': post, 'synopsis': synopsis, 'image_urls': image_urls, 'features': features})
 
 
-
 ######################################### Auxiliary functions #########################################
 
 def verify_new_posts():

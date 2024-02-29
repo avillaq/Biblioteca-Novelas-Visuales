@@ -11,7 +11,4 @@ urlpatterns = [
     path('android/kirikiroid2', view=android_kirikiroid2, name='android_kirikiroid2'),
 
     path('novel/<int:year>/<int:month>/<int:day>/<slug:title>/', novel_detail, name='novel_detail'),
-
-
-
 ]
