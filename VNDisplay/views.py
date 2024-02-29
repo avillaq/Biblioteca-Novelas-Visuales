@@ -84,10 +84,7 @@ def android_apk(request):
     return render(request, 'android_apk.html', {'android_posts': android_posts})
 
 def android_kirikiroid2(request):
-    verify_new_android_posts("kirikiroid2", scraper.get_kirikiroid2_section)
-
     kirikiroid2_emualtor = Type.objects.get(name="kirikiroid2").resource
-
     android_posts = Android_Post.objects.filter(type__name="kirikiroid2").order_by('-id')
     return render(request, 'android_kirikiroid2.html', {'android_posts': android_posts, 'emulador': kirikiroid2_emualtor})
 
@@ -110,8 +107,8 @@ def novel_detail(request, year, month, day, title):
 ######################################### Auxiliary functions #########################################
 
 def verify_new_posts():
-    if not Post.objects.exists():  #IMPORTANT: If there are no posts in the database. IT WILL TAKE A FEW MINUTES 
-        posts = scraper.get_all_posts() 
+    if not Post.objects.exists():  #IMPORTANT: If there are no posts in the database. 
+        posts = scraper.get_all_posts() #IT WILL TAKE A FEW MINUTES TO SCRAPE ALL THE POSTS
         for post in reversed(posts):
             new_post = Post.objects.create(title=post.title, slug=create_slug(post.full_url), full_url=post.full_url, 
                                 image_url=post.image_url, description=post.description, 
@@ -119,6 +116,8 @@ def verify_new_posts():
             for label in post.labels:
                 post_category = Category.objects.get(name=label)
                 new_post.categories.add(post_category)
+            
+            #create_post_detail(new_post)  
 
     else: 
         posts = scraper.get_section("inicio")  
@@ -132,6 +131,8 @@ def verify_new_posts():
                 for label in post.labels:
                     post_category = Category.objects.get(name=label)
                     new_post.categories.add(post_category)
+
+                create_post_detail(new_post)
 
 def create_slug(full_url):
     match = re.search(r"/([\w-]+)\.html", full_url)
