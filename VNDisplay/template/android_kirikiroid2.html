@@ -40,7 +40,13 @@
             </p>
         </li>
     </ul>
-    <h3 class="subtitle-text android-subtitle-text">Lista completa: </h3>
+    <div class="container-subtitle-reload">
+        <h3 class="subtitle-text android-subtitle-text">Lista completa: </h3>
+        <form action="{% url 'VNDisplay:update_novels' %}">
+            <input type="hidden" value="kirikiroid2" name="novel-type">
+            <button type="submit" class="btnUpdate">Actualizar Novelas</button>
+        </form>
+    </div>
     <div class="cards-container">
         {% for p in android_posts %}
         <div class="novel android-novel">

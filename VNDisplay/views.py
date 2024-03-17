@@ -110,7 +110,7 @@ def update_novels(request):
     else:
         verify_new_android_posts("kirikiroid2", scraper.get_kirikiroid2_section)
         verify_kirikiroid2_emulator()
-        return redirect('/directorio')
+        return redirect('/android/kirikiroid2')
 
 
 ######################################### Auxiliary functions #########################################
