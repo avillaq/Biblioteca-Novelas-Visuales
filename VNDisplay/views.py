@@ -2,7 +2,7 @@ import re
 import random
 from datetime import datetime
 
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse
 
 # Pagination
@@ -101,6 +101,16 @@ def novel_detail(request, year, month, day, title):
     features = post_detail.get_features()
 
     return render(request, 'novel_detail.html', {'post': post, 'synopsis': synopsis, 'image_urls': image_urls, 'features': features})
+
+def update_novels(request):
+    query = request.GET.get('novel-type')
+    if query == "pc":
+        verify_new_posts()
+        return redirect('/')
+    else:
+        verify_new_android_posts("kirikiroid2", scraper.get_kirikiroid2_section)
+        verify_kirikiroid2_emulator()
+        return redirect('/directorio')
 
 
 ######################################### Auxiliary functions #########################################
