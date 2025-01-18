@@ -257,6 +257,7 @@ class VN_Scraper:
 
         post_detail = soup.find('div', class_='post-body')
 
+        print(title, url, main_image)
         # Images
         images = post_detail.find_all('img')[1:] # we discard the first image because we already have it in the post list
         images = [image.get('src') for image in images]
