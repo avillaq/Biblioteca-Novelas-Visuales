@@ -253,18 +253,44 @@ class VN_Blogger:
 
             feed = self.service.Get(query.ToUri())
 
-            if len(feed.entry) == 0:
+            if len(feed.entry) == 0 or start_index == 7:
                 break
 
             for entry in feed.entry:
                 full_url = self._decode_data(entry.link[4].href)
-                title = self._decode_data(entry.title.text)
 
-            
-                post = Post(title, full_url, )
+                title = self._decode_data(entry.title.text)
+                # Title exceptions to avoid. Maybe in the future there will be more exceptions like this
+                title_exceptions = ["Kirikiroid", "Noticias", "Android", "Encuesta", "Navidad", "Aprende"]
+                if any(exception in title for exception in title_exceptions):
+                    continue
+
+                synopsis = "synopsis"
+                cover_url = "cover_url"
+                screenshot_urls = "screenshot_urls"
+                specifications = "specifications"
+                
+                labels = []
+                label_mapping = {
+                    "Completo": "Completo",
+                    "sin h": "All Ages",
+                    "yuri": "Yuri",
+                    "otome": "Otome",
+                    "eroge": "Eroge"
+                }
+                for i in entry.category:
+                    formatted_label = self._decode_data(i.term)
+                    if label_mapping.get(formatted_label):
+                        labels.append(label_mapping[formatted_label])
+
+                publicaction_date = self._decode_data(entry.published.text)
+
+                update_date = self._decode_data(entry.updated.text)
+
+                post = Post(full_url, title, synopsis, cover_url, screenshot_urls, specifications, labels, publicaction_date, update_date)
                 list_posts.append(post)
 
-            break
+            start_index += max_results
 
         return list_posts
 
