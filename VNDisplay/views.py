@@ -8,11 +8,11 @@ from django.http import HttpResponse
 # Pagination
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-from VNDisplay.Post import VN_Scraper
+from VNDisplay.Post import VN_Blogger
 from VNDisplay.forms import PostFilterForm
 from VNDisplay.models import Post, Category, Android_Post, Type, PostDetail
 
-scraper = VN_Scraper()
+scraper = VN_Blogger()
 
 def home(request):
     posts = Post.objects.all()
