@@ -265,9 +265,14 @@ class VN_Blogger:
                 if any(exception in title for exception in title_exceptions):
                     continue
 
+                soup = BeautifulSoup(self._decode_data(entry.content.text), "html.parser")
+
                 synopsis = "synopsis"
-                cover_url = "cover_url"
-                screenshot_urls = "screenshot_urls"
+
+                images = soup.find_all("img")
+                cover_url = images[0].get("src")
+                screenshot_urls = [image.get("src") for image in images[1:]]
+                
                 specifications = "specifications"
                 
                 labels = []
