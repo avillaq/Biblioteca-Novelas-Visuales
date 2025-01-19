@@ -112,8 +112,8 @@ class VN_Blogger:
             "kirikiroid2": "http://www.visualnovelparapc.com/2022/06/android-kirikiroid.html"
         }
         self._current_page = 1
-        self_service = BloggerService()
-        self_blog_id = "6976968703909484667"
+        self._service = BloggerService()
+        self._blog_id = "6976968703909484667"
 
     @property
     def sections(self) -> dict[str, str]:
@@ -126,6 +126,14 @@ class VN_Blogger:
     @current_page.setter
     def current_page(self, value: int):
         self._current_page = value
+    
+    @property
+    def service(self) -> BloggerService:
+        return self._service
+    
+    @property
+    def blog_id(self) -> str:
+        return self._blog_id
 
     # Private Methods
     def _verify_section(self, section: str) -> str:
@@ -135,6 +143,11 @@ class VN_Blogger:
                 return key
 
         return None
+    
+    def _decode_data(self, data: str) -> str:
+        if isinstance(data, bytes):
+            return data.decode('utf-8')
+        return data
 
     def _get_posts(self, url : str) -> list[Post]:
         
@@ -229,21 +242,29 @@ class VN_Blogger:
 
 
     def get_all_posts(self) -> list[Post]: # Get all the posts of the web site (PC)
-        url = self.sections["inicio"]
-        list_posts = self._get_posts(url) # get the first page
+        query = BlogPostQuery(blog_id=self.blog_id)
 
-        header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.2151.97'}
-        response = requests.get(url, headers=header)
-        soup = BeautifulSoup(response.content, 'html.parser')
+        list_posts = []
+        start_index = 1
+        max_results = 3
+        while True:
+            query["start-index"] = str(start_index)
+            query["max-results"] = str(max_results)
 
-        url = soup.find('a', class_='blog-pager-older-link')
-        while url:
-            url = url.get('href')
-            list_posts += self._get_posts(url)
+            feed = self.service.Get(query.ToUri())
 
-            response = requests.get(url, headers=header)
-            soup = BeautifulSoup(response.content, 'html.parser')
-            url = soup.find('a', class_='blog-pager-older-link')
+            if len(feed.entry) == 0:
+                break
+
+            for entry in feed.entry:
+                full_url = self._decode_data(entry.link[4].href)
+                title = self._decode_data(entry.title.text)
+
+            
+                post = Post(title, full_url, )
+                list_posts.append(post)
+
+            break
 
         return list_posts
 
@@ -480,12 +501,11 @@ class VN_Blogger:
 
 
 if __name__ == '__main__':
-    scraper = VN_Scraper()
-    post = Post("Hanachirasu", "http://www.visualnovelparapc.com/2022/10/hanachirasu.html", "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiloJxDae8yr-lKe0eAj2xmyekmU8SGMHpx2gX5hcXYLDcm1JBq2x4hfxMmfUtEiUs4UgFML7keBJaKKUlWsqwDOjDy7_bc9Cp4AapY-HzJczqM-MlL56xdv2EBhbZ-5Wx7hkQykX1JcV4GuJ-Bzw9OrefPf4Hti9uPa0juL4s6DotQEv_l9C3WZQZpAm4/w400-h299/sms.png", "Esto es una prueba", [],"2024-02-06")
+    blogger = VN_Blogger()
+    """ post = Post("Hanachirasu", "http://www.visualnovelparapc.com/2022/10/hanachirasu.html", "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiloJxDae8yr-lKe0eAj2xmyekmU8SGMHpx2gX5hcXYLDcm1JBq2x4hfxMmfUtEiUs4UgFML7keBJaKKUlWsqwDOjDy7_bc9Cp4AapY-HzJczqM-MlL56xdv2EBhbZ-5Wx7hkQykX1JcV4GuJ-Bzw9OrefPf4Hti9uPa0juL4s6DotQEv_l9C3WZQZpAm4/w400-h299/sms.png", "Esto es una prueba", [],"2024-02-06") """
     
     
-    
-    list_posts= scraper.get_post_detail(post)
+    list_posts= blogger.get_all_posts()
     #print(list_posts)
 
     for post in list_posts:
