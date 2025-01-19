@@ -3,53 +3,79 @@ import re
 from bs4 import BeautifulSoup
 from datetime import datetime
 import locale
+from gdata.blogger.service import BloggerService
+from gdata.blogger.service import BlogPostQuery
 
 locale.setlocale(locale.LC_ALL, 'es_ES') # Set the locale to spanish
 
 # En esta clase se define la estructura de un post y se define el scraper para obtener los posts de la página web
 
 class Post:
-    def __init__(self, title: str, full_url: str, image_url: str, description: str, labels: list[str], date: str):
-        self._title = title
+    def __init__(self, 
+                full_url: str, 
+                title: str, 
+                synopsis: str, 
+                cover_url: str, 
+                screenshot_urls: list[str],
+                specifications: dict[str, str],
+                labels: list[str], 
+                publicaction_date: str,
+                update_date: str
+            ):
         self._full_url = full_url
-        self._image_url = image_url
-        self._description = description
+        self._title = title
+        self._synopsis = synopsis
+        self._cover_url = cover_url
+        self._screenshot_urls = screenshot_urls
+        self._specifications = specifications
         self._labels = labels
-        self._date = date
-
+        self._publicaction_date = publicaction_date
+        self._update_date = update_date
+    
+    @property
+    def full_url(self) -> str:
+        return self._full_url
+    
     @property
     def title(self) -> str:
         return self._title
 
     @property
-    def full_url(self) -> str:
-        return self._full_url
+    def synopsis(self) -> str:
+        return self._synopsis
 
     @property
-    def image_url(self) -> str:
-        return self._image_url
+    def cover_url(self) -> str:
+        return self._cover_url
 
     @property
-    def description(self) -> str:
-        return self._description
+    def screenshot_urls(self) -> list[str]:
+        return self._screenshot_urls
+    
+    @property
+    def specifications(self) -> dict[str, str]:
+        return self._specifications
 
     @property
     def labels(self) -> list[str]:
         return self._labels
     
     @property
-    def date(self) -> str:
-        return self._date
+    def publicaction_date(self) -> str:
+        return self._publicaction_date
     
+    @property
+    def update_date(self) -> str:
+        return self._update_date
 
     def __str__(self) -> str:
-        return f"Title: {self.title}\nUrl: {self.full_url}\nUrl Image: {self.image_url}\nDescription: {self.description}\nLabels: {self.labels}\nDate: {self.date}"
+        return f"Url: {self.full_url}\nTitle: {self.title}\nCover Image: {self.cover_url}\nSynopsis: {self.synopsis}\nScreenshots: {self.screenshot_urls}\nSpecifications: {self.specifications}\nLabels: {self.labels}\nPublication Date: {self.publicaction_date}\nUpdate Date: {self.update_date}"
 
 class Post_Android:
     def __init__(self, title: str, full_url: str, image_url: str, type: str):
         self._title = title
         self._full_url = full_url
-        self._image_url = image_url
+        self._cover_url = image_url
         self._type = type
 
     @property
@@ -62,7 +88,7 @@ class Post_Android:
 
     @property
     def image_url(self) -> str:
-        return self._image_url
+        return self._cover_url
     
     @property
     def type(self) -> str:
@@ -73,7 +99,7 @@ class Post_Android:
 
 
 
-class VN_Scraper:
+class VN_Blogger:
     def __init__(self):
         self._sections = {
             "inicio": "http://www.visualnovelparapc.com/",
@@ -86,6 +112,8 @@ class VN_Scraper:
             "kirikiroid2": "http://www.visualnovelparapc.com/2022/06/android-kirikiroid.html"
         }
         self._current_page = 1
+        self_service = BloggerService()
+        self_blog_id = "6976968703909484667"
 
     @property
     def sections(self) -> dict[str, str]:
@@ -160,8 +188,8 @@ class VN_Scraper:
                 image_url = post_body.find('img').get('src')
                 
                 # Description
-                post_description = post_body.text
-                description = post_description.strip().replace("\n", " ").replace(post_url.text, "")
+                post_synopsis = post_body.text
+                description = post_synopsis.strip().replace("\n", " ").replace(post_url.text, "")
 
                 # Labels
                 post_labels = post.find('span', class_='post-labels').text
