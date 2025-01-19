@@ -253,28 +253,47 @@ class VN_Blogger:
 
             feed = self.service.Get(query.ToUri())
 
-            if len(feed.entry) == 0 or start_index == 7:
+            if len(feed.entry) == 0 or start_index == 4:
                 break
 
             for entry in feed.entry:
+
+                # Full URL
                 full_url = self._decode_data(entry.link[4].href)
 
+                # Title
                 title = self._decode_data(entry.title.text)
                 # Title exceptions to avoid. Maybe in the future there will be more exceptions like this
                 title_exceptions = ["Kirikiroid", "Noticias", "Android", "Encuesta", "Navidad", "Aprende"]
                 if any(exception in title for exception in title_exceptions):
                     continue
 
-                soup = BeautifulSoup(self._decode_data(entry.content.text), "html.parser")
+                soup = BeautifulSoup("<html>"+self._decode_data(entry.content.text)+"</html>", "html.parser")
+                soup.find("p").decompose()
+                html_text = soup.find("html").text
+                expression = r"(Imágenes:|Imagenes:|Descarga Mega:|Descarga Mediafire:|Descarga OneDrive:)"
+                slides = re.split(expression, html_text, flags=re.IGNORECASE)
 
-                synopsis = "synopsis"
+                # Synopsis
+                synopsis = slides[0].strip()
 
+                # Cover and screenshots
                 images = soup.find_all("img")
                 cover_url = images[0].get("src")
                 screenshot_urls = [image.get("src") for image in images[1:]]
-                
-                specifications = "specifications"
-                
+
+                # Specifications
+                specifications = slides[2].strip()
+                expression = r"(Nombre|Genero|Tipo|Estudio|Tamaño del Archivo|Subtítulos|Subtitulos|Traducción Por|Traducción|Traduccion|Agradecimientos|Duración|Duracion)"
+                slides = re.split(expression, specifications, flags=re.IGNORECASE)[1:]
+
+                specifications = {}
+
+                # The odd elements are the keys and the even elements are the values 
+                for i in range(0, len(slides), 2):
+                    specifications[slides[i]] = slides[i+1].strip(': ').replace('\xa0', '')
+
+                # Labels
                 labels = []
                 label_mapping = {
                     "Completo": "Completo",
@@ -288,8 +307,8 @@ class VN_Blogger:
                     if label_mapping.get(formatted_label):
                         labels.append(label_mapping[formatted_label])
 
+                # Dates
                 publicaction_date = self._decode_data(entry.published.text)
-
                 update_date = self._decode_data(entry.updated.text)
 
                 post = Post(full_url, title, synopsis, cover_url, screenshot_urls, specifications, labels, publicaction_date, update_date)
