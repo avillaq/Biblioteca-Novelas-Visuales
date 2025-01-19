@@ -117,7 +117,7 @@ def update_novels(request):
 
 def verify_new_posts():
     if not Post.objects.exists():  #IMPORTANT: If there are no posts in the database. 
-        posts = scraper.get_all_posts() #IT WILL TAKE A FEW MINUTES TO SCRAPE ALL THE POSTS
+        posts = scraper.get_all_posts() #IT WILL TAKE A FEW MINUTES TO GET ALL THE POSTS
         for post in reversed(posts):
             new_post = Post.objects.create(title=post.title, slug=create_slug(post.full_url), full_url=post.full_url, 
                                 image_url=post.image_url, description=post.description, 
@@ -125,8 +125,6 @@ def verify_new_posts():
             for label in post.labels:
                 post_category = Category.objects.get(name=label)
                 new_post.categories.add(post_category)
-            
-            #create_post_detail(new_post)  
 
     else: 
         posts = scraper.get_section("inicio")  
@@ -141,8 +139,6 @@ def verify_new_posts():
                     post_category = Category.objects.get(name=label)
                     new_post.categories.add(post_category)
 
-                create_post_detail(new_post)
-
 def create_slug(full_url):
     match = re.search(r"/([\w-]+)\.html", full_url)
     if match:
@@ -150,13 +146,6 @@ def create_slug(full_url):
     else:
         raise ValueError(f"Invalid URL: {full_url}")
     return match
-
-def create_post_detail(post):
-    title, main_image, synopsis, screenshots, features = scraper.get_post_detail(post)
-    post_detail = PostDetail.objects.create(post=post, synopsis=synopsis)
-    post_detail.set_image_urls(screenshots)
-    post_detail.set_features(features)
-    post_detail.save()
     
 
 def verify_new_android_posts(type_name, scraper_function):
