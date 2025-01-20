@@ -119,7 +119,9 @@ def verify_new_posts():
     if not Post.objects.exists():  #IMPORTANT: If there are no posts in the database. 
         posts = scraper.get_all_posts() #IT WILL TAKE A FEW MINUTES TO GET ALL THE POSTS
         for post in reversed(posts):
-            new_post = Post.objects.create(title=post.title, slug=create_slug(post.full_url), full_url=post.full_url, 
+            new_post = Post.objects.create(
+                                    title=post.title,
+                                    slug=create_slug(post.full_url), full_url=post.full_url, 
                                 image_url=post.image_url, description=post.description, 
                                 date=post.date)
             for label in post.labels:
