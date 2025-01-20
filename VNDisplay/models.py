@@ -14,17 +14,31 @@ class Category(models.Model):
 
 class Post(models.Model):
 
+    id_post = models.CharField(max_length=250, unique=True)
     title = models.CharField(max_length=250)
-    slug = models.SlugField(max_length=250,
-                            unique_for_date='date')
     full_url = models.URLField(max_length=250)
-    image_url = models.URLField(max_length=250)
-    description = models.TextField()
+    synopsis = models.TextField()
+    cover_url = models.URLField(max_length=250)
+    screenshot_urls = models.TextField(blank=True)
+    specifications = models.TextField(blank=True)
     categories = models.ManyToManyField(Category)
-    date = models.DateField()
+    publicaction_date = models.DateField()
+    update_date = models.DateField()
 
     class Meta:
         db_table = "post"
+
+    def set_screenshot_urls(self, data):
+        self.screenshot_urls = json.dumps(data, cls=DjangoJSONEncoder)
+    
+    def get_screenshot_urls(self):
+        return json.loads(self.screenshot_urls)
+    
+    def set_specifications(self, data):
+        self.specifications = json.dumps(data, cls=DjangoJSONEncoder)
+    
+    def get_specifications(self):
+        return json.loads(self.specifications)
 
     def __str__(self):
         return self.title
@@ -32,36 +46,7 @@ class Post(models.Model):
     #IMPORTANT This method will return the canonical URL for a post
     def get_absolute_url(self):
         return reverse('VNDisplay:novel_detail',
-                       args=[self.date.year,
-                            self.date.month,
-                            self.date.day,
-                            self.slug])
-
-
-
-class PostDetail(models.Model):
-    post = models.OneToOneField(Post, on_delete=models.CASCADE)
-    synopsis = models.TextField()
-    image_urls = models.TextField(blank=True)
-    features = models.TextField(blank=True)
-
-    def set_image_urls(self, data):
-        self.image_urls = json.dumps(data, cls=DjangoJSONEncoder)
-
-    def get_image_urls(self):
-        return json.loads(self.image_urls)
-
-    def set_features(self, data):
-        self.features = json.dumps(data, cls=DjangoJSONEncoder)
-
-    def get_features(self):
-        return json.loads(self.features)
-    
-    class Meta:
-        db_table = "post_detail"
-
-    def __str__(self):
-        return self.post.title
+                       args=[self.id_post])
 
 class Android_Post(models.Model):
     title = models.CharField(max_length=250)
