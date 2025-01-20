@@ -13,6 +13,7 @@ locale.setlocale(locale.LC_ALL, 'es_ES') # Set the locale to spanish
 class Post:
     def __init__(self, 
                 full_url: str, 
+                id_post: str,
                 title: str, 
                 synopsis: str, 
                 cover_url: str, 
@@ -23,6 +24,7 @@ class Post:
                 update_date: str
             ):
         self._full_url = full_url
+        self._id_post = id_post
         self._title = title
         self._synopsis = synopsis
         self._cover_url = cover_url
@@ -35,6 +37,10 @@ class Post:
     @property
     def full_url(self) -> str:
         return self._full_url
+    
+    @property
+    def id_post(self) -> str:
+        return self._id_post
     
     @property
     def title(self) -> str:
@@ -69,7 +75,7 @@ class Post:
         return self._update_date
 
     def __str__(self) -> str:
-        return f"Url: {self.full_url}\nTitle: {self.title}\nCover Image: {self.cover_url}\nSynopsis: {self.synopsis}\nScreenshots: {self.screenshot_urls}\nSpecifications: {self.specifications}\nLabels: {self.labels}\nPublication Date: {self.publicaction_date}\nUpdate Date: {self.update_date}"
+        return f"Url: {self.full_url}\ID: {self.id_post}\nTitle: {self.title}\nCover Image: {self.cover_url}\nSynopsis: {self.synopsis}\nScreenshots: {self.screenshot_urls}\nSpecifications: {self.specifications}\nLabels: {self.labels}\nPublication Date: {self.publicaction_date}\nUpdate Date: {self.update_date}"
 
 class Post_Android:
     def __init__(self, title: str, full_url: str, image_url: str, type: str):
@@ -260,6 +266,9 @@ class VN_Blogger:
 
                 # Full URL
                 full_url = self._decode_data(entry.link[4].href)
+
+                # Id Post
+                id_post = re.search(r"post-(\d+)", self._decode_data(entry.id.text)).group(1)
 
                 # Title
                 title = self._decode_data(entry.title.text)
