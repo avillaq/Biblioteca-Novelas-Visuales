@@ -222,15 +222,91 @@ class VN_Blogger:
         return list_posts
     
     # Public Methods
-    def get_section(self, section: str, params: dict[str, str]) -> list[Post]: ### Only scrap the first page of the section
-        section = self._verify_section(section)
+    def get_section(self,
+                    category: str = "inicio",
+                    start_index: int = 1,
+                    max_results: int = 25,
+                    published_min: str = None,
+                    published_max: str = None,
+                    ) -> list[Post]:
+        
+        section = self._verify_section(category)
         if not section:
             raise ValueError(f"Section {section} not found")
         
-        # Get the url of the section
-        url = self.sections[section]
-        
-        list_posts = self._get_posts(url)
+        query = BlogPostQuery(blog_id=self.blog_id)
+
+        list_posts = []
+        query["category"] = section
+        query["start-index"] = str(start_index)
+        query["max-results"] = str(max_results)
+        if published_min:
+            query["published-min"] = published_min
+        if published_max:
+            query["published-max"] = published_max
+
+        feed = self.service.Get(query.ToUri())
+
+        for entry in feed.entry:
+
+            # Full URL
+            full_url = self._decode_data(entry.link[4].href)
+
+            # Id Post
+            id_post = re.search(r"post-(\d+)", self._decode_data(entry.id.text)).group(1)
+
+            # Title
+            title = self._decode_data(entry.title.text)
+            # Title exceptions to avoid. Maybe in the future there will be more exceptions like this
+            title_exceptions = ["Kirikiroid", "Noticias", "Android", "Encuesta", "Navidad", "Aprende"]
+            if any(exception in title for exception in title_exceptions):
+                continue
+
+            soup = BeautifulSoup("<html>"+self._decode_data(entry.content.text)+"</html>", "html.parser")
+            soup.find("p").decompose()
+            html_text = soup.find("html").text
+            expression = r"(Imágenes:|Imagenes:|Descarga Mega:|Descarga Mediafire:|Descarga OneDrive:)"
+            slides = re.split(expression, html_text, flags=re.IGNORECASE)
+
+            # Synopsis
+            synopsis = slides[0].strip()
+
+            # Cover and screenshots
+            images = soup.find_all("img")
+            cover_url = images[0].get("src")
+            screenshot_urls = [image.get("src") for image in images[1:]]
+
+            # Specifications
+            specifications = slides[2].strip()
+            expression = r"(Nombre|Genero|Tipo|Estudio|Tamaño del Archivo|Subtítulos|Subtitulos|Traducción Por|Traducción|Traduccion|Agradecimientos|Duración|Duracion)"
+            slides = re.split(expression, specifications, flags=re.IGNORECASE)[1:]
+
+            specifications = {}
+
+            # The odd elements are the keys and the even elements are the values 
+            for i in range(0, len(slides), 2):
+                specifications[slides[i]] = slides[i+1].strip(': ').replace('\xa0', '')
+
+            # Labels
+            labels = []
+            label_mapping = {
+                "Completo": "Completo",
+                "sin h": "All Ages",
+                "yuri": "Yuri",
+                "otome": "Otome",
+                "eroge": "Eroge"
+            }
+            for i in entry.category:
+                formatted_label = self._decode_data(i.term)
+                if label_mapping.get(formatted_label):
+                    labels.append(label_mapping[formatted_label])
+
+            # Dates
+            publication_date = datetime.strptime(self._decode_data(entry.published.text), "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%Y-%m-%d")
+            update_date = datetime.strptime(self._decode_data(entry.updated.text), "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%Y-%m-%d")
+
+            post = Post(full_url, id_post, title, synopsis, cover_url, screenshot_urls, specifications, labels, publication_date, update_date)
+            list_posts.append(post)
 
         return list_posts
 
