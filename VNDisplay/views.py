@@ -120,7 +120,7 @@ def verify_new_posts():
                                 full_url=post.full_url,
                                 synopsis=post.synopsis,
                                 cover_url=post.cover_url,
-                                publicaction_date=post.publicaction_date,
+                                publication_date=post.publication_date,
                                 update_date=post.update_date
                             )
             new_post.set_screenshot_urls(post.screenshot_urls)
@@ -135,27 +135,24 @@ def verify_new_posts():
         posts = blogger.get_section("inicio")  
         latest_post = Post.objects.latest('id')
         for post in reversed(posts):
-            post_date = datetime.strptime(post.date, '%Y-%m-%d').date()
-            if post_date > latest_post.date:
+            post_date = datetime.strptime(post.publication_date, '%Y-%m-%d').date()
+            if post_date > latest_post.publication_date:
                 new_post = Post.objects.create(
-                                        title=post.title, 
-                                        slug=create_slug(post.full_url), 
-                                        full_url=post.full_url, 
-                                        image_url=post.image_url, 
-                                        description=post.description, 
-                                        date=post.date
-                                    )
+                                    id_post=new_post.id_post, 
+                                    title=new_post.title, 
+                                    full_url=new_post.full_url,
+                                    synopsis=new_post.synopsis,
+                                    cover_url=new_post.cover_url,
+                                    publication_date=new_post.publication_date,
+                                    update_date=new_post.update_date
+                                )
+                new_post.set_screenshot_urls(new_post.screenshot_urls)
+                new_post.set_specifications(new_post.specifications)
+                new_post.save()
+                
                 for label in post.labels:
                     post_category = Category.objects.get(name=label)
                     new_post.categories.add(post_category)
-
-def create_slug(full_url):
-    match = re.search(r"/([\w-]+)\.html", full_url)
-    if match:
-        match = match.group(1)
-    else:
-        raise ValueError(f"Invalid URL: {full_url}")
-    return match
     
 
 def verify_new_android_posts(type_name, scraper_function):

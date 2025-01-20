@@ -22,7 +22,7 @@ class Post(models.Model):
     screenshot_urls = models.TextField(blank=True)
     specifications = models.TextField(blank=True)
     categories = models.ManyToManyField(Category)
-    publicaction_date = models.DateField()
+    publication_date = models.DateField()
     update_date = models.DateField()
 
     class Meta:
