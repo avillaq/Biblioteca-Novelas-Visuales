@@ -305,8 +305,8 @@ class VN_Blogger:
                         labels.append(label_mapping[formatted_label])
 
                 # Dates
-                publicaction_date = self._decode_data(entry.published.text)
-                update_date = self._decode_data(entry.updated.text)
+                publicaction_date = datetime.strptime(self._decode_data(entry.published.text), "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%Y-%m-%d")
+                update_date = datetime.strptime(self._decode_data(entry.updated.text), "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%Y-%m-%d")
 
                 post = Post(full_url, id_post, title, synopsis, cover_url, screenshot_urls, specifications, labels, publicaction_date, update_date)
                 list_posts.append(post)
