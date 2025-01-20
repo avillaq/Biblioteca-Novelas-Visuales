@@ -10,9 +10,9 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from VNDisplay.Post import VN_Blogger
 from VNDisplay.forms import PostFilterForm
-from VNDisplay.models import Post, Category, Android_Post, Type, PostDetail
+from VNDisplay.models import Post, Category, Android_Post, Type
 
-scraper = VN_Blogger()
+blogger = VN_Blogger()
 
 def home(request):
     posts = Post.objects.all()
@@ -88,19 +88,14 @@ def android_kirikiroid2(request):
     android_posts = Android_Post.objects.filter(type__name="kirikiroid2").order_by('-id')
     return render(request, 'android_kirikiroid2.html', {'android_posts': android_posts, 'emulador': kirikiroid2_emualtor})
 
-def novel_detail(request, year, month, day, title):
+def novel_detail(request, id_post):
     post = get_object_or_404(Post,
-                            slug=title,
-                            date__year=year,
-                            date__month=month,
-                            date__day=day)
-    post_detail = PostDetail.objects.get(post=post)
+                            id_post=id_post)
 
-    synopsis = post_detail.synopsis
-    image_urls = post_detail.get_image_urls()
-    features = post_detail.get_features()
+    screenshot_urls = post.get_screenshot_urls()
+    specifications = post.get_specifications()
 
-    return render(request, 'novel_detail.html', {'post': post, 'synopsis': synopsis, 'image_urls': image_urls, 'features': features})
+    return render(request, 'novel_detail.html', {'post': post, 'screenshot_urls': screenshot_urls, 'specifications': specifications})
 
 def update_novels(request):
     query = request.GET.get('novel-type')
@@ -108,7 +103,7 @@ def update_novels(request):
         verify_new_posts()
         return redirect('/')
     else:
-        verify_new_android_posts("kirikiroid2", scraper.get_kirikiroid2_section)
+        verify_new_android_posts("kirikiroid2", blogger.get_kirikiroid2_section)
         verify_kirikiroid2_emulator()
         return redirect('/android/kirikiroid2')
 
@@ -117,7 +112,7 @@ def update_novels(request):
 
 def verify_new_posts():
     if not Post.objects.exists():  #IMPORTANT: If there are no posts in the database. 
-        posts = scraper.get_all_posts() #IT WILL TAKE A FEW MINUTES TO GET ALL THE POSTS
+        posts = blogger.get_all_posts() #IT WILL TAKE A FEW MINUTES TO GET ALL THE POSTS
         for post in reversed(posts):
             new_post = Post.objects.create(
                                     title=post.title,
@@ -129,14 +124,19 @@ def verify_new_posts():
                 new_post.categories.add(post_category)
 
     else: 
-        posts = scraper.get_section("inicio")  
+        posts = blogger.get_section("inicio")  
         latest_post = Post.objects.latest('id')
         for post in reversed(posts):
             post_date = datetime.strptime(post.date, '%Y-%m-%d').date()
             if post_date > latest_post.date:
-                new_post = Post.objects.create(title=post.title, slug=create_slug(post.full_url), full_url=post.full_url, 
-                                    image_url=post.image_url, description=post.description, 
-                                    date=post.date)
+                new_post = Post.objects.create(
+                                        title=post.title, 
+                                        slug=create_slug(post.full_url), 
+                                        full_url=post.full_url, 
+                                        image_url=post.image_url, 
+                                        description=post.description, 
+                                        date=post.date
+                                    )
                 for label in post.labels:
                     post_category = Category.objects.get(name=label)
                     new_post.categories.add(post_category)
@@ -169,7 +169,7 @@ def verify_new_android_posts(type_name, scraper_function):
                                     image_url=post.image_url, type=post_type)
 
 def verify_kirikiroid2_emulator():
-    Type.objects.filter(name="kirikiroid2").update(resource=scraper.get_kirikiroid2_emulator())
+    Type.objects.filter(name="kirikiroid2").update(resource=blogger.get_kirikiroid2_emulator())
 
 
 
