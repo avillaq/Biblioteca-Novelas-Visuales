@@ -12,5 +12,5 @@ urlpatterns = [
     path('update/', view=update_novels, name='update_novels'),
 
 
-    path('novel/<int:year>/<int:month>/<int:day>/<slug:title>/', novel_detail, name='novel_detail'),
+    path('novel/<str:id_post>/', novel_detail, name='novel_detail'),
 ]
