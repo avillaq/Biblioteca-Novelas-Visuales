@@ -3,8 +3,8 @@ from .models import Post, Category, Android_Post, Type
 
 @admin.register(Post) # if you want to register the model with the custom admin interface
 class PostAdmin(admin.ModelAdmin): 
-    list_display = ["title", "categories", "publicaction_date", "update_date"]
-    list_filter = ["title", "categories", "publicaction_date", "update_date"]
+    list_display = ["title", "publicaction_date", "update_date"]
+    list_filter = ["title", "publicaction_date", "update_date"]
     search_fields = ["title"]
     ordering = ["publicaction_date", "update_date"]
 
