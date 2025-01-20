@@ -8,8 +8,6 @@ from gdata.blogger.service import BlogPostQuery
 
 locale.setlocale(locale.LC_ALL, 'es_ES') # Set the locale to spanish
 
-# En esta clase se define la estructura de un post y se define el scraper para obtener los posts de la página web
-
 class Post:
     def __init__(self, 
                 full_url: str, 
@@ -75,7 +73,7 @@ class Post:
         return self._update_date
 
     def __str__(self) -> str:
-        return f"Url: {self.full_url}\ID: {self.id_post}\nTitle: {self.title}\nCover Image: {self.cover_url}\nSynopsis: {self.synopsis}\nScreenshots: {self.screenshot_urls}\nSpecifications: {self.specifications}\nLabels: {self.labels}\nPublication Date: {self.publicaction_date}\nUpdate Date: {self.update_date}"
+        return f"Url: {self.full_url}\nID: {self.id_post}\nTitle: {self.title}\nCover Image: {self.cover_url}\nSynopsis: {self.synopsis}\nScreenshots: {self.screenshot_urls}\nSpecifications: {self.specifications}\nLabels: {self.labels}\nPublication Date: {self.publicaction_date}\nUpdate Date: {self.update_date}"
 
 class Post_Android:
     def __init__(self, title: str, full_url: str, image_url: str, type: str):
@@ -117,21 +115,12 @@ class VN_Blogger:
             "apk": "http://www.visualnovelparapc.com/2022/01/android-apk.html",
             "kirikiroid2": "http://www.visualnovelparapc.com/2022/06/android-kirikiroid.html"
         }
-        self._current_page = 1
         self._service = BloggerService()
         self._blog_id = "6976968703909484667"
 
     @property
     def sections(self) -> dict[str, str]:
         return self._sections
-
-    @property
-    def current_page(self) -> int:
-        return self._current_page
-    
-    @current_page.setter
-    def current_page(self, value: int):
-        self._current_page = value
     
     @property
     def service(self) -> BloggerService:
@@ -147,7 +136,6 @@ class VN_Blogger:
         for key in self.sections:
             if key.lower() == section:
                 return key
-
         return None
     
     def _decode_data(self, data: str) -> str:
@@ -320,78 +308,12 @@ class VN_Blogger:
                 publicaction_date = self._decode_data(entry.published.text)
                 update_date = self._decode_data(entry.updated.text)
 
-                post = Post(full_url, title, synopsis, cover_url, screenshot_urls, specifications, labels, publicaction_date, update_date)
+                post = Post(full_url, id_post, title, synopsis, cover_url, screenshot_urls, specifications, labels, publicaction_date, update_date)
                 list_posts.append(post)
 
             start_index += max_results
 
         return list_posts
-
-    
-    def get_next_page_section(self, section: str) -> list[Post]: # Only get the second page of the section
-        section = self._verify_section(section)
-        if not section:
-            raise ValueError(f"Section {section} not found")
-        
-        # Get the url of the section
-        url = self.sections[section]   
-
-        # Get the next page 
-        header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.2151.97'}
-        response = requests.get(url, headers=header)
-        soup = BeautifulSoup(response.content, 'html.parser')
-
-        next_page = soup.find('a', class_='blog-pager-older-link').get('href')
-        return self._get_posts(next_page)
-    
-
-    def get_post_detail(self, post: Post) -> tuple[any]:
-
-        #Title
-        title = post.title
-
-        # Main image
-        main_image = post.image_url
-
-        url = post.full_url
-
-        try:
-            header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.2151.97'}
-            response = requests.get(url, headers=header)
-        except requests.exceptions.ConnectionError as e:
-            print("Internet connection error. Please check your connection.")
-            return ()
-        soup = BeautifulSoup(response.content, 'html.parser')
-
-        post_detail = soup.find('div', class_='post-body')
-
-        print(title, url, main_image)
-        # Images
-        images = post_detail.find_all('img')[1:] # we discard the first image because we already have it in the post list
-        images = [image.get('src') for image in images]
-
-
-        expression = r"(Imágenes:|Imagenes:|Descarga Mega:|Descarga Mediafire:)"
-        slides = re.split(expression, post_detail.text, flags=re.IGNORECASE)
-        
-        # Sinopsis
-        sinopsis = re.sub(r'(\w+[,!\?\'\/\-\s\w]*(\[[^\]]*\])+)', "", slides[0].strip())
-
-        # Specifications
-        specifications = slides[2].strip()
-        expression = r"(Nombre|Genero|Tipo|Estudio|Tamaño del Archivo|Subtítulos|Subtitulos|Traducción Por|Traducción|Traduccion|Agradecimientos|Duración|Duracion)"
-        slides = re.split(expression, specifications, flags=re.IGNORECASE)[1:]
-
-        specifications = {}
-
-        # The odd elements are the keys and the even elements are the values 
-        for i in range(0, len(slides), 2):
-            specifications[slides[i]] = slides[i+1].strip(': ').replace('\xa0', '')
-
-        # Return the post detail
-        post_detail = (title, main_image, sinopsis, images, specifications)
-        
-        return post_detail
 
     # APK  http://www.visualnovelparapc.com/2022/01/android-apk.html
     ############################# The APK section is different from the others, so we need to scrap it differently #############################
