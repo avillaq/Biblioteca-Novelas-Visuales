@@ -188,6 +188,13 @@ header {
     justify-content: space-between;
     align-items: center;
 }
+.container-nodata-subtitle-reload{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    margin: 50px 0;
+}
 
 .subtitle-text {
     color: var(--text-color);

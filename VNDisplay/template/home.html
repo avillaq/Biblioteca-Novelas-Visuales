@@ -17,55 +17,63 @@
 
 {% block content %}
 
-
-
-<div class="carousel-container">
-    <h3 class="subtitle-text">Podria interesarte: </h3>
-    <div class="swiper">
-        <div class="swiper-wrapper">
-            {% for post in carousel_posts %}
-            <div class="swiper-slide">
-                <a href="{{ post.get_absolute_url }}">
-                    <img src="{{ post.image_url }}" alt="">
-                </a>
+    {% if not last_posts %}
+        <div class="main-container">
+            <div class="container-nodata-subtitle-reload">
+                <h3 class="subtitle-text">No hay novelas visuales disponibles, intenta actualizar.</h3>
+                <form action="{% url 'VNDisplay:update_novels' %}">
+                    <input type="hidden" value="pc" name="novel-type">
+                    <button type="submit" class="btnUpdate">Actualizar Novelas</button>
+                </form>
             </div>
-            {% endfor %}
-        </div>
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
-    </div>
-
-</div>
-
-
-<div class="main-container">
-    <div class="container-subtitle-reload">
-        <h3 class="subtitle-text">Ultimas Novelas</h3>
-        <form action="{% url 'VNDisplay:update_novels' %}">
-            <input type="hidden" value="pc" name="novel-type">
-            <button type="submit" class="btnUpdate">Actualizar Novelas</button>
-        </form>
-    </div>
-    <div class="cards-container">
-        {% for p in last_posts %}
-        <div class="novel">
-            <a href="{{ p.get_absolute_url }}">
-                <img src="{{ p.image_url }}" alt="img">
-                <div class="novel-info">
-                    <p>{{ p.title }}</p>
-                </div>
-                <div class="overview">
-                    <span>{{ p.description }}</span>
-                </div>
-            </a>
         </div>
 
-        {% endfor %}
+    {% else %}
+        <div class="carousel-container">
+            <h3 class="subtitle-text">Podria interesarte: </h3>
+            <div class="swiper">
+                <div class="swiper-wrapper">
+                    {% for post in carousel_posts %}
+                    <div class="swiper-slide">
+                        <a href="{{ post.get_absolute_url }}">
+                            <img src="{{ post.image_url }}" alt="">
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+
+        </div>
 
 
-    </div>
+        <div class="main-container">
+            <div class="container-subtitle-reload">
+                <h3 class="subtitle-text">Ultimas Novelas</h3>
+                <form action="{% url 'VNDisplay:update_novels' %}">
+                    <input type="hidden" value="pc" name="novel-type">
+                    <button type="submit" class="btnUpdate">Actualizar Novelas</button>
+                </form>
+            </div>
+            <div class="cards-container">
+                {% for p in last_posts %}
+                <div class="novel">
+                    <a href="{{ p.get_absolute_url }}">
+                        <img src="{{ p.image_url }}" alt="img">
+                        <div class="novel-info">
+                            <p>{{ p.title }}</p>
+                        </div>
+                        <div class="overview">
+                            <span>{{ p.description }}</span>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
 
-</div>
+            </div>
+        </div>
+    {% endif %}
 
 
 {% endblock %}
