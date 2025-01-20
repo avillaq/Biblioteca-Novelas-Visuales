@@ -6,12 +6,12 @@
         <h1>{{ post.title }}</h1>
         <img src="{{ post.image_url }}" alt="{{ post.title }}" >
         <h2>Sinopsis</h2>
-        <p>{{ synopsis }}</p>
+        <p>{{ post.synopsis }}</p>
 
         <div class="screenshots-container">
             <h2>Screenshots</h2>
             <div class="screenshots">
-                {% for image in image_urls %}
+                {% for image in screenshot_urls %}
                     <img src="{{ image }}" alt="{{ post.title }}" >
                 {% endfor %}
             </div>
@@ -19,7 +19,7 @@
 
         <div class="feature-container">
             <h2>Características</h2>
-            {% for key, value in features.items %}
+            {% for key, value in specifications.items %}
                 <p><strong>{{ key }}:</strong> {{ value }}</p>
             {% endfor %}
 
