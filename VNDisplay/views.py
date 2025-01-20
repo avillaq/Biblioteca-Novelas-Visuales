@@ -120,12 +120,13 @@ def verify_new_posts():
                                 full_url=post.full_url,
                                 synopsis=post.synopsis,
                                 cover_url=post.cover_url,
-                                screenshot_urls=post.screenshot_urls, 
-                                specifications=post.specifications,
                                 publicaction_date=post.publicaction_date,
                                 update_date=post.update_date
                             )
-            
+            new_post.set_screenshot_urls(post.screenshot_urls)
+            new_post.set_specifications(post.specifications)
+            new_post.save()
+
             for label in post.labels:
                 post_category = Category.objects.get(name=label)
                 new_post.categories.add(post_category)
