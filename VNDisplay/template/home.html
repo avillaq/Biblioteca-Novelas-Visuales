@@ -36,7 +36,7 @@
                     {% for post in carousel_posts %}
                     <div class="swiper-slide">
                         <a href="{{ post.get_absolute_url }}">
-                            <img src="{{ post.image_url }}" alt="">
+                            <img src="{{ post.cover_url }}" alt="">
                         </a>
                     </div>
                     {% endfor %}
@@ -60,12 +60,12 @@
                 {% for p in last_posts %}
                 <div class="novel">
                     <a href="{{ p.get_absolute_url }}">
-                        <img src="{{ p.image_url }}" alt="img">
+                        <img src="{{ p.cover_url }}" alt="img">
                         <div class="novel-info">
                             <p>{{ p.title }}</p>
                         </div>
                         <div class="overview">
-                            <span>{{ p.description }}</span>
+                            <span>{{ p.synopsis }}</span>
                         </div>
                     </a>
                 </div>
