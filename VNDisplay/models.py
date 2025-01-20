@@ -14,7 +14,7 @@ class Category(models.Model):
 
 class Post(models.Model):
 
-    id_post = models.CharField(max_length=250, unique=True)
+    id_post = models.CharField(max_length=250, unique=True, blank=True)
     title = models.CharField(max_length=250)
     full_url = models.URLField(max_length=250)
     synopsis = models.TextField()
