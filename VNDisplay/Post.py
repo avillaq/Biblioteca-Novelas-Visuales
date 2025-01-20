@@ -18,7 +18,7 @@ class Post:
                 screenshot_urls: list[str],
                 specifications: dict[str, str],
                 labels: list[str], 
-                publicaction_date: str,
+                publication_date: str,
                 update_date: str
             ):
         self._full_url = full_url
@@ -29,7 +29,7 @@ class Post:
         self._screenshot_urls = screenshot_urls
         self._specifications = specifications
         self._labels = labels
-        self._publicaction_date = publicaction_date
+        self._publication_date = publication_date
         self._update_date = update_date
     
     @property
@@ -65,15 +65,15 @@ class Post:
         return self._labels
     
     @property
-    def publicaction_date(self) -> str:
-        return self._publicaction_date
+    def publication_date(self) -> str:
+        return self._publication_date
     
     @property
     def update_date(self) -> str:
         return self._update_date
 
     def __str__(self) -> str:
-        return f"Url: {self.full_url}\nID: {self.id_post}\nTitle: {self.title}\nCover Image: {self.cover_url}\nSynopsis: {self.synopsis}\nScreenshots: {self.screenshot_urls}\nSpecifications: {self.specifications}\nLabels: {self.labels}\nPublication Date: {self.publicaction_date}\nUpdate Date: {self.update_date}"
+        return f"Url: {self.full_url}\nID: {self.id_post}\nTitle: {self.title}\nCover Image: {self.cover_url}\nSynopsis: {self.synopsis}\nScreenshots: {self.screenshot_urls}\nSpecifications: {self.specifications}\nLabels: {self.labels}\nPublication Date: {self.publication_date}\nUpdate Date: {self.update_date}"
 
 class Post_Android:
     def __init__(self, title: str, full_url: str, image_url: str, type: str):
@@ -222,7 +222,7 @@ class VN_Blogger:
         return list_posts
     
     # Public Methods
-    def get_section(self, section: str) -> list[Post]: ### Only scrap the first page of the section
+    def get_section(self, section: str, params: dict[str, str]) -> list[Post]: ### Only scrap the first page of the section
         section = self._verify_section(section)
         if not section:
             raise ValueError(f"Section {section} not found")
@@ -305,10 +305,10 @@ class VN_Blogger:
                         labels.append(label_mapping[formatted_label])
 
                 # Dates
-                publicaction_date = datetime.strptime(self._decode_data(entry.published.text), "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%Y-%m-%d")
+                publication_date = datetime.strptime(self._decode_data(entry.published.text), "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%Y-%m-%d")
                 update_date = datetime.strptime(self._decode_data(entry.updated.text), "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%Y-%m-%d")
 
-                post = Post(full_url, id_post, title, synopsis, cover_url, screenshot_urls, specifications, labels, publicaction_date, update_date)
+                post = Post(full_url, id_post, title, synopsis, cover_url, screenshot_urls, specifications, labels, publication_date, update_date)
                 list_posts.append(post)
 
             start_index += max_results
