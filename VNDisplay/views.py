@@ -17,7 +17,7 @@ blogger = VN_Blogger()
 def home(request):
     posts = Post.objects.all()
 
-    carousel_posts = random.sample(list(posts), 10)
+    carousel_posts = random.sample(list(posts), 0)
     last_posts = posts.order_by('-id')[:32]
 
     return render(request, 'home.html', {'carousel_posts': carousel_posts, 
@@ -115,10 +115,17 @@ def verify_new_posts():
         posts = blogger.get_all_posts() #IT WILL TAKE A FEW MINUTES TO GET ALL THE POSTS
         for post in reversed(posts):
             new_post = Post.objects.create(
-                                    title=post.title,
-                                    slug=create_slug(post.full_url), full_url=post.full_url, 
-                                image_url=post.image_url, description=post.description, 
-                                date=post.date)
+                                id_post=post.id_post, 
+                                title=post.title, 
+                                full_url=post.full_url,
+                                synopsis=post.synopsis,
+                                cover_url=post.cover_url,
+                                screenshot_urls=post.screenshot_urls, 
+                                specifications=post.specifications,
+                                publicaction_date=post.publicaction_date,
+                                update_date=post.update_date
+                            )
+            
             for label in post.labels:
                 post_category = Category.objects.get(name=label)
                 new_post.categories.add(post_category)
