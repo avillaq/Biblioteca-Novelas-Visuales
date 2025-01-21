@@ -17,7 +17,9 @@ blogger = VN_Blogger()
 def home(request):
     posts = Post.objects.all()
 
-    carousel_posts = random.sample(list(posts), 0)
+    simple_num = 10 if len(posts) > 10 else len(posts)
+
+    carousel_posts = random.sample(list(posts), simple_num)
     last_posts = posts.order_by('-id')[:32]
 
     return render(request, 'home.html', {'carousel_posts': carousel_posts, 
