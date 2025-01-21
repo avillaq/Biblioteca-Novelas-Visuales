@@ -2,11 +2,8 @@ import requests
 import re
 from bs4 import BeautifulSoup
 from datetime import datetime
-import locale
 from gdata.blogger.service import BloggerService
 from gdata.blogger.service import BlogPostQuery
-
-locale.setlocale(locale.LC_ALL, 'es_ES') # Set the locale to spanish
 
 class Post:
     def __init__(self, 
