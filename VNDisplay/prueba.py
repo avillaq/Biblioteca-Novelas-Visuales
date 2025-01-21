@@ -7,10 +7,10 @@ def get_blog_posts(blog_id, max_results=3):
         service = BloggerService()
         
         # Crear query con filtros
-        query = BlogPostQuery(blog_id=blog_id, categories=["otome"], params={
+        query = BlogPostQuery(blog_id=blog_id, categories=["sin h"], params={
             "max-results": str(max_results),
             "orderby": "published",
-            "start-index": "3"
+            "start-index": "1"
         })
         
         # Obtener posts filtrados
