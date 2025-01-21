@@ -117,6 +117,8 @@ class VN_Blogger:
         }
         self._service = BloggerService()
         self._blog_id = "6976968703909484667"
+        self._query = BlogPostQuery(blog_id=self._blog_id)
+
 
     @property
     def sections(self) -> dict[str, str]:
@@ -129,6 +131,10 @@ class VN_Blogger:
     @property
     def blog_id(self) -> str:
         return self._blog_id
+
+    @property
+    def query(self) -> BlogPostQuery:
+        return self._query
 
     # Private Methods
     def _verify_section(self, section: str) -> str:
@@ -234,18 +240,16 @@ class VN_Blogger:
         if not section:
             raise ValueError(f"Section {section} not found")
         
-        query = BlogPostQuery(blog_id=self.blog_id)
-
         list_posts = []
-        query["category"] = section
-        query["start-index"] = str(start_index)
-        query["max-results"] = str(max_results)
+        self.query["category"] = section
+        self.query["start-index"] = str(start_index)
+        self.query["max-results"] = str(max_results)
         if published_min:
-            query["published-min"] = published_min
+            self.query["published-min"] = f"{published_min}T00:00:00-05:00"
         if published_max:
-            query["published-max"] = published_max
+            self.query["published-max"] = f"{published_max}T00:00:00-05:00"
 
-        feed = self.service.Get(query.ToUri())
+        feed = self.service.Get(self.query.ToUri())
 
         for entry in feed.entry:
 
@@ -312,16 +316,15 @@ class VN_Blogger:
 
 
     def get_all_posts(self) -> list[Post]: # Get all the posts of the web site (PC)
-        query = BlogPostQuery(blog_id=self.blog_id)
 
         list_posts = []
         start_index = 1
         max_results = 3
         while True:
-            query["start-index"] = str(start_index)
-            query["max-results"] = str(max_results)
+            self.query["start-index"] = str(start_index)
+            self.query["max-results"] = str(max_results)
 
-            feed = self.service.Get(query.ToUri())
+            feed = self.service.Get(self.query.ToUri())
 
             if len(feed.entry) == 0 or start_index == 4:
                 break
