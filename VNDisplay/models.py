@@ -18,7 +18,7 @@ class Post(models.Model):
     title = models.CharField(max_length=250)
     full_url = models.URLField(max_length=250)
     synopsis = models.TextField()
-    cover_url = models.URLField(max_length=250)
+    cover_url = models.URLField(max_length=300)
     screenshot_urls = models.TextField(blank=True)
     specifications = models.TextField(blank=True)
     categories = models.ManyToManyField(Category)
