@@ -103,14 +103,12 @@ class Post_Android:
 class VN_Blogger:
     def __init__(self):
         self._sections = {
-            "inicio": "http://www.visualnovelparapc.com/",
-            "Completo": "http://www.visualnovelparapc.com/search/label/Completo",
-            "allages": "http://www.visualnovelparapc.com/search/label/sin%20h",
-            "yuri": "http://www.visualnovelparapc.com/search/label/yuri",
-            "otome": "http://www.visualnovelparapc.com/search/label/otome",
-            "eroge": "http://www.visualnovelparapc.com/search/label/eroge",
-            "apk": "http://www.visualnovelparapc.com/2022/01/android-apk.html",
-            "kirikiroid2": "http://www.visualnovelparapc.com/2022/06/android-kirikiroid.html"
+            "inicio": "",
+            "completo": "Completo",
+            "allages": "sin h",
+            "yuri": "yuri",
+            "otome": "otome",
+            "eroge": "eroge"
         }
         self._service = BloggerService()
         self._blog_id = "6976968703909484667"
@@ -236,9 +234,12 @@ class VN_Blogger:
         section = self._verify_section(category)
         if not section:
             raise ValueError(f"Section {section} not found")
-        
-        list_posts = []
-        self.query["category"] = section
+        print(self.sections[section])
+        list_posts = [] 
+
+        if self.sections[section]:
+            self.query.categories = [self.sections[section]]
+
         self.query["start-index"] = str(start_index)
         self.query["max-results"] = str(max_results)
         if published_min:
@@ -264,13 +265,18 @@ class VN_Blogger:
                 continue
 
             soup = BeautifulSoup("<html>"+self._decode_data(entry.content.text)+"</html>", "html.parser")
-            soup.find("p").decompose()
+            first_part = soup.find("p")
+            if not first_part:
+                first_part = soup.find("div")
+            print("-",id_post)
+            first_part.decompose()
+            
             html_text = soup.find("html").text
             expression = r"(Imágenes:|Imagenes:|Descarga Mega:|Descarga Mediafire:|Descarga OneDrive:)"
             slides = re.split(expression, html_text, flags=re.IGNORECASE)
 
             # Synopsis
-            synopsis = slides[0].strip()
+            synopsis = re.sub(r'(\w+[,!\?\'\/\-\s\w]*(\[[^\]]*\])+)', "", slides[0].strip())
 
             # Cover and screenshots
             images = soup.find_all("img")
@@ -348,7 +354,7 @@ class VN_Blogger:
                 slides = re.split(expression, html_text, flags=re.IGNORECASE)
 
                 # Synopsis
-                synopsis = slides[0].strip()
+                synopsis = re.sub(r'(\w+[,!\?\'\/\-\s\w]*(\[[^\]]*\])+)', "", slides[0].strip())
 
                 # Cover and screenshots
                 images = soup.find_all("img")
