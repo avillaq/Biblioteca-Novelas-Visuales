@@ -26,12 +26,12 @@
                 {% for p in posts %}
                 <div class="novel">
                     <a href="{{ p.get_absolute_url }}">
-                        <img src="{{ p.image_url }}" alt="img">
+                        <img src="{{ p.cover_url }}" alt="img">
                         <div class="novel-info">
                             <p>{{ p.title }}</p>
                         </div>
                         <div class="overview">
-                            <span>{{ p.description }}</span>
+                            <span>{{ p.synopsis }}</span>
                         </div>
                     </a>
                 </div>
@@ -43,7 +43,7 @@
             <div class="cards-container">
                 {% for p in apk_posts %}
                     <div class="novel android-novel">
-                        <img src="{{ p.image_url }}" alt="img">
+                        <img src="{{ p.cover_url }}" alt="img">
                         <div class="novel-info android-novel-info">
                             <p>{{ p.title }}</p>
                             <a href="{{ p.full_url }}" target="_blank">Descargar</a>
@@ -57,7 +57,7 @@
             <div class="cards-container">
                 {% for p in kirikiroid2_posts %}
                     <div class="novel android-novel">
-                        <img src="{{ p.image_url }}" alt="img">
+                        <img src="{{ p.cover_url }}" alt="img">
                         <div class="novel-info android-novel-info">
                             <p>{{ p.title }}</p>
                             <a href="{{ p.full_url }}" target="_blank">Descargar</a>
