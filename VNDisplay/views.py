@@ -1,6 +1,6 @@
 import re
 import random
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse
@@ -114,46 +114,56 @@ def verify_new_posts():
     if not Post.objects.exists():  #IMPORTANT: If there are no posts in the database. 
         posts = blogger.get_all_posts() #IT WILL TAKE A FEW MINUTES TO GET ALL THE POSTS
         for post in reversed(posts):
-            new_post = Post.objects.create(
+            new_post, created = Post.objects.get_or_create(
                                 id_post=post.id_post, 
-                                title=post.title, 
-                                full_url=post.full_url,
-                                synopsis=post.synopsis,
-                                cover_url=post.cover_url,
-                                publication_date=post.publication_date,
-                                update_date=post.update_date
+                                defaults={
+                                    "title": post.title, 
+                                    "full_url": post.full_url,
+                                    "synopsis": post.synopsis,
+                                    "cover_url": post.cover_url,
+                                    "publication_date": post.publication_date,
+                                    "update_date": post.update_date
+                                }
                             )
-            new_post.set_screenshot_urls(post.screenshot_urls)
-            new_post.set_specifications(post.specifications)
-            new_post.save()
-
-            for label in post.labels:
-                post_category = Category.objects.get(name=label)
-                new_post.categories.add(post_category)
-
-    else: 
-        posts = blogger.get_section("inicio")  
-        latest_post = Post.objects.latest('id')
-        for post in reversed(posts):
-            post_date = datetime.strptime(post.publication_date, '%Y-%m-%d').date()
-            if post_date > latest_post.publication_date:
-                new_post = Post.objects.create(
-                                    id_post=new_post.id_post, 
-                                    title=new_post.title, 
-                                    full_url=new_post.full_url,
-                                    synopsis=new_post.synopsis,
-                                    cover_url=new_post.cover_url,
-                                    publication_date=new_post.publication_date,
-                                    update_date=new_post.update_date
-                                )
-                new_post.set_screenshot_urls(new_post.screenshot_urls)
-                new_post.set_specifications(new_post.specifications)
+            if created:
+                new_post.set_screenshot_urls(post.screenshot_urls)
+                new_post.set_specifications(post.specifications)
                 new_post.save()
-                
+
                 for label in post.labels:
                     post_category = Category.objects.get(name=label)
                     new_post.categories.add(post_category)
-    
+
+    else: 
+        latest_post = Post.objects.latest('publication_date')
+        latest_post_date = latest_post.publication_date - timedelta(days=1) 
+        posts = blogger.get_section(
+                                category="inicio",
+                                start_index=1, 
+                                max_results=100,
+                                published_min=latest_post_date)  
+        
+        for post in reversed(posts):
+            new_post, created = Post.objects.get_or_create(
+                                id_post=post.id_post, 
+                                defaults={
+                                    "title": post.title, 
+                                    "full_url": post.full_url,
+                                    "synopsis": post.synopsis,
+                                    "cover_url": post.cover_url,
+                                    "publication_date": post.publication_date,
+                                    "update_date": post.update_date
+                                }
+                            )
+            if created:
+                new_post.set_screenshot_urls(post.screenshot_urls)
+                new_post.set_specifications(post.specifications)
+                new_post.save()
+
+                for label in post.labels:
+                    post_category = Category.objects.get(name=label)
+                    new_post.categories.add(post_category)
+        
 
 def verify_new_android_posts(type_name, scraper_function):
     posts = Android_Post.objects.filter(type__name=type_name)
