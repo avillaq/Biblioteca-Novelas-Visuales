@@ -112,8 +112,6 @@ class VN_Blogger:
         }
         self._service = BloggerService()
         self._blog_id = "6976968703909484667"
-        self._query = BlogPostQuery(blog_id=self._blog_id)
-
 
     @property
     def sections(self) -> dict[str, str]:
@@ -126,10 +124,6 @@ class VN_Blogger:
     @property
     def blog_id(self) -> str:
         return self._blog_id
-
-    @property
-    def query(self) -> BlogPostQuery:
-        return self._query
 
     # Private Methods
     def _verify_section(self, section: str) -> str:
@@ -235,19 +229,21 @@ class VN_Blogger:
         if not section:
             raise ValueError(f"Section {section} not found")
         print(self.sections[section])
+
         list_posts = [] 
+        query = BlogPostQuery(blog_id=self._blog_id)
 
         if self.sections[section]:
-            self.query.categories = [self.sections[section]]
+            query.categories = [self.sections[section]]
 
-        self.query["start-index"] = str(start_index)
-        self.query["max-results"] = str(max_results)
+        query["start-index"] = str(start_index)
+        query["max-results"] = str(max_results)
         if published_min:
-            self.query["published-min"] = f"{published_min}T00:00:00-05:00"
+            query["published-min"] = f"{published_min}T00:00:00-05:00"
         if published_max:
-            self.query["published-max"] = f"{published_max}T00:00:00-05:00"
+            query["published-max"] = f"{published_max}T00:00:00-05:00"
 
-        feed = self.service.Get(self.query.ToUri())
+        feed = self.service.Get(query.ToUri())
 
         for entry in feed.entry:
 
@@ -319,15 +315,16 @@ class VN_Blogger:
 
 
     def get_all_posts(self) -> list[Post]: # Get all the posts of the web site (PC)
+        query = BlogPostQuery(blog_id=self._blog_id)
 
         list_posts = []
         start_index = 1
         max_results = 3
         while True:
-            self.query["start-index"] = str(start_index)
-            self.query["max-results"] = str(max_results)
+            query["start-index"] = str(start_index)
+            query["max-results"] = str(max_results)
 
-            feed = self.service.Get(self.query.ToUri())
+            feed = self.service.Get(query.ToUri())
 
             if len(feed.entry) == 0 or start_index == 4:
                 break
@@ -485,21 +482,17 @@ class VN_Blogger:
 
         return list_posts
         
-
-    # Emulador Kirikiroid2   http://www.visualnovelparapc.com/2022/06/android-kirikiroid.html
-    ############################# The kirikiroid2 section is different from the others, so we need to scrap it differently #############################
     def get_kirikiroid2_section(self) -> list[Post_Android]:
-        url = self.sections["kirikiroid2"]
-        
-        try:
-            header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.2151.97'}
-            response = requests.get(url, headers=header)
-        except requests.exceptions.ConnectionError as e:
-            print("Internet connection error. Please check your connection.")
-            return []
-        
-        soup = BeautifulSoup(response.content, 'html.parser')
+        query = BlogPostQuery(blog_id=self._blog_id)
+        query.categories = ["Kirikiroid2"]
 
+        feed = self.service.Get(query.ToUri())
+        
+        soup = BeautifulSoup("<html>"+self._decode_data(feed.entry[0].content.text)+"</html>", "html.parser")
+
+        print(soup.find("html").text)
+
+        return
         post = soup.find('div', class_='post-body')
 
         list_posts = []
@@ -568,7 +561,7 @@ if __name__ == '__main__':
     """ post = Post("Hanachirasu", "http://www.visualnovelparapc.com/2022/10/hanachirasu.html", "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiloJxDae8yr-lKe0eAj2xmyekmU8SGMHpx2gX5hcXYLDcm1JBq2x4hfxMmfUtEiUs4UgFML7keBJaKKUlWsqwDOjDy7_bc9Cp4AapY-HzJczqM-MlL56xdv2EBhbZ-5Wx7hkQykX1JcV4GuJ-Bzw9OrefPf4Hti9uPa0juL4s6DotQEv_l9C3WZQZpAm4/w400-h299/sms.png", "Esto es una prueba", [],"2024-02-06") """
     
     
-    list_posts= blogger.get_all_posts()
+    list_posts= blogger.get_kirikiroid2_section()
     #print(list_posts)
 
     for post in list_posts:
