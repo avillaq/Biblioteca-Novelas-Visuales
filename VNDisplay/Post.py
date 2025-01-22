@@ -372,25 +372,25 @@ class VN_Blogger:
         ]
   
         # Image URL
-        image_urls = soup.find_all("img")
+        cover_urls = soup.find_all("img")
         
         # Full URL
         full_urls = soup.find_all("a", string="Apk")
 
         # Type
-        type = "apk"
+        android_type = "apk"
 
         # IMPORTANT !! 
-        # if the length of the titles, full_urls or image_urls is different, we need to check the original page: http://www.visualnovelparapc.com/2022/01/android-apk.html and manually add missing titles to the first position of the title list. Just do that.  
-        if len(titles) != len(full_urls) or len(titles) != len(image_urls):
-            raise ValueError("The length of the titles, full_urls or image_urls is different")
+        # if the length of the titles, full_urls or cover_urls is different, we need to check the original page: http://www.visualnovelparapc.com/2022/01/android-apk.html and manually add missing titles to the first position of the title list. Just do that.  
+        if len(titles) != len(full_urls) or len(titles) != len(cover_urls):
+            raise ValueError("The length of the titles, full_urls or cover_urls is different")
 
-        for title, full_url, cover_url  in zip(titles,full_urls,image_urls):
+        for title, full_url, cover_url  in zip(titles,full_urls,cover_urls):
             full_url = full_url.get("href")
             cover_url = cover_url.get("src")
 
             # Create a new instance
-            post = Post_Android(title, full_url, cover_url, type)
+            post = Post_Android(title, full_url, cover_url, android_type)
             list_posts.append(post)
 
         return list_posts
@@ -463,9 +463,9 @@ if __name__ == '__main__':
     """ post = Post("Hanachirasu", "http://www.visualnovelparapc.com/2022/10/hanachirasu.html", "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiloJxDae8yr-lKe0eAj2xmyekmU8SGMHpx2gX5hcXYLDcm1JBq2x4hfxMmfUtEiUs4UgFML7keBJaKKUlWsqwDOjDy7_bc9Cp4AapY-HzJczqM-MlL56xdv2EBhbZ-5Wx7hkQykX1JcV4GuJ-Bzw9OrefPf4Hti9uPa0juL4s6DotQEv_l9C3WZQZpAm4/w400-h299/sms.png", "Esto es una prueba", [],"2024-02-06") """
     
     
-    list_posts= blogger.get_kirikiroid2_emulator()
-    print(list_posts)
+    list_posts= blogger.get_apk_section()
+    #print(list_posts)
 
-    """ for post in list_posts:
+    for post in list_posts:
         print(post)
-        print("\n") """
+        print("\n")
