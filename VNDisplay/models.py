@@ -51,7 +51,7 @@ class Post(models.Model):
 class Android_Post(models.Model):
     title = models.CharField(max_length=250)
     full_url = models.URLField(max_length=250)
-    image_url = models.URLField(max_length=300)
+    cover_url = models.URLField(max_length=300)
     type = models.ForeignKey('Type', on_delete=models.CASCADE)
 
     class Meta:
