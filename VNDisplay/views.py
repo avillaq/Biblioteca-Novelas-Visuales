@@ -171,22 +171,17 @@ def verify_new_posts():
         
 
 def verify_new_android_posts(type_name, scraper_function):
-    posts = Android_Post.objects.filter(type__name=type_name)
     android_posts = scraper_function() 
-    if not posts:
-        post_type = Type.objects.get(name=type_name)
-        for post in reversed(android_posts):
-            Android_Post.objects.create(title=post.title, full_url=post.full_url, 
-                                    cover_url=post.cover_url, type=post_type)
-    else: 
-        total = posts.count()
-        if total < len(android_posts):
-            difference = len(android_posts) - total
-            new_posts = android_posts[:difference]
-            post_type = Type.objects.get(name=type_name)
-            for post in reversed(new_posts):
-                Android_Post.objects.create(title=post.title, full_url=post.full_url, 
-                                    cover_url=post.cover_url, type=post_type)
+    post_type = Type.objects.get(name=type_name)
+    for post in reversed(android_posts):
+        new_post, created = Android_Post.objects.get_or_create(
+                            title=post.title, 
+                            type=post_type,
+                            defaults={
+                                "full_url": post.full_url,
+                                "cover_url": post.cover_url
+                            }
+                        )
 
 def verify_kirikiroid2_emulator():
     Type.objects.filter(name="kirikiroid2").update(resource=blogger.get_kirikiroid2_emulator())
