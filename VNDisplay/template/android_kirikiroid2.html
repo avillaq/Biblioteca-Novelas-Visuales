@@ -45,7 +45,7 @@
         <div class="container-nodata-subtitle-reload">
             <h3 class="subtitle-text">No hay novelas visuales disponibles, intenta actualizar.</h3>
             <form action="{% url 'VNDisplay:update_novels' %}">
-                <input type="hidden" value="pc" name="novel-type">
+                <input type="hidden" value="kirikiroid2" name="novel-type">
                 <button type="submit" class="btnUpdate">Actualizar Novelas</button>
             </form>
         </div>
@@ -62,7 +62,7 @@
         <div class="cards-container">
             {% for p in android_posts %}
             <div class="novel android-novel">
-                    <img src="{{ p.image_url }}" alt="img">
+                    <img src="{{ p.cover_url }}" alt="img">
                     <div class="novel-info android-novel-info">
                         <p>{{ p.title }}</p>
                         <a href="{{ p.full_url }}" target="_blank">Descargar</a>
