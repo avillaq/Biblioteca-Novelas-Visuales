@@ -1,9 +1,7 @@
-import re
 import random
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 from django.shortcuts import get_object_or_404, render, redirect
-from django.http import HttpResponse
 
 # Pagination
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -170,8 +168,8 @@ def verify_new_posts():
                     new_post.categories.add(post_category)
         
 
-def verify_new_android_posts(type_name, scraper_function):
-    android_posts = scraper_function() 
+def verify_new_android_posts(type_name, blogger_function):
+    android_posts = blogger_function() 
     post_type = Type.objects.get(name=type_name)
     for post in reversed(android_posts):
         new_post, created = Android_Post.objects.get_or_create(

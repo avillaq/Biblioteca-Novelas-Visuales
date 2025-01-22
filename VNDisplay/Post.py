@@ -1,4 +1,3 @@
-import requests
 import re
 from bs4 import BeautifulSoup
 from datetime import datetime
@@ -460,8 +459,6 @@ class VN_Blogger:
 
 if __name__ == '__main__':
     blogger = VN_Blogger()
-    """ post = Post("Hanachirasu", "http://www.visualnovelparapc.com/2022/10/hanachirasu.html", "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiloJxDae8yr-lKe0eAj2xmyekmU8SGMHpx2gX5hcXYLDcm1JBq2x4hfxMmfUtEiUs4UgFML7keBJaKKUlWsqwDOjDy7_bc9Cp4AapY-HzJczqM-MlL56xdv2EBhbZ-5Wx7hkQykX1JcV4GuJ-Bzw9OrefPf4Hti9uPa0juL4s6DotQEv_l9C3WZQZpAm4/w400-h299/sms.png", "Esto es una prueba", [],"2024-02-06") """
-    
     
     list_posts= blogger.get_apk_section()
     #print(list_posts)
