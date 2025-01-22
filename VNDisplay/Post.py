@@ -426,8 +426,8 @@ class VN_Blogger:
 
         filtered_titles = re.findall(r'(\w+[,!\?\'\/\-\s\w]*(\[[^\]]*\])+)', text_title)
         # Only the first match is the title of the post
-
         titles = [match[0] for match in filtered_titles]
+
         # Image URL
         image_urls = soup.find_all('img')[1:] # we discard the first image because it's not a game
     
@@ -443,8 +443,8 @@ class VN_Blogger:
             raise ValueError("The length of the titles, full_urls or image_urls is different")
 
         for title, full_url, cover_url  in zip(titles,full_urls,image_urls):
-            full_url = full_url.get('href')
-            cover_url = cover_url.get('src')
+            full_url = full_url.get("href")
+            cover_url = cover_url.get("src")
 
             # Create a new instance
             post = Post_Android(title, full_url, cover_url, android_type)
@@ -453,21 +453,15 @@ class VN_Blogger:
         return list_posts
         
     def get_kirikiroid2_emulator(self) -> str:
-        url = self.sections["kirikiroid2"]
+        query = BlogPostQuery(blog_id=self._blog_id)
+        query.categories = ["Kirikiroid2"]
 
-        try:
-            header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.2151.97'}
-            response = requests.get(url, headers=header)
-        except requests.exceptions.ConnectionError as e:
-            print("Internet connection error. Please check your connection.")
-            return ""
+        feed = self.service.Get(query.ToUri())
         
-        soup = BeautifulSoup(response.content, 'html.parser')
-
-        post = soup.find('div', class_='post-body')
+        soup = BeautifulSoup("<html>"+self._decode_data(feed.entry[0].content.text)+"</html>", "html.parser")
 
         # Emulator
-        emulator = post.find('a', string="Apk").get('href')
+        emulator = soup.find("a", string="Apk").get("href")
 
         return emulator
 
@@ -478,9 +472,9 @@ if __name__ == '__main__':
     """ post = Post("Hanachirasu", "http://www.visualnovelparapc.com/2022/10/hanachirasu.html", "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiloJxDae8yr-lKe0eAj2xmyekmU8SGMHpx2gX5hcXYLDcm1JBq2x4hfxMmfUtEiUs4UgFML7keBJaKKUlWsqwDOjDy7_bc9Cp4AapY-HzJczqM-MlL56xdv2EBhbZ-5Wx7hkQykX1JcV4GuJ-Bzw9OrefPf4Hti9uPa0juL4s6DotQEv_l9C3WZQZpAm4/w400-h299/sms.png", "Esto es una prueba", [],"2024-02-06") """
     
     
-    list_posts= blogger.get_kirikiroid2_section()
-    #print(list_posts)
+    list_posts= blogger.get_kirikiroid2_emulator()
+    print(list_posts)
 
-    for post in list_posts:
+    """ for post in list_posts:
         print(post)
-        print("\n")
+        print("\n") """
