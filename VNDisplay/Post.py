@@ -316,22 +316,13 @@ class VN_Blogger:
 
         return list_posts
 
-    # APK  http://www.visualnovelparapc.com/2022/01/android-apk.html
-    ############################# The APK section is different from the others, so we need to scrap it differently #############################
     def get_apk_section(self) -> list[Post_Android]:
+        query = BlogPostQuery(blog_id=self._blog_id)
+        query.categories = ["Android Apk"]
 
-        url = self.sections["apk"]
-
-        try:
-            header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.2151.97'}
-            response = requests.get(url, headers=header)
-        except requests.exceptions.ConnectionError as e:
-            print("Internet connection error. Please check your connection.")
-            return []
+        feed = self.service.Get(query.ToUri())
         
-        soup = BeautifulSoup(response.content, 'html.parser')
-
-        post = soup.find('div', class_='post-body')
+        soup = BeautifulSoup("<html>"+self._decode_data(feed.entry[0].content.text)+"</html>", "html.parser")
   
         list_posts = []        
         
@@ -381,10 +372,10 @@ class VN_Blogger:
         ]
   
         # Image URL
-        image_urls = post.find_all('img')
+        image_urls = soup.find_all("img")
         
         # Full URL
-        full_urls = post.find_all('a', string="Apk")
+        full_urls = soup.find_all("a", string="Apk")
 
         # Type
         type = "apk"
@@ -395,8 +386,8 @@ class VN_Blogger:
             raise ValueError("The length of the titles, full_urls or image_urls is different")
 
         for title, full_url, cover_url  in zip(titles,full_urls,image_urls):
-            full_url = full_url.get('href')
-            cover_url = cover_url.get('src')
+            full_url = full_url.get("href")
+            cover_url = cover_url.get("src")
 
             # Create a new instance
             post = Post_Android(title, full_url, cover_url, type)
@@ -429,10 +420,10 @@ class VN_Blogger:
         titles = [match[0] for match in filtered_titles]
 
         # Image URL
-        image_urls = soup.find_all('img')[1:] # we discard the first image because it's not a game
+        image_urls = soup.find_all("img")[1:] # we discard the first image because it's not a game
     
         # Full URL
-        full_urls = soup.find_all('a', string="Mediafire")
+        full_urls = soup.find_all("a", string="Mediafire")
 
         # Type
         android_type = "kirikiroid2"
