@@ -104,10 +104,13 @@ def update_novels(request):
     if query == "pc":
         verify_new_posts()
         return redirect('/')
-    else:
+    elif query == "kirikiroid2":
         verify_new_android_posts("kirikiroid2", blogger.get_kirikiroid2_section)
         verify_kirikiroid2_emulator()
         return redirect('/android/kirikiroid2')
+    elif query == "apk":
+        verify_new_android_posts("apk", blogger.get_apk_section)
+        return redirect('/android/apk')
 
 
 ######################################### Auxiliary functions #########################################
@@ -174,7 +177,7 @@ def verify_new_android_posts(type_name, scraper_function):
         post_type = Type.objects.get(name=type_name)
         for post in reversed(android_posts):
             Android_Post.objects.create(title=post.title, full_url=post.full_url, 
-                                    image_url=post.image_url, type=post_type)
+                                    cover_url=post.cover_url, type=post_type)
     else: 
         total = posts.count()
         if total < len(android_posts):
@@ -183,7 +186,7 @@ def verify_new_android_posts(type_name, scraper_function):
             post_type = Type.objects.get(name=type_name)
             for post in reversed(new_posts):
                 Android_Post.objects.create(title=post.title, full_url=post.full_url, 
-                                    image_url=post.image_url, type=post_type)
+                                    cover_url=post.cover_url, type=post_type)
 
 def verify_kirikiroid2_emulator():
     Type.objects.filter(name="kirikiroid2").update(resource=blogger.get_kirikiroid2_emulator())
