@@ -73,11 +73,11 @@ class Post:
         return f"Url: {self.full_url}\nID: {self.id_post}\nTitle: {self.title}\nCover Image: {self.cover_url}\nSynopsis: {self.synopsis}\nScreenshots: {self.screenshot_urls}\nSpecifications: {self.specifications}\nLabels: {self.labels}\nPublication Date: {self.publication_date}\nUpdate Date: {self.update_date}"
 
 class Post_Android:
-    def __init__(self, title: str, full_url: str, image_url: str, type: str):
+    def __init__(self, title: str, full_url: str, cover_url: str, android_type: str):
         self._title = title
         self._full_url = full_url
-        self._cover_url = image_url
-        self._type = type
+        self._cover_url = cover_url
+        self._android_type = android_type
 
     @property
     def title(self) -> str:
@@ -88,15 +88,15 @@ class Post_Android:
         return self._full_url
 
     @property
-    def image_url(self) -> str:
+    def cover_url(self) -> str:
         return self._cover_url
     
     @property
-    def type(self) -> str:
-        return self._type
+    def android_type(self) -> str:
+        return self._android_type
 
     def __str__(self) -> str:
-        return f"Title: {self.title}\nUrl: {self.full_url}\nUrl Image: {self.image_url}\nType: {self.type}"
+        return f"Title: {self.title}\nUrl: {self.full_url}\nUrl Image: {self.cover_url}\nType: {self.android_type}"
 
 
 
@@ -137,84 +137,6 @@ class VN_Blogger:
         if isinstance(data, bytes):
             return data.decode('utf-8')
         return data
-
-    def _get_posts(self, url : str) -> list[Post]:
-        
-        domain = "www.visualnovelparapc.com"  # The domain of the page
-        if domain not in url:
-            raise ValueError("URL does not belong to the domain")
-
-        try:
-            header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.2151.97'}
-            response = requests.get(url, headers=header)
-        except requests.exceptions.ConnectionError as e:
-            print("Internet connection error. Please check your connection.")
-            return []
-
-        soup = BeautifulSoup(response.content, 'html.parser')
-
-        posts_by_date = soup.find_all('div', class_='date-outer') #############################
-
-        list_posts = []
-
-        for post_by_date in posts_by_date:
-
-            # Date
-            date = post_by_date.find('h2', class_='date-header').text     
-            date = datetime.strptime(date, '%A, %d de %B de %Y')
-            date = date.strftime("%Y-%m-%d")
-
-
-            posts = post_by_date.find_all('div', class_='post-outer')
-            for post in posts:
-                # Title
-                title = post.find('h3', class_='post-title').text
-
-                # Title exceptions to avoid. Maybe in the future there will be more exceptions like this
-                title_exceptions = ["Kirikiroid", "Noticias", "Android", "Encuesta", "Navidad", "Aprende"]
-                if any(exception in title for exception in title_exceptions):
-                    continue
-
-                # Post body
-                post_body = post.find('div', class_='post-body')
-                
-                # Url full
-                post_url = post_body.find('a')
-                full_url = post_url.get('href')
-                if "html" not in full_url:
-                    continue
-
-                # Url image
-                if not post_body.find('img'): # if there's no image in the post, we avoid it
-                    continue
-                image_url = post_body.find('img').get('src')
-                
-                # Description
-                post_synopsis = post_body.text
-                description = post_synopsis.strip().replace("\n", " ").replace(post_url.text, "")
-
-                # Labels
-                post_labels = post.find('span', class_='post-labels').text
-                list_labels = []
-
-                label_mapping = {
-                    "Completo": "Completo",
-                    "sin h": "All Ages",
-                    "yuri": "Yuri",
-                    "otome": "Otome",
-                    "eroge": "Eroge"
-                }
-
-                for label in label_mapping:
-                    if label in post_labels:
-                        list_labels.append(label_mapping[label])
-                
-                
-                # Create a new instance
-                post = Post(title, full_url, image_url, description, list_labels, date)
-                list_posts.append(post)
-
-        return list_posts
     
     # Public Methods
     def get_section(self,
@@ -472,12 +394,12 @@ class VN_Blogger:
         if len(titles) != len(full_urls) or len(titles) != len(image_urls):
             raise ValueError("The length of the titles, full_urls or image_urls is different")
 
-        for title, full_url, image_url  in zip(titles,full_urls,image_urls):
+        for title, full_url, cover_url  in zip(titles,full_urls,image_urls):
             full_url = full_url.get('href')
-            image_url = image_url.get('src')
+            cover_url = cover_url.get('src')
 
             # Create a new instance
-            post = Post_Android(title, full_url, image_url, type)
+            post = Post_Android(title, full_url, cover_url, type)
             list_posts.append(post)
 
         return list_posts
@@ -490,47 +412,42 @@ class VN_Blogger:
         
         soup = BeautifulSoup("<html>"+self._decode_data(feed.entry[0].content.text)+"</html>", "html.parser")
 
-        print(soup.find("html").text)
-
-        return
-        post = soup.find('div', class_='post-body')
-
         list_posts = []
 
         # Titles
-        titles = post.find_all("u")
+        all_title = soup.find_all("u")
 
         text_title = ""
-        for title in titles:
+        for title in all_title:
             text = title.text.strip()
             if text == "":
                 continue
             text_title += text.replace("por AngelGbb", "").replace("por DaveVGN", "") # we discard the names of the uploaders
 
-        titles = re.findall(r'(\w+[,!\?\'\/\-\s\w]*(\[[^\]]*\])+)', text_title)
+        filtered_titles = re.findall(r'(\w+[,!\?\'\/\-\s\w]*(\[[^\]]*\])+)', text_title)
         # Only the first match is the title of the post
-        titles = [match[0] for match in titles]
 
+        titles = [match[0] for match in filtered_titles]
         # Image URL
-        image_urls = post.find_all('img')[1:] # we discard the first image because it's not a game
+        image_urls = soup.find_all('img')[1:] # we discard the first image because it's not a game
     
         # Full URL
-        full_urls = post.find_all('a', string="Mediafire")
+        full_urls = soup.find_all('a', string="Mediafire")
 
         # Type
-        type = "kirikiroid2"
+        android_type = "kirikiroid2"
 
         # IMPORTANT !!
         # if the length of the titles, full_urls or image_urls is different, we need to check the original page: http://www.visualnovelparapc.com/2022/06/android-kirikiroid.html.
         if len(titles) != len(full_urls) or len(titles) != len(image_urls):
             raise ValueError("The length of the titles, full_urls or image_urls is different")
 
-        for title, full_url, image_url  in zip(titles,full_urls,image_urls):
+        for title, full_url, cover_url  in zip(titles,full_urls,image_urls):
             full_url = full_url.get('href')
-            image_url = image_url.get('src')
+            cover_url = cover_url.get('src')
 
             # Create a new instance
-            post = Post_Android(title, full_url, image_url, type)
+            post = Post_Android(title, full_url, cover_url, android_type)
             list_posts.append(post)
 
         return list_posts
