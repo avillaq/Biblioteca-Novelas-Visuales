@@ -1,7 +1,6 @@
 from datetime import datetime
 from django import forms
-from .models import Post, Category
-from django.db.models import Min, Max
+from .models import Category
 
 class PostFilterForm(forms.Form):
     ORDER_CHOICES = [
