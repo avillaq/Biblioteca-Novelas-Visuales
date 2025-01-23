@@ -1,1 +1,1 @@
-web: python manage.py collectstatic --noinput && python manage.py migrate && gunicorn VisualNovel.wsgi
+web: python manage.py migrate && python manage.py collectstatic --noinput && gunicorn VisualNovel.wsgi

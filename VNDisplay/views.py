@@ -117,25 +117,29 @@ def verify_new_posts():
     if not Post.objects.exists():  #IMPORTANT: If there are no posts in the database. 
         posts = blogger.get_all_posts() #IT WILL TAKE A FEW MINUTES TO GET ALL THE POSTS
         for post in reversed(posts):
-            new_post, created = Post.objects.get_or_create(
-                                id_post=post.id_post, 
-                                defaults={
-                                    "title": post.title, 
-                                    "full_url": post.full_url,
-                                    "synopsis": post.synopsis,
-                                    "cover_url": post.cover_url,
-                                    "publication_date": post.publication_date,
-                                    "update_date": post.update_date
-                                }
-                            )
-            if created:
-                new_post.set_screenshot_urls(post.screenshot_urls)
-                new_post.set_specifications(post.specifications)
-                new_post.save()
+            try:
+                new_post, created = Post.objects.get_or_create(
+                                    id_post=post.id_post, 
+                                    defaults={
+                                        "title": post.title, 
+                                        "full_url": post.full_url,
+                                        "synopsis": post.synopsis,
+                                        "cover_url": post.cover_url,
+                                        "publication_date": post.publication_date,
+                                        "update_date": post.update_date
+                                    }
+                                )
+                if created:
+                    new_post.set_screenshot_urls(post.screenshot_urls)
+                    new_post.set_specifications(post.specifications)
+                    new_post.save()
 
-                for label in post.labels:
-                    post_category = Category.objects.get(name=label)
-                    new_post.categories.add(post_category)
+                    for label in post.labels:
+                        post_category = Category.objects.get(name=label)
+                        new_post.categories.add(post_category)
+            except Exception as e:
+                print(f"Error creating post {post.id_post}: {str(e)}")
+                continue
 
     else: 
         latest_post = Post.objects.latest('publication_date')
