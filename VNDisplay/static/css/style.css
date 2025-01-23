@@ -66,7 +66,6 @@ header {
     height: 100%;
     margin: 0 auto;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -655,7 +654,7 @@ button.btnUpdate{
 
     header .site-header {
         flex-direction: column;
-        padding-bottom: 20px;
+        padding-bottom: 10px;
     }
 
     .bg-intro div {
@@ -682,6 +681,7 @@ button.btnUpdate{
     }
 
     header .site-header {
+        flex-direction: column;
         padding: 10px 0;
     }
 
@@ -708,6 +708,10 @@ button.btnUpdate{
 }
 
 @media (800px <=width <=1000px) {
+    header .site-header {
+        flex-direction: row;
+        justify-content: space-between;
+    }
     .novel {
         width: calc(33.33% - 30px);
         /* Adjust the width to fit 3 cards per row on smaller screens */
@@ -730,6 +734,14 @@ button.btnUpdate{
         width: calc(50% - 20px);
     }
 }
+
+@media (1000px <= width) {
+    header .site-header {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
 
 
 /****** Pagination ******/
