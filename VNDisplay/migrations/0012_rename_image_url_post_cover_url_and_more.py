@@ -33,7 +33,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='post',
             name='id_post',
-            field=models.CharField(blank=True, max_length=250, unique=True),
+            field=models.CharField(blank=True, max_length=250),
         ),
         migrations.AddField(
             model_name='post',
