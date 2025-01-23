@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-d=uctpn9r_bik36%)^$iv@7%&x^k@2(=%ire!+uzq&_#czqsl1
 DEBUG = True 
 ALLOWED_HOSTS = ["127.0.0.1", "visual-novel-library.up.railway.app"]
 
-CSRF_TRUSTED_ORIGINS = ["http://*","https://cinemaunsa-api.up.railway.app"]
+CSRF_TRUSTED_ORIGINS = ["http://*","https://visual-novel-library.up.railway.app"]
 
 # Application definition
 
