@@ -44,7 +44,7 @@ def directory(request):
             posts = posts.filter(categories=category)
 
         if year:
-            posts = posts.filter(date__year=year)
+            posts = posts.filter(publication_date__year=year)
 
         posts = posts.order_by(field)
 

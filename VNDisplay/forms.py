@@ -10,14 +10,14 @@ class PostFilterForm(forms.Form):
     ]
 
     FIELD_CHOICES = [
-        ('date', 'Fecha'),
+        ('publication_date', 'Fecha'),
         ('title', 'Nombre'),
     ]
 
 
     field = forms.ChoiceField(
         choices=FIELD_CHOICES, 
-        initial='date', 
+        initial='publication_date', 
         widget=forms.Select(attrs={'class': 'custom-select', 'style': 'display: none;'}), 
         label=False
     )
