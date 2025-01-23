@@ -4,6 +4,10 @@
     --primary-color: #141a32;
     --secondary-color: #1e2747;
     --tertiary-color: #007aff;
+
+    --small-size: 14px;
+    --normal-size: 16px;
+    --big-size: 20px;
 }
 
 *,
@@ -32,6 +36,7 @@ body {
     flex-direction: column;
     min-height: 100%;
     background-color: #080f28;
+    font-size: var(--normal-size);
 }
 
 img {
@@ -80,7 +85,6 @@ header {
 
 .nav a {
     color: #fff;
-    font-size: 18px;
     transition: all 0.1s ease-out;
 }
 
@@ -101,9 +105,10 @@ header {
     border-radius: 30px;
     padding: 10px 15px;
     color: var(--text-color);
-    font-size: 16px;
+    font-size: var(--small-size);
 
     &::placeholder {
+        font-size: var(--small-size);
         color: var(--text-color);
     }
 
@@ -276,7 +281,7 @@ header {
     bottom: 0;
     right: 0;
     max-height: 100%;
-    font-size: 14px;
+    font-size: var(--small-size);
 
     transform: translateY(101%);
     overflow-y: auto;
@@ -321,7 +326,7 @@ header {
 
     width: 110px;
     padding: 5px 0;
-    font-size: 14px;
+    font-size: var(--small-size);
     color: #fff;
     background-color: var(--tertiary-color);
     border-radius: 4px;
@@ -375,7 +380,7 @@ header {
     position: relative;
     display: block;
     border-bottom: 1px solid #b5b5b5;
-    font-size: 14px;
+    font-size: var(--small-size);
     text-align: center;
     padding: 5px 0;
     color: #000;
@@ -761,7 +766,7 @@ footer {
 }
 
 .copyright p {
-    font-size: 14px;
+    font-size: var(--small-size);
     text-align: center;
     color: var(--text-color);
     margin: 0;
