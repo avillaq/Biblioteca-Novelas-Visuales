@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Open+Sans:wght@400;500;700;800&display=swap');
-
 :root {
     --text-color: #b9c4d5;
     /* #0e0e0e */
@@ -25,7 +23,7 @@ html {
 }
 
 body {
-    font-family: 'Open Sans', 'Segoe UI', 'Tahoma';
+    font-family: "DM Sans", "system-ui", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;
     margin: 0;
     padding: 0;
     line-height: 1.6;
@@ -37,18 +35,14 @@ body {
 
 img {
     max-width: 100%;
-    /*Imagen responsiva*/
     width: 100%;
     display: block;
 }
 
 ul {
     margin: 0;
-    /*Elimina estacios en blaco innecesarios*/
     padding: 0;
-    /*Elimina estacios en blaco innecesarios*/
     list-style: none;
-    /*Elimina los puntos que aconpañan a las listas*/
 }
 
 a {
@@ -58,15 +52,7 @@ a {
 
 /*Side header*/
 header {
-    position: sticky;
-    top: 0;
-    z-index: 9999;
     background-color: var(--secondary-color);
-
-    /*** Navbar Animation ***/
-    animation: navbar-animation linear both;
-    animation-timeline: scroll(root block);
-    animation-range: 0 500px;
 }
 
 .site-header {
@@ -99,15 +85,6 @@ header {
 
 .nav a:hover {
     border-bottom: 2px solid var(--tertiary-color);
-}
-
-
-
-@keyframes navbar-animation {
-    to {
-        background: #1e2747c0;
-        backdrop-filter: blur(15px);
-    }
 }
 
 
