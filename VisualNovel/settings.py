@@ -69,7 +69,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'VisualNovel.wsgi.app'
+WSGI_APPLICATION = 'VisualNovel.wsgi.application'
 
 
 # Database
