@@ -141,6 +141,12 @@ header {
 /****** Introduction ******/
 
 /*Image de fondo*/
+@media (768px <= width ) {
+    .bg-container {
+        background-attachment: fixed;
+    }
+}
+
 .bg-intro {
     height: 600px;
     background: radial-gradient(circle, #1e274744 0%, #080f28 100%);
