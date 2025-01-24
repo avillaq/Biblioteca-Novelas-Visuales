@@ -1,0 +1,19 @@
+{% extends "./base.html" %}
+{% load static %}
+
+{% block section %}
+{% endblock %}
+
+{% block content %}
+<div class="main-container">
+    <div class="not-found-container">
+        <h1>404</h1>
+        <h2>Página no encontrada</h2>
+        <p>Lo sentimos, la página que buscas no existe o ha sido movida.</p>
+        <img src="{% static 'img/sadness.webp' %}" alt="404" draggable="false">
+        <a href="{% url 'VNDisplay:home' %}" class="btn-home">
+            <i class="fa-solid fa-house"></i> Volver al inicio
+        </a>
+    </div>
+</div>
+{% endblock %}

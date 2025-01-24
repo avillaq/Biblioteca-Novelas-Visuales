@@ -141,7 +141,7 @@ header {
 /****** Introduction ******/
 
 /*Image de fondo*/
-@media (768px <= width ) {
+@media (768px <=width) {
     .bg-container {
         background-attachment: fixed;
     }
@@ -170,17 +170,17 @@ header {
 
 /****** Main Content ******/
 
-.container-subtitle-reload{
+.container-subtitle-reload {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.container-subtitle-reload h3{
-    margin: 0; 
+.container-subtitle-reload h3 {
+    margin: 0;
 }
 
-.container-nodata-subtitle-reload{
+.container-nodata-subtitle-reload {
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -415,7 +415,8 @@ header {
     font-weight: bold;
 }
 
-button.btnSubmit ,button.btnUpdate{
+button.btnSubmit,
+button.btnUpdate {
     background-color: #007bff;
     color: #fff;
     padding: 5px 0;
@@ -428,7 +429,8 @@ button.btnSubmit ,button.btnUpdate{
 
     width: 90px;
 }
-button.btnUpdate{
+
+button.btnUpdate {
     padding: 10px 0;
     width: 150px;
 }
@@ -598,6 +600,7 @@ button.btnUpdate{
         font-weight: 600;
         text-align: center;
     }
+
     & h2 {
         font-size: 20px;
         font-weight: 600;
@@ -616,12 +619,13 @@ button.btnUpdate{
     }
 }
 
-.screenshots-container .screenshots{
+.screenshots-container .screenshots {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
 }
-.screenshots-container .screenshots img{
+
+.screenshots-container .screenshots img {
     width: calc(40% - 20px);
     margin: 10px;
 }
@@ -634,6 +638,7 @@ button.btnUpdate{
     & p {
         margin: 5px;
     }
+
     & a {
         display: inline-block;
         color: #fff;
@@ -644,6 +649,7 @@ button.btnUpdate{
         transition: transform 0.2s ease-out;
         margin: 40px;
     }
+
     & a:hover {
         transform: scale(1.05);
     }
@@ -675,7 +681,8 @@ button.btnUpdate{
         width: calc(75% - 20px);
         margin: 10px;
     }
-    .screenshots-container .screenshots img{
+
+    .screenshots-container .screenshots img {
         width: calc(100% - 20px);
     }
 }
@@ -707,7 +714,8 @@ button.btnUpdate{
         width: calc(50% - 20px);
         margin: 10px;
     }
-    .screenshots-container .screenshots img{
+
+    .screenshots-container .screenshots img {
         width: calc(90% - 20px);
     }
 
@@ -718,6 +726,7 @@ button.btnUpdate{
         flex-direction: column;
         padding: 10px 0;
     }
+
     .novel {
         width: calc(33.33% - 30px);
         /* Adjust the width to fit 3 cards per row on smaller screens */
@@ -736,12 +745,13 @@ button.btnUpdate{
         margin: 10px;
 
     }
-    .screenshots-container .screenshots img{
+
+    .screenshots-container .screenshots img {
         width: calc(50% - 20px);
     }
 }
 
-@media (1000px <= width) {
+@media (1000px <=width) {
     header .site-header {
         flex-direction: row;
         justify-content: space-between;
@@ -821,5 +831,67 @@ footer {
 
     &:hover {
         color: var(--tertiary-color);
+    }
+}
+
+/* Not Found Page */
+.not-found-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 50px 0;
+    color: var(--text-color);
+}
+
+.not-found-container h1 {
+    font-size: 120px;
+    margin: 0;
+    color: var(--tertiary-color);
+    text-shadow: 2px 2px 0 var(--secondary-color);
+}
+
+.not-found-container h2 {
+    font-size: 30px;
+    margin: 0 0 20px 0;
+}
+
+.not-found-container p {
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.not-found-container img {
+    width: 300px;
+    margin: 20px auto;
+}
+
+.not-found-container .btn-home {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+    background-color: var(--tertiary-color);
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: transform 0.2s ease-out;
+}
+
+.not-found-container .btn-home:hover {
+    transform: scale(1.05);
+}
+
+@media (width <=540px) {
+    .not-found-container h1 {
+        font-size: 80px;
+    }
+
+    .not-found-container h2 {
+        font-size: 24px;
+    }
+
+    .not-found-container img {
+        width: 250px;
     }
 }
