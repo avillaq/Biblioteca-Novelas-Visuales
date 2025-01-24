@@ -155,7 +155,7 @@ class VN_Blogger:
             # Parse content
             soup = BeautifulSoup("<html>"+self._decode_data(entry.content.text)+"</html>", "html.parser")
             first_part = soup.find("p") or soup.find("div")
-            if first_part:
+            if first_part and len(first_part.text) < 100:
                 first_part.decompose()
 
             # Get text sections
@@ -259,15 +259,13 @@ class VN_Blogger:
 
             feed = self.service.Get(query.ToUri())
 
-            if len(feed.entry) == 0 or start_index == 4:
+            if len(feed.entry) == 0 or start_index == 101:
                 break
 
             for entry in feed.entry:
                 post = self._parse_post_from_entry(entry)
                 if post:
                     list_posts.append(post)
-                else:
-                    break
 
             start_index += max_results
 
