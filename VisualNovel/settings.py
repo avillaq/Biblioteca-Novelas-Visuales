@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,13 +24,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-d=uctpn9r_bik36%)^$iv@7%&x^k@2(=%ire!+uzq&_#czqsl1'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True 
-ALLOWED_HOSTS = ["127.0.0.1", "visual-novel-library.up.railway.app"]
+DEBUG = os.getenv('DEBUG') == "True"
 
-CSRF_TRUSTED_ORIGINS = ["http://*","https://visual-novel-library.up.railway.app"]
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',')
+
+CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:8000","https://visual-novel-library.up.railway.app"]
 
 # Application definition
 
@@ -122,7 +126,7 @@ STATIC_URL = 'static/'
 
 # Whitenoise
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-STATICFILES_DIRS = []
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "VNDisplay/static")]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
