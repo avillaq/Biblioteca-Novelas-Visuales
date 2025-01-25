@@ -164,7 +164,7 @@ class VN_Blogger:
             slides = re.split(expression, html_text, flags=re.IGNORECASE)
 
             # Synopsis
-            synopsis = re.sub(r'(\w+[,!\?\'\/\-\s\w]*(\[[^\]]*\])+)', "", slides[0].strip())
+            synopsis = re.sub(r'.*(\w+[,!\?\'\/\-\s\w]*(\[[^\]]*\])+)', "", slides[0].strip().replace('\n', ''))
 
             # Cover and screenshots
             images = soup.find_all("img")
@@ -259,7 +259,7 @@ class VN_Blogger:
 
             feed = self.service.Get(query.ToUri())
 
-            if len(feed.entry) == 0 or start_index == 101:
+            if len(feed.entry) == 0:
                 break
 
             for entry in feed.entry:
