@@ -1,33 +1,73 @@
+# Biblioteca de Novelas Visuales
 
-# Novelas Visuales
+Una biblioteca digital de novelas visuales construida con Django que permite a los usuarios explorar y descargar novelas visuales tanto para PC como para Android. El sitio ofrece una experiencia de usuario fluida con características como búsqueda, filtrado y una sección especial para emulación con Kirikiroid2.
 
-Sitio web de novelas visuales construido con Python y Django. El sitio permite a los usuarios explorar y descargar novelas visuales para PC y Android. Las novelas visuales están organizadas en varias categorías, incluyendo una sección especial para novelas que se pueden emular con Kirikiroid2 en Android.
+![Inicio](screenshots/home.png)
+![Directorio](screenshots/imageViewer.png)
+![Android](screenshots/favorites.png)
 
+## ✨ Características
 
-El proyecto utiliza varias tecnologías y herramientas, incluyendo Python, Django, SQLite para la base de datos, y pip para manejar las dependencias. El código está organizado en varias carpetas y archivos, siguiendo las mejores prácticas de Django y la estructura de un proyecto Django típico.
+- 🎮 Exploración de novelas visuales para PC y Android
+- 🔍 Sistema de búsqueda avanzado
+- 🗂️ Filtrado por categorías y fechas
+- 📱 Sección dedicada para Android (APK y Kirikiroid2)
+- 📖 Vista detallada de cada novela visual
+- 💫 Interfaz moderna y responsive
+- 🔄 Actualizaciones desde la fuente original
 
-## Installation
+## 🛠️ Tecnologías
 
-Para instalar y ejecutar este proyecto,  segue los siguientes pasos:
+- **Backend**: Django 5.0.2
+- **Frontend**: HTML5, CSS3, JavaScript
+- **Base de datos**: SQLite3
+- **APIs**: Blogger API
+- **Otros**: BeautifulSoup4, Whitenoise
 
-1. Clona el repositorio en tu máquina local:
+## 🚀 Instalación
 
+1. Clona el repositorio:
 ```bash
-  git clone https://github.com/avillaq/Novelas-Visuales-Django.git
+git clone https://github.com/avillaq/Biblioteca-Novelas-Visuales.git
+cd Biblioteca-Novelas-Visuales
 ```
-2. Navega al directorio del proyecto:
+
+2. Crea y activa un entorno virtual:
 ```bash
-  cd Novelas-Visuales-Django
+python -m venv .venv
+source .venv/bin/activate  # Linux/Mac
+.venv\Scripts\activate     # Windows
 ```
-3. Instala las dependencias del proyecto:
+
+3. Instala las dependencias:
 ```bash
-  pip install -r requirements.txt
+pip install -r requirements.txt
 ```
-4. Realiza las migraciones de la base de datos:
+
+4. Configura las variables de entorno:
 ```bash
-  python manage.py migrate
+cp .env.example .env
+# Edita .env con tus configuraciones
 ```
-5. Inicia el servidor de desarrollo:
+
+5. Realiza las migraciones:
 ```bash
-  python manage.py runserver
+python manage.py migrate
 ```
+
+6. Inicia el servidor:
+```bash
+python manage.py runserver
+```
+
+## 🎮 Uso
+- Exploración: Navega por la biblioteca usando los filtros de categoría y año
+- Búsqueda: Utiliza la barra de búsqueda para encontrar novelas específicas
+- Sección Android: Accede a las versiones móviles y guías de instalación
+- Detalles: Visualiza screenshots, sinopsis y especificaciones de cada novela
+
+## 📄 License
+Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
+
+## 👤 Author
+Alexander VQ - [@avillaq](https://github.com/avillaq)
