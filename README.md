@@ -2,9 +2,9 @@
 
 Una biblioteca digital de novelas visuales construida con Django que permite a los usuarios explorar y descargar novelas visuales tanto para PC como para Android. El sitio ofrece una experiencia de usuario fluida con características como búsqueda, filtrado y una sección especial para emulación con Kirikiroid2.
 
-![Inicio](screenshots/home.png)
-![Directorio](screenshots/imageViewer.png)
-![Android](screenshots/favorites.png)
+![Inicio](screenshots/inicio.png)
+![Directorio](screenshots/directorio.png)
+![Android](screenshots/android.png)
 
 ## ✨ Características
 
