@@ -771,7 +771,7 @@ button.btnUpdate {
 .step-links {
     display: flex;
     gap: 10px;
-    padding: 10px 15px;
+    padding: 8px 12px;
     border-radius: 30px;
     background-color: var(--secondary-color);
 
@@ -780,8 +780,9 @@ button.btnUpdate {
         justify-content: center;
         align-items: center;
         color: var(--text-color);
-        width: 35px;
-        height: 35px;
+        font-size: var(--small-size);
+        width: 32px;
+        height: 32px;
         border-radius: 100%;
         transition: all 0.4s ease-out;
 
