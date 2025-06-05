@@ -68,11 +68,14 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 10px 0;
 }
 
 .logo-title {
-    font-size: 35px;
+    font-size: 36px;
     color: #fff;
+    font-weight: 600;
+    letter-spacing: -0.5px;
 }
 
 .nav {
@@ -87,11 +90,16 @@ header {
 .nav a {
     color: #fff;
     font-size: 16px;
-    transition: all 0.1s ease-out;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    font-weight: 400;
 }
 
 .nav a:hover {
-    border-bottom: 2px solid var(--tertiary-color);
+    color: #fff;
+    background: rgba(0, 102, 255, 0.15);
+    transform: translateY(-1px);
 }
 
 
@@ -105,7 +113,7 @@ header {
 
     background-color: #080f28;
     border-radius: 30px;
-    padding: 10px 15px;
+    padding: 12px 45px 12px 18px;
     color: var(--text-color);
     font-size: 14px;
 
@@ -260,6 +268,11 @@ header {
     height: 85%;
     object-fit: cover;
     object-position: center;
+    transition: transform 0.4s ease;
+}
+
+.novel:hover img {
+    transform: scale(1.05);
 }
 
 .novel-info {
@@ -296,7 +309,7 @@ header {
     transform: translateY(101%);
     overflow-y: auto;
     transition: transform 0.3s ease-in;
-    color: #000;
+    color: #2c3e50;
 
     scrollbar-width: thin;
     /* scrollbar setting */
@@ -421,11 +434,12 @@ button.btnUpdate {
     color: #fff;
     padding: 5px 0;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
     font-family: inherit;
     font-weight: inherit;
     font-size: 14px;
+    transition: all 0.2s ease;
 
     width: 90px;
 }
@@ -433,6 +447,12 @@ button.btnUpdate {
 button.btnUpdate {
     padding: 10px 0;
     width: 150px;
+}
+
+button.btnSubmit:hover,
+button.btnUpdate:hover {
+    background-color: #0052cc;
+    transform: translateY(-1px);
 }
 
 /* No results */
