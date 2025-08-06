@@ -148,7 +148,7 @@ class VN_Blogger:
             # Title
             title = self._decode_data(entry.title.text)
             # Title exceptions to avoid. Maybe in the future there will be more exceptions like this
-            title_exceptions = ["Kirikiroid", "Noticias", "Android", "Encuesta", "Navidad", "Aprende"]
+            title_exceptions = ["Kirikiroid", "Noticias", "Android", "Encuesta", "Navidad", "Aprende", "Temu"]
             if any(exception in title for exception in title_exceptions):
                 return None
             
