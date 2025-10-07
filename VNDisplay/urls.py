@@ -1,9 +1,11 @@
 from django.urls import path
+from django.http import HttpResponse
 from VNDisplay.views import home, directory, novel_detail, android, android_apk, android_kirikiroid2, search, update_novels
 
 app_name = 'VNDisplay'
 urlpatterns = [
     path('', view=home, name='home'),
+    path('ping', view=lambda request: HttpResponse("OK"), name='ping'),
     path('directorio', view=directory, name='directory'),
     path('search', view=search, name='search'),
     path('android', view=android, name='android'),
